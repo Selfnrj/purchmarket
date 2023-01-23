@@ -1,28 +1,89 @@
 import Container from './container'
-import { EXAMPLE_PATH } from '../lib/constants'
+import logoWhite from '../public/logo_white.svg'
+import arrowUp from '../public/arrow-up.svg'
+import Image from "next/image"
+import Link from "next/link"
+import { SocialIcon } from "react-social-icons"
 
 export default function Footer() {
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth'});
+  }
+
   return (
-    <footer className="bg-accent-1 border-t border-accent-2">
+    <footer className="bg-[#111827]">
       <Container>
-        <div className="py-28 flex flex-col lg:flex-row items-center">
-          <h3 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Statically Generated with Next.js.
-          </h3>
-          <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
-            <a
-              href="https://nextjs.org/docs/basic-features/pages"
-              className="mx-3 bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
-            >
-              Read Documentation
-            </a>
-            <a
-              href={`https://github.com/vercel/next.js/tree/canary/examples/${EXAMPLE_PATH}`}
-              className="mx-3 font-bold hover:underline"
-            >
-              View on GitHub
-            </a>
+        <div className="py-28 flex">
+          <Link href="/" className="hover:underline">
+            <Image 
+              width={97}
+              height={40}
+              alt="logo"
+              src={logoWhite} />
+          </Link>
+          <div className="w-full grid grid-cols-3 gap-4 ml-32 text-white relative">
+            <div className="">
+              <h6 className="uppercase text-sm text-gray-400 mb-4">Sidor</h6>
+              <ul>
+                <li className="my-2">
+                  <Link href="">Hitta inköpsavtal</Link>
+                </li>
+                <li className="my-2">
+                  <Link href="">Leverantörer</Link>
+                </li>
+                <li className="my-2">
+                  <Link href="">Min sida</Link>
+                </li>
+                <li className="my-2">
+                  <Link href="">Nyheter</Link>
+                </li>
+                <li className="my-2">
+                  <Link href="">Om oss</Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h6 className="uppercase text-sm text-gray-400 mb-4">Adress</h6>
+              <ul>
+                <li className="my-2">
+                  Kungsportsavenyn 37
+                </li>
+                <li className="my-2">
+                  411 36 Göteborg
+                </li>
+                <li className="my-2">
+                  Sverige
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h6 className="uppercase text-sm text-gray-400 mb-4">Komma Igång</h6>
+              <ul>
+                <li className="my-2">
+                  <Link href="">Logga in</Link>
+                </li>
+                <li className="my-2">
+                  <Link href="">Kontakta oss</Link>
+                </li>
+              </ul>
+            </div>
+            <button className="bg-gray-800 rounded-full h-16 w-16 text-center flex justify-center items-center absolute top-0 right-0" onClick={handleScrollToTop}>
+              <Image 
+                width={24}
+                height={24}
+                alt="Till toppen"
+                src={arrowUp} />
+            </button>
           </div>
+        </div>
+        <div className="border border-transparent border-t-gray-600 flex justify-between items-center">
+          <p className="text-gray-400 py-8">© 2023 Purch</p>
+          <SocialIcon 
+            url="https://linkedin.com/in/"
+            fgColor="gray"
+            bgColor="transparent"
+          />
         </div>
       </Container>
     </footer>

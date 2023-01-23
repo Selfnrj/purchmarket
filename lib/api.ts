@@ -101,6 +101,38 @@ export async function getAllPostsForHome(preview) {
   return data?.posts
 }
 
+export async function getAllAvtal() {
+  const data = await fetchAPI(`
+    query Avtal {
+      allAvtal {
+        edges {
+          node {
+            date
+            content
+            id
+            title
+            featuredImage {
+              node {
+                altText
+                sourceUrl
+              }
+            }
+            categories {
+              edges {
+                node {
+                  id
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
+  return data?.allAvtal
+}
+
 export async function getPostAndMorePosts(slug, preview, previewData) {
   const postPreview = preview && previewData?.post
   // The slug may be the id of an unpublished post
@@ -209,4 +241,60 @@ export async function getPostAndMorePosts(slug, preview, previewData) {
   if (data.posts.edges.length > 2) data.posts.edges.pop()
 
   return data
+}
+
+export async function getPrimaryMenu() {
+  const data = await fetchAPI(`
+  {
+    menus(where: {location: PRIMARY}) {
+      nodes {
+        menuItems {
+          edges {
+            node {
+              path
+              label
+              connectedNode {
+                node {
+                  ... on Page {
+                    isPostsPage
+                    slug
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  `);
+  return data?.menus?.nodes[0];
+}
+
+export async function getAllPagesWithSlugs() {
+  const data = await fetchAPI(`
+  {
+    pages(first: 10000) {
+      edges {
+        node {
+          slug
+        }
+      }
+    }
+  }
+  `);
+  return data?.pages;
+}
+
+export async function getPageBySlug(slug) {
+  const data = await fetchAPI(`
+  {
+    page(id: "${slug}", idType: URI) {
+      title
+      content
+      uri
+    }
+  }
+  `);
+  return data?.page;
 }
