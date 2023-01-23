@@ -1,13 +1,10 @@
-﻿import { getAllAvtal, getAllPagesWithSlugs, getPageBySlug, getPrimaryMenu } from '../lib/api';
+﻿import { getAllPagesWithSlugs, getPageBySlug } from '../lib/api';
 import Head from 'next/head';
-import Layout from "../components/layout";
-import Header from "../components/header";
-import Container from "../components/container";
 import Image from "next/image";
 
-export default function Page({ page, preview, menuItems, allAvtal }) {
+function Page(page) {
 
-  const avtal = allAvtal.edges.map(({ node }) => (
+  /* const avtal = allAvtal.edges.map(({ node }) => (
     <div className="bg-[#DFEDFF] p-8 rounded-3xl mb-6 flex" key={node.id}>
       <div className="relative h-48 w-48 mr-8">
         <Image
@@ -26,40 +23,30 @@ export default function Page({ page, preview, menuItems, allAvtal }) {
           )}
         </div>
       </div>
+      <div className='mb-5 text-4xl font-bold'>{page.title}</div>
+      <div
+        className='text-base text-grey-darker'
+        dangerouslySetInnerHTML={{ __html: page.content }}
+      />
     </div>
-  ));
+  ));  */
+    
 
   return (
-    <Layout preview={preview}>
-      <Header menuItems={menuItems} />
-      <Container>
-        <Head>
-          <title>{page.title}</title>
-          <link rel='icon' href='/favicon.ico' />
-        </Head>
-        <div className="py-8">
-          <h1 className='mb-5 text-4xl font-bold'>{page.title}</h1>
-          <div
-            className='text-base text-grey-darker'
-            dangerouslySetInnerHTML={{ __html: page.content }}
-          />
-          {page.uri === "/avtal/" && avtal }
-        </div>
-      </Container>
-    </Layout>
+    <div className='flex flex-col p-10'>
+      <Head>
+        <title>{page.title}</title>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
+
+      <div className='mb-5 text-4xl font-bold'>{page.title}</div>
+      <div
+        className='text-base text-grey-darker'
+        dangerouslySetInnerHTML={{ __html: page.content }}
+      ></div>
+      {/* { page.uri === "/avtal/" && avtal } */}
+    </div>
   );
-}
-
-export async function getStaticProps({ params }) {
-  const page = await getPageBySlug(params.slug);
-  const menuItems = await getPrimaryMenu();
-  const allAvtal = await getAllAvtal();
-
-  return { props: {
-    page,
-    menuItems,
-    allAvtal,
-  } };
 }
 
 export async function getStaticPaths() {
@@ -69,3 +56,10 @@ export async function getStaticPaths() {
     fallback: true,
   };
 }
+
+export async function getStaticProps({ params }) {
+  const page = await getPageBySlug(params.slug);
+  return { props: page };
+}
+
+export default Page;

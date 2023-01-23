@@ -12,9 +12,8 @@ import PostTitle from '../../components/post-title'
 import Tags from '../../components/tags'
 import { getAllPostsWithSlug, getPostAndMorePosts, getPrimaryMenu } from '../../lib/api'
 import { CMS_NAME } from '../../lib/constants'
-import Header from "../../components/header"
 
-export default function Post({ post, posts, preview, menuItems }) {
+export default function Post({ post, posts, preview }) {
   const router = useRouter()
   const morePosts = posts?.edges
 
@@ -24,14 +23,6 @@ export default function Post({ post, posts, preview, menuItems }) {
 
   return (
     <Layout preview={preview}>
-      <Header menuItems={menuItems} />
-      <PostHeader
-        title={post.title}
-        coverImage={post.featuredImage}
-        date={post.date}
-        author={post.author}
-        categories={post.categories}
-      />
       <Container>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
@@ -47,6 +38,13 @@ export default function Post({ post, posts, preview, menuItems }) {
                   content={post.featuredImage?.node.sourceUrl}
                 />
               </Head>
+              <PostHeader
+                title={post.title}
+                coverImage={post.featuredImage}
+                date={post.date}
+                author={post.author}
+                categories={post.categories}
+              />
               <PostBody content={post.content} />
               <footer>
                 {post.tags.edges.length > 0 && <Tags tags={post.tags} />}
@@ -68,14 +66,12 @@ export const getStaticProps: GetStaticProps = async ({
   previewData,
 }) => {
   const data = await getPostAndMorePosts(params?.slug, preview, previewData)
-  const menuItems = await getPrimaryMenu()
 
   return {
     props: {
       preview,
       post: data.post,
       posts: data.posts,
-      menuItems,
     },
     revalidate: 10,
   }
