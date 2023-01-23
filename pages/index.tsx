@@ -10,16 +10,16 @@ import { CMS_NAME } from '../lib/constants'
 import Header from "../components/header"
 import Link from "next/link"
 
-export default function Index({ allPosts: { edges }, preview, menuItems }) {
+export default function Index({ allPosts: { edges }, menuItems }) {
   const heroPost = edges[0]?.node
   const morePosts = edges.slice(2)
 
   return (
-    <Layout preview={preview}>
+    <Layout>
+      <Header menuItems={menuItems} />
       <Head>
         <title>Next.js Blog Example with {CMS_NAME}</title>
       </Head>
-      <Header menuItems={menuItems}  />
       <Container>
         {/*  <Intro /> */}
         <div className="flex justify-between mb-6">

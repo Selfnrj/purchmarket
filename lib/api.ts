@@ -111,6 +111,7 @@ export async function getAllAvtal() {
             content
             id
             title
+            slug
             featuredImage {
               node {
                 altText
@@ -131,6 +132,25 @@ export async function getAllAvtal() {
     }
   `)
   return data?.allAvtal
+}
+
+export async function getAvtal(slug) {
+  const data = await fetchAPI(`
+    {
+      avtal(id: "${slug}", idType: URI) {
+        title
+        content
+        uri
+        featuredImage {
+          node {
+            altText
+            sourceUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.avtal
 }
 
 export async function getPostAndMorePosts(slug, preview, previewData) {

@@ -15,16 +15,24 @@ export default function Header({menuItems: {menuItems}}) {
         </Link>
         <nav className="ml-16">
           <ul className="flex items-center justify-end flex-grow w-full">
-            {menuItems.edges.map((item) => (
-              <li key={item.node.path}>
+            {menuItems.edges.map(({ node }) => (
+              <li key={node.path}>
                 <Link
                   className="p-4 ml-2 text-black font-medium hover:underline"
-                  href={item.node.connectedNode.node.slug}
+                  href={node.connectedNode.node.slug}
                 >
-                  {item.node.label}
+                  {node.label}
                 </Link>
               </li>
             ))}
+            <li>
+              <Link 
+                href="/avtal"
+                className="p-4 ml-2 text-black font-medium hover:underline"
+              >
+                  Avtal
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
