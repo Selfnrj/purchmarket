@@ -1,19 +1,48 @@
 ﻿import { useSession, signIn, signOut } from "next-auth/react"
+import Image from "next/image"
+import Link from "next/link"
+import arrowRight from '../public/arrow-right.svg'
+
 
 export default function LoginBtn() {
   const { data: session } = useSession()
   if (session) {
     return (
-      <>
-        Signed in as {session.user.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
+      <div className="flex items-center">
+        <Link 
+          className="bg-white px-8 py-4 mr-4 font-bold rounded-full border border-gray-200 flex items-center" 
+          href="/mina-sidor">
+          Inloggad som: {session.user.name}
+          <Image
+            width={32}
+            height={32}
+            className="ml-4 rounded-full"
+            alt="arrow right"
+            src={session.user.image} />
+        </Link>
+        
+        <button 
+          onClick={() => signOut({ callbackUrl: '/' })}
+          className="bg-white px-8 py-4 font-bold rounded-full border border-gray-200 flex items-center"
+        >
+            Logga ut
+        </button>
+      </div>
     )
   }
+
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+    <button 
+      onClick={() => signIn()}
+      className="bg-white px-8 py-4 font-bold rounded-full border border-gray-200 flex items-center"
+    >
+        Logga in
+        <Image
+              width={40}
+              height={14}
+              className="ml-4"
+              alt="arrow right"
+              src={arrowRight} />
+    </button>
   )
 }
