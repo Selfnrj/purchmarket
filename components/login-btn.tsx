@@ -10,13 +10,14 @@ export default function LoginBtn() {
     return (
       <div className="flex items-center">
         <Link 
-          className="bg-white px-8 py-4 mr-4 font-bold rounded-full border border-gray-200 flex items-center" 
+          className="bg-white px-8 py-4 mr-4 rounded-full border border-gray-200 flex items-center" 
           href="/mina-sidor">
-          Inloggad som: {session.user.name}
+          <span className="mr-1">Inloggad som:</span>
+          <b>{session.user.name}</b>
           <Image
             width={32}
             height={32}
-            className="ml-4 rounded-full"
+            className="ml-2 rounded-full"
             alt="arrow right"
             src={session.user.image} />
         </Link>
