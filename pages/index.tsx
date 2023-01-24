@@ -16,13 +16,13 @@ export default function Index({ allPosts: { edges }, menuItems }) {
 
   return (
     <Layout>
-      <Header menuItems={menuItems} />
+      <Header />
       <Head>
         <title>Next.js Blog Example with {CMS_NAME}</title>
       </Head>
       <Container>
         {/*  <Intro /> */}
-        <div className="flex justify-between mb-6">
+        <div className="flex justify-between mt-12 mb-6">
           <h2 className="text-2xl">Nyheter</h2>
           <Link href="/">Visa alla nyheter</Link>
         </div>

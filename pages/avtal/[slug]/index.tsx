@@ -1,5 +1,6 @@
 ﻿import Image from "next/image";
 import Container from "../../../components/container";
+import Header from "../../../components/header";
 import Layout from "../../../components/layout";
 import { getAllAvtal, getAvtal } from "../../../lib/api";
 
@@ -7,6 +8,7 @@ export default function AvtalDetail(avtal) {
 
   return (
     <Layout>
+      <Header />
       <div className="relative h-96 w-full mb-8">
         <Image
           fill

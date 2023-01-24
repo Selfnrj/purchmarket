@@ -8,7 +8,7 @@ function Page({ page, menuItems }) {
 
   return (
     <Layout>
-      <Header menuItems={menuItems} />
+      <Header />
       <div className='flex flex-col p-10'>
         <Head>
           <title>{page?.title}</title>
