@@ -15,7 +15,7 @@ export default function PostPreview({
     <div className="flex bg-[#DFEDFF] mb-5 p-5 rounded-3xl">
       <div className="mr-5">
         {coverImage && (
-          <div className="relative w-44 h-44"> 
+          <div className="relative w-48 h-48"> 
             <CoverImage title={title} coverImage={coverImage} slug={slug} />
           </div>
         )}

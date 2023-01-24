@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from 'next/link'
 import logoBlue from '../public/logo_blue.svg'
+import arrowRight from '../public/arrow-right.svg'
 
 export default function Header() {
   return (
@@ -60,7 +61,15 @@ export default function Header() {
           </ul>
         </nav>
       </div>
-      <button className="bg-white px-8 py-4 font-bold rounded-full shadow-lg">Logga in</button>
+      <button className="bg-white px-8 py-4 font-bold rounded-full shadow-lg flex items-center">
+        Logga in
+        <Image 
+              width={40}
+              height={14}
+              className="ml-4"
+              alt="arrow right"
+              src={arrowRight} />
+      </button>
     </div>
   )
 }
