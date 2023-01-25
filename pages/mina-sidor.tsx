@@ -34,16 +34,19 @@ function profile() {
           <div className="grid grid-cols-3 gap-8">
             <ProfileCard 
               Icon={MinaAvtal} 
+              Linkto="/mina-avtal"
               LinkText="Visa alla Mina Avtal" 
               Title="Mina Avtal"
             />
             <ProfileCard 
               Icon={SparadeAvtal} 
+              Linkto="/sparade-avtal"
               LinkText="Visa alla Sparade Avtal" 
               Title="Sparade Avtal"
             />
             <ProfileCard 
               Icon={Rapporter} 
+              Linkto="/rapporter"
               LinkText="Visa alla Rapporter" 
               Title="Rapporter"
             />
