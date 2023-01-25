@@ -20,7 +20,7 @@ export default function Header() {
   ]
 
   return (
-    <div className="flex items-center justify-between p-6 bg-white shadow-lg">
+    <div className="flex items-center justify-between px-8 py-4 bg-white shadow-lg">
       <div className="flex items-center">
         <Link href="/">
           <Image 

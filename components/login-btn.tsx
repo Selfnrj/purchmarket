@@ -12,7 +12,6 @@ export default function LoginBtn() {
         <Link 
           className="bg-white px-8 py-4 mr-4 rounded-full border border-gray-200 flex items-center" 
           href="/mina-sidor">
-          <span className="mr-1">Inloggad som:</span>
           <b>{session.user.name}</b>
           <Image
             width={32}
