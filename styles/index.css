@@ -9,7 +9,7 @@
 
   .navLink {
     @apply hover:underline decoration-gray-900 text-center decoration-2 active:underline
-    underline-offset-8 rounded-full py-8 px-4 cursor-pointer hover:font-bold capitalize 
+    underline-offset-8 rounded-full p-4 cursor-pointer hover:font-bold capitalize 
     hover:scale-110 transition-all duration-200 ease-out;
   }
 }
