@@ -13,6 +13,7 @@ export default function MoreStories({ posts }) {
             author={node.author}
             slug={node.slug}
             excerpt={node.excerpt}
+            category={node.categories.edges[0].node.name}
           />
         ))}
       </div>

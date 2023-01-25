@@ -3,17 +3,15 @@ import { GetStaticProps } from 'next'
 import Container from '../components/container'
 import MoreStories from '../components/more-stories'
 import HeroPost from '../components/hero-post'
-import Intro from '../components/intro'
 import Layout from '../components/layout'
 import { getAllPostsForHome, getPrimaryMenu } from '../lib/api'
-import { CMS_NAME } from '../lib/constants'
 import Header from "../components/header"
 import Link from "next/link"
 import arrowRight from '../public/arrow-right.svg'
 import OmslagsBild from '../public/omslag.jpg'
 import Image from "next/image"
 
-export default function Index({ allPosts: { edges }, menuItems }) {
+export default function Index({ allPosts: { edges } }) {
   const heroPost = edges[0]?.node
   const morePosts = edges.slice(1)
 
@@ -21,7 +19,7 @@ export default function Index({ allPosts: { edges }, menuItems }) {
     <Layout>
       <Header />
       <Head>
-        <title>Next.js Blog Example with {CMS_NAME}</title>
+        <title>Purchmarket</title>
       </Head>
       <div className="relative wp-block-cover w-full flex items-center">
         <div className="absolute h-full w-full bg-black bg-opacity-50 z-40" />
@@ -77,7 +75,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const menuItems = await getPrimaryMenu()
 
   return {
-    props: { allPosts, preview, menuItems },
+    props: { allPosts, preview },
     revalidate: 10,
   }
 }

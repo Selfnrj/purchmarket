@@ -10,6 +10,7 @@ export default function PostPreview({
   excerpt,
   author,
   slug,
+  category
 }) {
   return (
     <div className="flex bg-[#DFEDFF] mb-5 p-5 rounded-3xl">
@@ -23,7 +24,7 @@ export default function PostPreview({
       <div className="flex-1">
         <h3 className="text-3xl mb-3 leading-snug">
           <Link
-            href={`/posts/${slug}`}
+            href={`/nyheter/${slug}`}
             className="hover:underline"
             dangerouslySetInnerHTML={{ __html: title }}
           ></Link>
@@ -32,7 +33,9 @@ export default function PostPreview({
           className="text-lg leading-relaxed mb-4"
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
-        <div className="text-lg mb-4">
+        <div className="text-lg flex">
+          {category}
+          <span className="mx-1">•</span>
           <Date dateString={date} />
         </div>
         {/* <Avatar author={author} /> */}

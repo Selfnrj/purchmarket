@@ -75,6 +75,13 @@ export async function getAllPostsForHome(preview) {
                 sourceUrl
               }
             }
+            categories {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
             author {
               node {
                 name
@@ -108,7 +115,7 @@ export async function getAllAvtal() {
         edges {
           node {
             date
-            content
+            excerpt
             id
             title
             slug
@@ -145,6 +152,19 @@ export async function getAvtal(slug) {
           node {
             altText
             sourceUrl
+          }
+        }
+        categories {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
+        author {
+          node {
+            firstName
           }
         }
       }
