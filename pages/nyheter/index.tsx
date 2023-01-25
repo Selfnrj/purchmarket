@@ -13,7 +13,6 @@ import { Fragment } from 'react'
 
 export default function Nyheter({ allPosts }) {
   const totalCount = allPosts.edges.length
-  console.log(totalCount);
 
   return (
     <Layout>

@@ -38,7 +38,7 @@ export default function Index({ allPosts: { edges } }) {
         {/*  <Intro /> */}
         <div className="flex justify-between items-center mt-12 mb-6">
           <h1 className="text-6xl font-bold">Nyheter</h1>
-          <Link href="/" className="flex items-center font-bold text-[#17375E]">
+          <Link href="/nyheter" className="flex items-center font-bold text-[#17375E]">
             Visa alla nyheter
             <Image 
               width={40}
