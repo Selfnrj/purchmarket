@@ -1,18 +1,18 @@
 @tailwind base;
-
-/* Write your own custom base styles here */
-
-/* Start purging... */
 @tailwind components;
-/* Stop purging. */
-
-/* Write you own custom component styles here */
-
-/* Start purging... */
 @tailwind utilities;
-/* Stop purging. */
 
-/* Your own custom utilities */
+@layer components {
+  .active {
+    @apply underline decoration-blue-600 underline-offset-8 cursor-default font-bold scale-110;
+  }
+
+  .navLink {
+    @apply hover:underline decoration-gray-900 text-center decoration-2 active:underline
+    underline-offset-8 rounded-full py-8 px-4 cursor-pointer hover:font-bold capitalize 
+    hover:scale-110 transition-all duration-200 ease-out;
+  }
+}
 
 .has-text-align-left {
   @apply text-left;

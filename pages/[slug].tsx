@@ -1,27 +1,19 @@
 ﻿import { getAllPagesWithSlugs, getPageBySlug, getPrimaryMenu } from '../lib/api';
 import Head from 'next/head';
-import Image from "next/image";
-import Layout from "../components/layout";
-import Header from "../components/header";
 
-function Page({ page, menuItems }) {    
-
+function Page({ page }) {    
   return (
-    <Layout>
-      <Header />
-      <div className='flex flex-col p-10'>
-        <Head>
-          <title>{page?.title}</title>
-          <link rel='icon' href='/favicon.ico' />
-        </Head>
-        <div className='mb-5 text-4xl font-bold'>{page?.title}</div>
-        <div
-          className='text-base text-grey-darker'
-          dangerouslySetInnerHTML={{ __html: page?.content }}
-        ></div>
-      </div>
-    </Layout>
-    
+    <div className='flex flex-col p-10'>
+      <Head>
+        <title>{page?.title}</title>
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
+      <div className='mb-5 text-4xl font-bold'>{page?.title}</div>
+      <div
+        className='text-base text-grey-darker'
+        dangerouslySetInnerHTML={{ __html: page?.content }}
+      ></div>
+    </div>
   );
 }
 

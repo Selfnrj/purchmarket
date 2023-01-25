@@ -3,9 +3,7 @@ import { GetStaticProps } from 'next'
 import Container from '../components/container'
 import MoreStories from '../components/more-stories'
 import HeroPost from '../components/hero-post'
-import Layout from '../components/layout'
 import { getAllPostsForHome, getPrimaryMenu } from '../lib/api'
-import Header from "../components/header"
 import Link from "next/link"
 import arrowRight from '../public/arrow-right.svg'
 import OmslagsBild from '../public/omslag.jpg'
@@ -16,8 +14,7 @@ export default function Index({ allPosts: { edges } }) {
   const morePosts = edges.slice(1)
 
   return (
-    <Layout>
-      <Header />
+    <>
       <Head>
         <title>Purchmarket</title>
       </Head>
@@ -66,13 +63,13 @@ export default function Index({ allPosts: { edges } }) {
           </div>
         </div>
       </Container>
-    </Layout>
+    </>
   )
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview)
-  const menuItems = await getPrimaryMenu()
+  //const menuItems = await getPrimaryMenu()
 
   return {
     props: { allPosts, preview },
