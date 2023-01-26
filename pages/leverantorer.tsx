@@ -9,7 +9,7 @@ export default function leverantorer(Leverantorer) {
     <div className="relative wp-block-cover mb-8 w-full flex items-center justify-center">
       <div className="absolute h-full w-full bg-black bg-opacity-50 z-40" />
       <div className="text-white z-40 relative flex flex-col">
-          <h1 className="max-w-2xl leading-tight mb-8 text-7xl font-bold">
+          <h1 className="max-w-2xl leading-tight mb-8 text-7xl font-black">
             Leverantörer
           </h1>
           <input type="text" className="p-4 text-black rounded-full" placeholder="Sök leverantör" />
@@ -24,9 +24,9 @@ export default function leverantorer(Leverantorer) {
     <Container>
       <div>
         {Leverantorer.edges.map(({ node }) => (
-          <div className="flex items-center bg-[#DFEDFF] mb-5 p-5 rounded-3xl">
+          <div key={node.id} className="flex items-center bg-[#DFEDFF] mb-5 p-5 rounded-3xl">
             {node.featuredImage && (
-              <div key={node.id} className="relative w-48 h-48 mr-8 bg-white rounded-lg"> 
+              <div className="relative w-48 h-48 mr-8 bg-white rounded-lg"> 
                 <Image
                   fill
                   alt={node.title}

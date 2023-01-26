@@ -12,8 +12,8 @@ export default function Nyheter({ allPosts }) {
   return (
     <Container>
       <div className="mt-12 mb-8">
-        <h1 className="text-7xl font-bold">Nyheter</h1>
-        <p className="font-semibold leading-8">Här finns våra pressmeddelanden och andra nyheter.</p>
+        <h1 className="text-7xl font-black">Nyheter</h1>
+        <p className="text-xl leading-8">Här finns våra pressmeddelanden och andra nyheter.</p>
       </div>
       <Tab.Group>
         <div className="flex items-center justify-between border border-transparent border-b-gray-300 mb-4">

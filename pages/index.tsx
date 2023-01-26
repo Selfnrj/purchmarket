@@ -21,8 +21,8 @@ export default function Index({ allPosts: { edges } }) {
       <div className="relative wp-block-cover w-full flex items-center">
         <div className="absolute h-full w-full bg-black bg-opacity-50 z-40" />
         <div className="text-white z-40 relative container mx-auto px-5">
-            <h1 className="max-w-2xl leading-tight mb-8 text-7xl font-bold">För en bättre vård och omsorg</h1>
-            <p className="max-w-lg font-semibold leading-8">Vår leverantör av sjukvårdsmaterial. Mediqs sortiment innehåller förbrukningsartiklar och medicintekniska produkter.</p>
+            <h1 className="max-w-2xl leading-tight mb-8 text-7xl font-black">För en bättre vård och omsorg</h1>
+            <p className="max-w-lg text-xl leading-8">Vår leverantör av sjukvårdsmaterial. Mediqs sortiment innehåller förbrukningsartiklar och medicintekniska produkter.</p>
         </div>
         <Image 
           fill

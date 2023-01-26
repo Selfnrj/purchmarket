@@ -155,6 +155,7 @@ export async function getAllRapporter() {
               }
             }
             title
+            id
           }
         }
       }
