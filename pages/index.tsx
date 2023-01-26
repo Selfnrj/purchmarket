@@ -34,7 +34,7 @@ export default function Index({ allPosts: { edges } }) {
       <Container>
         {/*  <Intro /> */}
         <div className="flex justify-between items-center mt-12 mb-6">
-          <h1 className="text-6xl font-bold">Nyheter</h1>
+          <h1 className="text-6xl font-black">Nyheter</h1>
           <Link href="/nyheter" className="flex items-center font-bold text-[#17375E]">
             Visa alla nyheter
             <Image 
@@ -55,6 +55,7 @@ export default function Index({ allPosts: { edges } }) {
                 author={heroPost.author}
                 slug={heroPost.slug}
                 excerpt={heroPost.excerpt}
+                category={heroPost.categories.edges[0].node.name}
               />
             )}
           </div>
