@@ -1,9 +1,12 @@
 ﻿import Image from "next/image";
 import Container from "../../../components/container";
 import { getAllAvtal, getAvtal } from "../../../lib/api";
+import FileDownloader from '../../../components/FileDownloader'
+import { filesize } from "filesize";
 
 export default function AvtalDetail(avtal) {
-
+  //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
+  
   return (
     <>
     <div className="relative flex items-end h-96 w-full mb-8">
@@ -28,7 +31,31 @@ export default function AvtalDetail(avtal) {
     </div>
     <Container>
       <h2 className="text-4xl font-bold mb-4">Om avtalet</h2>
-      <div dangerouslySetInnerHTML={{ __html: avtal.content }} />
+      <div className="grid grid-cols-3 gap-8">
+        <div className="col-span-2">
+          <div dangerouslySetInnerHTML={{ __html: avtal.content }} />
+          { avtal.file?.pdf?.title &&
+            <div className="border border-transparent mt-8 border-t-gray-300">
+              <FileDownloader 
+                title={avtal.file?.pdf?.title}
+                url={avtal.file?.pdf?.mediaItemUrl}
+                size={avtal.file?.pdf?.fileSize}
+              />
+            </div>
+          }
+        </div>
+        <div>
+          <div className="bg-[#DFEDFF] rounded-lg p-8">
+            <h3 className="text-xl font-bold mb-4">Kontakt</h3>
+            <ul className="flex flex-wrap">
+              <li className="mr-8 py-2 w-6/12">Namn:</li>
+              <li className="font-semibold py-2">{avtal.avtalsinfo?.namn}</li>
+              <li className="mr-8 w-6/12 py-2">Telefonnummer:</li>
+              <li className="font-semibold py-2">{avtal.avtalsinfo?.telefonnummer}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </Container>
     </>
   )

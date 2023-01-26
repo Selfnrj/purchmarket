@@ -141,6 +141,51 @@ export async function getAllAvtal() {
   return data?.allAvtal
 }
 
+export async function getAllRapporter() {
+  const data = await fetchAPI(`
+    query Rapporter {
+      allRapporter {
+        edges {
+          node {
+            file {
+              pdf {
+                fileSize
+                mediaItemUrl
+                title
+              }
+            }
+            title
+          }
+        }
+      }
+    }
+  `)
+  return data?.allRapporter
+}
+
+export async function getAllLeverantorer() {
+  const data = await fetchAPI(`
+    query Leverantorer {
+      allLeverantorer {
+        edges {
+          node {
+            excerpt
+            featuredImage {
+              node {
+                sourceUrl
+              }
+            }
+            id
+            title
+            content
+          }
+        }
+      }
+    }
+  `)
+  return data?.allLeverantorer
+}
+
 export async function getAvtal(slug) {
   const data = await fetchAPI(`
     {
@@ -166,6 +211,17 @@ export async function getAvtal(slug) {
           node {
             firstName
           }
+        }
+        file {
+          pdf {
+            mediaItemUrl
+            title
+            fileSize
+          }
+        }
+        avtalsinfo {
+          namn
+          telefonnummer
         }
       }
     }

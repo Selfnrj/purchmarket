@@ -3,7 +3,6 @@ import Image from "next/image"
 import Link from "next/link"
 import arrowRight from '../public/arrow-right.svg'
 
-
 export default function LoginBtn() {
   const { data: session } = useSession()
   if (session) {
