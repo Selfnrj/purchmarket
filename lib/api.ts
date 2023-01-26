@@ -119,6 +119,11 @@ export async function getAllAvtal() {
             id
             title
             slug
+            author {
+              node {
+                name
+              }
+            }
             featuredImage {
               node {
                 altText

@@ -22,7 +22,7 @@ export default function Footer() {
               alt="logo"
               src={logoWhite} />
           </Link>
-          <div className="flex-1 grid grid-cols-3 gap-4 ml-96 text-white relative">
+          <div className="flex-1 grid grid-cols-3 gap-4 ml-64 text-white relative">
             <div className="">
               <h6 className="uppercase text-sm text-gray-400 mb-4">Sidor</h6>
               <ul>
