@@ -30,7 +30,7 @@ export default function leverantorer(Leverantorer) {
                 <Image
                   fill
                   alt={node.title}
-                  src={node.featuredImage?.node.sourceUrl}
+                  src={`https://purchwp.azurewebsites.net/${node.featuredImage?.node.sourceUrl}`}
                   className="object-contain object-center rounded-xl"
                 />
               </div>
