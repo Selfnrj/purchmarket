@@ -33,7 +33,7 @@ export default function HeroPost({
         </div>
         <div>
           <div
-            className="leading-relaxed mb-4"
+            className="leading-relaxed text-lg mb-4"
             dangerouslySetInnerHTML={{ __html: excerpt }}
           />
           {/* <Avatar author={author} /> */}

@@ -13,7 +13,7 @@ export default function AvtalDetail(avtal) {
       <Image
         fill
         alt={avtal.title}
-        src={avtal.featuredImage?.node.sourceUrl}
+        src={`https://purchwp.azurewebsites.net/${avtal.featuredImage?.node.sourceUrl}`}
         className="object-cover object-center"
       />
       <div className="bg-black bg-opacity-50 z-40 w-full pb-6 pt-12 text-white relative">

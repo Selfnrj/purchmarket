@@ -13,7 +13,7 @@ export default function PostPreview({
   category
 }) {
   return (
-    <div className="flex bg-[#DFEDFF] mb-5 p-5 rounded-3xl mx-auto max-w-screen-lg">
+    <div className="flex bg-[#DFEDFF] mb-5 p-5 rounded-3xl">
       <div className="mr-5">
         {coverImage && (
           <div className="relative w-48 h-48"> 
@@ -30,7 +30,7 @@ export default function PostPreview({
           ></Link>
         </h3>
         <div
-          className="leading-relaxed mb-4"
+          className="leading-relaxed text-lg mb-4"
           dangerouslySetInnerHTML={{ __html: excerpt }}
         />
         <div className="flex text-sm">

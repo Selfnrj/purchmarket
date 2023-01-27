@@ -17,7 +17,7 @@ export default function CoverImage({ title, coverImage, slug }: Props) {
     <Image
       fill
       alt={`Cover Image for ${title}`}
-      src={coverImage?.node.sourceUrl}
+      src={`https://purchwp.azurewebsites.net/${coverImage?.node.sourceUrl}`}
       className={cn('shadow-small', {
         'object-cover object-center rounded-xl': slug,
       })}

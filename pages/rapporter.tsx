@@ -69,8 +69,8 @@ export default function rapporter(allRapporter) {
               <FileDownloader 
                 key={node.id}
                 title={node.title}
-                url={node.file.pdf.mediaItemUrl}
-                size={node.file.pdf.fileSize}
+                url={node.file?.pdf?.mediaItemUrl}
+                size={node.file?.pdf?.fileSize}
             />
             ))}
           </Tab.Panel>

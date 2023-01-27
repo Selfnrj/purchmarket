@@ -68,7 +68,7 @@ export default function Avtal(allAvtal) {
               <Image
                 fill
                 alt={item.node.title}
-                src={item.node.featuredImage.node.sourceUrl}
+                src={`https://purchwp.azurewebsites.net/${item.node.featuredImage.node.sourceUrl}`}
                 className="object-cover object-center rounded-xl"
               />
             </div>
