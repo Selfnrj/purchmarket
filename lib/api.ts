@@ -400,3 +400,22 @@ export async function getPageBySlug(slug) {
   `);
   return data?.page;
 }
+
+export async function getToken() {
+  const data = await fetchAPI(`
+    mutation LoginUser {
+      login(
+        input: {clientMutationId: "dXNlcjoy", 
+          username: "ambjorn.fagerstrom",
+          password: "Purchrunner99"}
+      ) {
+        authToken
+        clientMutationId
+        refreshToken
+      }
+    }
+  `);
+  return data?.login;
+}
+
+

@@ -1,32 +1,28 @@
-﻿import { ArrowRightIcon } from "@heroicons/react/24/outline"
-import { useSession, signIn } from "next-auth/react"
+﻿import { ArrowRightIcon, UserIcon } from "@heroicons/react/24/outline";
 import Image from "next/image"
 import Link from "next/link"
-import arrowRight from '../public/arrow-right.svg'
+import useAuth from "../hooks/useAuth";
 
 export default function LoginBtn() {
-  const { data: session } = useSession()
-  if (session) {
+    const { loggedIn } = useAuth();
+
     return (
-      <div className="flex items-center">
+      <div>
+      {loggedIn ? (
+        <>
+        <div className="flex items-center">
         <Link 
           className="bg-white hover:bg-gray-200 px-4 py-3 mr-4 rounded-full border border-gray-200 flex items-center" 
           href="/mina-sidor">
-          <b>{session.user.name}</b>
-          <Image
-            width={32}
-            height={32}
-            className="ml-2 rounded-full"
-            alt="arrow right"
-            src={session.user.image} />
+          <b>Mina sidor</b>
+          <UserIcon className="h-6 w-6 ml-2 text-gray-900"/>
         </Link>
       </div>
-    )
-  }
-
-  return (
-    <button 
-      onClick={() => signIn()}
+        </>
+      ) : (
+        <div>
+        <Link 
+      href="/login"
       className="bg-white hover:bg-gray-200 px-6 py-3 font-bold rounded-full border border-gray-200 flex items-center"
     >
         Logga in
@@ -37,6 +33,9 @@ export default function LoginBtn() {
               className="ml-4"
               alt="arrow right"
               src={arrowRight} /> */}
-    </button>
-  )
+    </Link>
+    </div>
+    )}
+    </div>
+  )  
 }
