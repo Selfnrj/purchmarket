@@ -8,12 +8,15 @@ type Props = {
 
 function NavLink({path, link, isActive}: Props) {
   return (
-    <Link 
-      href={`/${path}`}  
-      className={`navLink ${ isActive === true ? " active" : "" }`} 
-    >
-      {link}
-    </Link>
+    <li>
+      <Link 
+        href={`/${path}`}  
+        className={`navLink ${ isActive === true ? " active" : "" }`} 
+        aria-current="page"
+      >
+        {link}
+      </Link>
+    </li>
   )
 }
 

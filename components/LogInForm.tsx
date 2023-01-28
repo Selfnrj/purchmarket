@@ -78,7 +78,11 @@ export default function LogInForm() {
         </div>
         
         <button className="w-full font-bold p-4 bg-[#17375E] rounded-full text-white" type="submit" disabled={loading}>
-          {loading ? 'Loggar in...' : 'Logga in'}
+          {loading ? 
+            'Loggar in...' 
+            : 
+            'Logga in'
+          }
         </button>
       </fieldset>
     </form>
