@@ -24,7 +24,7 @@ export default function Header() {
   ]
 
   return (
-    <nav className="bg-white px-2 sm:px-4 py-2.5 fixed w-full z-50 top-0 left-0 border-b border-gray-200 shadow-lg">
+    <nav className="bg-white px-2 sm:px-4 py-3 fixed w-full z-50 top-0 left-0 border-b border-gray-200 shadow-lg">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
       <Link href="/">
           <Image 
@@ -36,9 +36,19 @@ export default function Header() {
         </Link>
         <div className="flex md:order-2">
           <LoginBtn />
-          <button onClick={handleNavCollapse} data-toggle="collapse" data-target="#navbarsExample09" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation" data-collapse-toggle="navbar-sticky" type="button" className="inline-flex items-center py-2 px-4 ml-4 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-sticky" >
+          <button 
+            onClick={handleNavCollapse} 
+            data-toggle="collapse" 
+            data-target="#navbar-sticky" 
+            aria-expanded={!isNavCollapsed ? true : false} 
+            aria-label="Toggle navigation" 
+            data-collapse-toggle="navbar-sticky" 
+            type="button" 
+            aria-controls="navbar-sticky"
+            className="inline-flex items-center py-2 px-4 ml-4 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+          >
             <span className="sr-only">Open main menu</span>
-            <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+            <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
         </button>
       </div>
         <div className={`${isNavCollapsed ? 'hidden' : ''} items-center justify-between w-full md:flex md:w-auto md:order-1`} id="navbar-sticky">

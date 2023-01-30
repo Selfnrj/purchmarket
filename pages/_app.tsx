@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ApolloProvider client={client}>
         <AuthProvider>
           <ClickProvider>
-            <main className={`${lato.variable} font-sans`}>
+            <main className={`pt-20 ${lato.variable} font-sans`}>
               <Layout>
                   <Component {...pageProps} />
               </Layout>

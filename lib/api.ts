@@ -401,21 +401,25 @@ export async function getPageBySlug(slug) {
   return data?.page;
 }
 
-export async function getToken() {
+export async function getStartsida() {
   const data = await fetchAPI(`
-    mutation LoginUser {
-      login(
-        input: {clientMutationId: "dXNlcjoy", 
-          username: "ambjorn.fagerstrom",
-          password: "Purchrunner99"}
-      ) {
-        authToken
-        clientMutationId
-        refreshToken
+    query Startsidan {
+      allStartsida {
+        edges {
+          node {
+            startsida {
+              heroBild {
+                sourceUrl
+              }
+              heroRubrik
+              heroText
+            }
+          }
+        }
       }
     }
   `);
-  return data?.login;
+  return data?.allStartsida;
 }
 
 

@@ -13,7 +13,7 @@ export default function PostPreview({
   category
 }) {
   return (
-    <div className="flex bg-[#DFEDFF] mb-5 p-5 rounded-3xl">
+    <div className="sm:flex bg-[#DFEDFF] mb-5 p-5 rounded-3xl">
       <div className="mr-5">
         {coverImage && (
           <div className="relative w-48 h-48"> 
