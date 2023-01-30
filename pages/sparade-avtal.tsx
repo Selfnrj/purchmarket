@@ -43,7 +43,7 @@ export default function sparadeAvtal() {
             <Image
               fill
               alt={item.node.title}
-              src={item.node.featuredImage.node.sourceUrl}
+              src={`https://purchwp.azurewebsites.net/${item.node.featuredImage.node.sourceUrl}`}
               className="object-cover object-center rounded-xl"
             />
           </div>
@@ -54,7 +54,7 @@ export default function sparadeAvtal() {
             <div className="mb-4" dangerouslySetInnerHTML={{ __html: item.node.excerpt }} />
             <div className="flex">
               {item.node.categories.edges.map(({ node }) =>
-                <div className="bg-slate-400 rounded-full px-4 py-2 mr-2" key={node.id}>{node.name}</div>
+                <div className="bg-blue-300 text-xs font-bold rounded-full px-4 py-1 mr-2" key={node.id}>{node.name}</div>
               )}
             </div> 
           </div>

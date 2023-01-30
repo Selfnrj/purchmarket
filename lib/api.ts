@@ -138,6 +138,14 @@ export async function getAllAvtal() {
                 }
               }
             }
+            tags {
+              edges {
+                node {
+                  id
+                  name
+                }
+              }
+            }
           }
         }
       }

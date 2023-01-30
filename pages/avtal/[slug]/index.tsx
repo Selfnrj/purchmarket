@@ -19,9 +19,9 @@ export default function AvtalDetail(avtal) {
       <div className="bg-black bg-opacity-50 z-40 w-full pb-6 pt-12 text-white relative">
         <Container>
           <div className="flex">
-            <p className="mr-1">{avtal.author?.node.firstName}</p>
+            {/* <p className="mr-1">{avtal.author?.node.firstName}</p> */}
             {avtal.categories?.edges.map(({ node }) => (
-              <p className="relative mr-1" key={node.id}>• {node.name}</p>
+              <p className="relative mr-1" key={node.id}>{node.name} </p>
             ))}
           </div>
           

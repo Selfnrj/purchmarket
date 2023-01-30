@@ -4,32 +4,18 @@ import React, { useContext, useEffect } from 'react'
 import Container from "../../components/container";
 import { getAllAvtal } from "../../lib/api";
 import { StarIcon } from '@heroicons/react/24/solid'
-import { toast, Toaster } from "react-hot-toast";
+
 import MenuContext from "../../contexts/click";
 import OmslagsBild from '../../public/omslag.jpg'
-
+import AvtalCard from "../../components/avtal-card";
+import AuthContent from "../../components/AuthContent";
+import useAuth from "../../hooks/useAuth";
+import AvtalUtvalda from "../../components/avtal-utvalda";
 
 export default function Avtal(allAvtal) {
-  const [favorite, setFavorite] = useContext(MenuContext);
 
-  const addAvtal = (item) => {
-    if (!favorite.includes(item)) {
-      toast.success("Avtalet är sparat");
-      setFavorite([...favorite, item]);
-    } else {
-      toast.success("Avtalet har tagits bort");
-      setFavorite([...favorite.filter((block) => block !== item)]);
-    }
-  };
-
-  useEffect(() => {
-    const data = window.localStorage.getItem('SAVE_FAVORITE');
-    if (data !== null) setFavorite(JSON.parse(data))
-  }, [])
-
-  useEffect(() => {
-    window.localStorage.setItem('SAVE_FAVORITE', JSON.stringify(favorite))
-  }, [favorite])
+  const { loggedIn } = useAuth();
+  //const { firstName } = user as User;
 
   return (
     <>
@@ -49,42 +35,20 @@ export default function Avtal(allAvtal) {
         src={OmslagsBild} />
     </div>
     <Container>
-      <Toaster />
       <div className="mt-12">
         <h1 className="mb-8 text-4xl font-bold"></h1>
-        {allAvtal.edges.map((item) => (
-          <div 
-            className="bg-[#DFEDFF] p-8 rounded-3xl mb-6 flex relative" 
-            key={item.node.id}  
-          >
-            <button 
-              onClick={() => addAvtal(item)}
-              className="absolute top-6 right-6 h-6 w-6 text-yellow-500"
-            >
-              <StarIcon className="h-6 w-6 text-yellow-500"/>
-            </button> 
-  
-            <div className="relative h-48 w-48 mr-8">
-              <Image
-                fill
-                alt={item.node.title}
-                src={`https://purchwp.azurewebsites.net/${item.node.featuredImage.node.sourceUrl}`}
-                className="object-cover object-center rounded-xl"
-              />
-            </div>
-            <div className="flex-1">
-              <Link href={`/avtal/${item.node.slug}`}>
-                <h2 className="text-2xl font-black mb-4">{item.node.title}</h2>
-              </Link>
-              <div className="mb-4" dangerouslySetInnerHTML={{ __html: item.node.excerpt }} />
-              <div className="flex">
-                {item.node.categories.edges.map(({ node }) =>
-                  <div className="bg-blue-300 text-xs font-bold rounded-full px-4 py-1 mr-2" key={node.id}>{node.name}</div>
-                )}
-              </div> 
-            </div>
-          </div>
-        ))}
+          {allAvtal.edges.filter(item => item.node.tags.edges[0]?.node.name === undefined).map((item) => (
+            <AvtalCard 
+              key={item.node.id}
+              title={item.node.title}
+              excerpt={item.node.excerpt}
+              slug={item.node.slug}
+              categories={item.node.categories}
+              item={item}
+              sourceUrl={`https://purchwp.azurewebsites.net/${item.node.featuredImage?.node.sourceUrl}`}
+            />
+          ))}
+          {loggedIn ? <AvtalUtvalda allAvtal={allAvtal}/> : ""}
       </div>
     </Container>
     </>
