@@ -486,4 +486,20 @@ export async function getStartsida() {
   return data?.allStartsida;
 }
 
+export async function getKundNummer() {
+  const data = await fetchAPI(`
+    viewer {
+      kundnummer {
+        catell
+        juzo
+        medema
+        mediqSverige
+      }
+    }
+  `);
+  return data?.user;
+}
+
+
+
 

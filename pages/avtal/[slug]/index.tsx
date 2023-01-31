@@ -3,9 +3,13 @@ import Container from "../../../components/container";
 import { getAllAvtal, getAvtal } from "../../../lib/api";
 import FileDownloader from '../../../components/FileDownloader'
 import { filesize } from "filesize";
+import Link from "next/link";
+import arrowRight from '../../../public/arrow-right.svg'
+import useAuth from "../../../hooks/useAuth";
 
 export default function AvtalDetail(avtal) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
+  const { loggedIn } = useAuth();
   
   return (
     <>
@@ -33,7 +37,20 @@ export default function AvtalDetail(avtal) {
       <h2 className="text-4xl font-bold mb-4">Om avtalet</h2>
       <div className="grid grid-cols-3 gap-8">
         <div className="col-span-2">
-          <div dangerouslySetInnerHTML={{ __html: avtal.content }} />
+          <div className="mb-8" dangerouslySetInnerHTML={{ __html: avtal.content }} />
+          {loggedIn ? (
+            <Link href="/kundnummer" className="flex items-center font-bold text-[#17375E]">
+              Se mina kundnummer
+              <Image 
+                width={40}
+                height={14}
+                className="ml-4"
+                alt="arrow right"
+                src={arrowRight} />
+            </Link>
+          ) : (
+            ""
+          )}
           { avtal.file?.pdf?.title &&
             <div className="border border-transparent mt-8 border-t-gray-300">
               <FileDownloader 

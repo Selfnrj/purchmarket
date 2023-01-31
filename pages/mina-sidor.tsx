@@ -1,6 +1,7 @@
 ﻿import Container from "../components/container"
 import Image from "next/image"
 import MinaAvtal from '../public/mina-avtal.svg'
+import KundNummer from '../public/mina-kundnummer.svg'
 import Rapporter from '../public/rapporter.svg'
 import SparadeAvtal from '../public/sparade-avtal.svg'
 import ProfileCard from "../components/profile-card"
@@ -31,7 +32,7 @@ export default function Profile() {
             Logga ut
           </Link>
         </div>
-        <div className="grid grid-cols-3 gap-8">
+        <div className="grid grid-cols-4 gap-8">
           <ProfileCard 
             Icon={MinaAvtal} 
             Linkto="/mina-avtal"
@@ -49,6 +50,12 @@ export default function Profile() {
             Linkto="/rapporter"
             LinkText="Visa alla Rapporter" 
             Title="Rapporter"
+          />
+          <ProfileCard 
+            Icon={KundNummer} 
+            Linkto="/kundnummer"
+            LinkText="Visa mina Kundnummer" 
+            Title="Kundnummer"
           />
         </div>
       </Container>
