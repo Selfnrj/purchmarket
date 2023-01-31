@@ -1,21 +1,13 @@
 ﻿import Image from "next/image"
-import Link from "next/link";
-import React, { useContext, useEffect } from 'react'
 import Container from "../../components/container";
 import { getAllAvtal } from "../../lib/api";
-import { StarIcon } from '@heroicons/react/24/solid'
-
-import MenuContext from "../../contexts/click";
 import OmslagsBild from '../../public/omslag.jpg'
 import AvtalCard from "../../components/avtal-card";
-import AuthContent from "../../components/AuthContent";
 import useAuth from "../../hooks/useAuth";
 import AvtalUtvalda from "../../components/avtal-utvalda";
 
 export default function Avtal(allAvtal) {
-
   const { loggedIn } = useAuth();
-  //const { firstName } = user as User;
 
   return (
     <>
@@ -37,9 +29,10 @@ export default function Avtal(allAvtal) {
     <Container>
       <div className="mt-12">
         <h1 className="mb-8 text-4xl font-bold"></h1>
-          {allAvtal.edges.filter(item => item.node.tags.edges[0]?.node.name === undefined).map((item) => (
+          {allAvtal.edges.filter(item => item.node.avtalstyp.valjkund === "Alla").map((item) => (
             <AvtalCard 
               key={item.node.id}
+              id={item.node.id}
               title={item.node.title}
               excerpt={item.node.excerpt}
               slug={item.node.slug}

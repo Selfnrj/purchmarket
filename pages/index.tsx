@@ -93,10 +93,11 @@ export default function Index({ allPosts: { edges }, allHero, allAvtal }) {
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-8">
-            {allAvtal.edges.filter(item => item.node.tags.edges[0]?.node.name === undefined).map((item) => (
+            {allAvtal.edges.filter(item => item.node.avtalstyp.valjkund === "Alla").map((item) => (
               <AvtalCard 
                 className="bg-white shadow-lg"
                 key={item.node.id}
+                id={item.node.id}
                 title={item.node.title}
                 excerpt={item.node.excerpt}
                 slug={item.node.slug}

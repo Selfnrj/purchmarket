@@ -1,10 +1,9 @@
-﻿import { StarIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
-import { useContext, useEffect } from "react";
-import MenuContext from "../contexts/click";
-import { toast, Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
+import StarButton from "./star-button";
+import AuthContent from "./AuthContent";
 
 interface Props {
   title: string,
@@ -13,46 +12,25 @@ interface Props {
   categories: any,
   item: string,
   sourceUrl: string,
-  className?: string
+  className?: string,
+  id?: string
 }
 
-export default function AvtalCard({ title, slug, excerpt, categories, item, sourceUrl, className }: Props) {
-  const [favorite, setFavorite] = useContext(MenuContext);
+export default function AvtalCard({ title, slug, excerpt, categories, item, sourceUrl, className, id }: Props) {
+  //const [favorite, setFavorite] = useContext(MenuContext);
 
   const { loggedIn } = useAuth();
-
-  const addAvtal = (item) => {
-    if (!favorite.includes(item)) {
-      toast.success("Avtalet är sparat");
-      setFavorite([...favorite, item]);
-    } else {
-      toast.success("Avtalet har tagits bort");
-      setFavorite([...favorite.filter((block) => block !== item)]);
-    }
-  };
-
-  useEffect(() => {
-    const data = window.localStorage.getItem('SAVE_FAVORITE');
-    if (data !== null) setFavorite(JSON.parse(data))
-  }, [])
-
-  useEffect(() => {
-    window.localStorage.setItem('SAVE_FAVORITE', JSON.stringify(favorite))
-  }, [favorite])
 
   return (
     <>
     <Toaster />
     <div className={`bg-[#DFEDFF] p-8 rounded-3xl mb-6 flex relative ${className}`}>
       {loggedIn ? (
-        <button 
-          onClick={() => addAvtal(item)}
-          className="absolute top-6 right-6 h-6 w-6 text-yellow-500"
-        >
-          <StarIcon className="h-6 w-6 text-yellow-500"/>
-        </button> 
-        ) : (
-          ""
+        <AuthContent>
+          <StarButton item={item} id={id} />
+        </AuthContent>
+      ) : (
+        ""
       )}
       <div className="relative h-48 w-48 mr-8">
         <Image

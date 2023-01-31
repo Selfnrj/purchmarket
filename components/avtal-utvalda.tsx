@@ -13,9 +13,10 @@ export default function AvtalUtvalda({ allAvtal }) {
 
   return (
     <div>
-      {allAvtal.edges.filter(item => item.node.tags.edges[0]?.node.name === firstName).map((item) => (
+      {allAvtal.edges.filter(item => item.node.avtalstyp.valjkund === firstName).map((item) => (
         <AvtalCard
           key={item.node.id}
+          id={item.node.id}
           title={item.node.title}
           excerpt={item.node.excerpt}
           slug={item.node.slug}
