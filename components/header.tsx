@@ -25,7 +25,7 @@ export default function Header() {
 
   return (
     <nav className="bg-white px-2 sm:px-4 py-3 fixed w-full z-50 top-0 left-0 border-b border-gray-200 shadow-lg">
-      <div className="container flex flex-wrap items-center justify-between mx-auto">
+      <div className="container flex flex-wrap items-center justify-between mx-auto px-5">
       <Link href="/">
           <Image 
             width={97}

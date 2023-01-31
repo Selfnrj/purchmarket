@@ -12,7 +12,7 @@ export default function LoginBtn() {
         <>
         <div className="flex items-center">
         <Link 
-          className="bg-white hover:bg-gray-200 px-4 py-3 mr-4 rounded-full border border-gray-200 flex items-center" 
+          className="bg-white hover:bg-gray-200 px-4 py-3 rounded-full border border-gray-200 flex items-center" 
           href="/mina-sidor">
           <b>Mina sidor</b>
           <UserIcon className="h-6 w-6 ml-2 text-gray-900"/>
