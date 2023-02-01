@@ -226,6 +226,13 @@ export async function getAllRapporter() {
             }
             title
             id
+            rapportUser {
+              kopplaRapport {
+                id
+                name
+                email
+              }
+            }
           }
         }
       }

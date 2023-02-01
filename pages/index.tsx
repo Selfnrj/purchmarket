@@ -116,7 +116,7 @@ export default function Index({ allPosts: { edges }, allHero, allAvtal }) {
             <div>
               <h1 className="max-w-lg leading-tight mb-8 text-5xl font-black">Alla dina rapporterer samlade på en sida</h1>
               <p className="mb-8 text-xl leading-8">A wonderful serenity has taken possession of my entire soul.</p>
-              <Link href="/rapporter" className="flex items-center font-bold">
+              <Link href="/login" className="flex items-center font-bold">
                 Rapporter
                 <ArrowRightIcon className="h-6 w-6 ml-2 text-[#17375E]"/>
               </Link>

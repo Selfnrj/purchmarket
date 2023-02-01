@@ -74,7 +74,7 @@ export default function LogInForm() {
           {!isPasswordValid ? (
             <p className="text-red-500 mb-3">Felaktigt lösenord. Var god försök igen.</p>
           ) : null}
-          <Link href="/forgot-password">Glömt ditt lösenord?</Link>
+          <Link href="/glomt-losenord">Glömt ditt lösenord?</Link>
         </div>
         
         <button className="w-full font-bold p-4 bg-[#17375E] rounded-full text-white" type="submit" disabled={loading}>

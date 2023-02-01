@@ -1,6 +1,6 @@
 ﻿import { gql, useMutation } from "@apollo/client";
-import { StarIcon } from "@heroicons/react/24/outline";
-import StarFill from "../public/star-fill.svg"
+import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
+import { StarIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import MenuContext from "../contexts/click";
@@ -93,15 +93,9 @@ export default function StarButton({ item, id }) {
       className={`absolute top-6 right-6 h-6 w-6 cursor-pointer text-yellow-500 ${favorite ? 'active' : ''}`}
     >
       {favorite === true ? (
-        <Image
-          height="24"
-          width="24"
-          alt="star"
-          className="text-yellow-500"
-          src={StarFill}
-        />
-      ) : ( 
         <StarIcon className="h-6 w-6 text-[#FFAB57]"/>
+      ) : ( 
+        <StarIconOutline className="h-6 w-6 text-[#FFAB57]"/>
       )}
     </button> 
   )

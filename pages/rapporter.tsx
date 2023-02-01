@@ -5,8 +5,12 @@ import { getAllRapporter } from "../lib/api";
 import OmslagsBild from '../public/omslag.jpg'
 import { Tab } from '@headlessui/react'
 import { Fragment } from 'react'
+import useAuth from "../hooks/useAuth";
+import RapportLogin from "../components/rapport-login";
+import UnAuthContent from "../components/UnAuthContent";
 
 export default function rapporter(allRapporter) {
+  const { loggedIn } = useAuth();
   const totalCount = allRapporter.edges.length
 
   return (
@@ -28,8 +32,10 @@ export default function rapporter(allRapporter) {
         alt="header bild"
         src={OmslagsBild} />
     </div>
+    
+    {loggedIn ? (
     <Container>
-    <Tab.Group>
+      <Tab.Group>
         <div className="flex items-center justify-between border border-transparent border-b-gray-300">
           <Tab.List>
             <Tab as={Fragment}>
@@ -62,17 +68,9 @@ export default function rapporter(allRapporter) {
           </Tab.List>
           <p>Totalt: {totalCount} Rapporter </p>
         </div>
-        
         <Tab.Panels>
           <Tab.Panel>
-            {allRapporter.edges.map(({ node }) => (
-              <FileDownloader 
-                key={node.id}
-                title={node.title}
-                url={node.file?.pdf?.mediaItemUrl}
-                size={node.file?.pdf?.fileSize}
-            />
-            ))}
+            <FileDownloader/>
           </Tab.Panel>
           <Tab.Panel>
             2022
@@ -82,8 +80,12 @@ export default function rapporter(allRapporter) {
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
-      
     </Container>
+    ) : (
+      <UnAuthContent>
+        <RapportLogin />
+      </UnAuthContent>
+    )}
     </>
   )
 }

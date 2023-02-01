@@ -53,11 +53,11 @@ export default function AvtalDetail(avtal) {
           )}
           { avtal.file?.pdf?.title &&
             <div className="border border-transparent mt-8 border-t-gray-300">
-              <FileDownloader 
+{/*               <FileDownloader 
                 title={avtal.file?.pdf?.title}
                 url={avtal.file?.pdf?.mediaItemUrl}
                 size={avtal.file?.pdf?.fileSize}
-              />
+              /> */}
             </div>
           }
         </div>
