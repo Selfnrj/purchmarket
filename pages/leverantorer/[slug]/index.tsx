@@ -10,15 +10,15 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
         <div className="relative w-48 h-48 border rounded-lg mx-auto mb-4"> 
           <Image
             fill
-            alt={leverantor.title}
-            src={`https://purchwp.azurewebsites.net/${leverantor.featuredImage?.node.sourceUrl}`}
+            alt={leverantor?.title}
+            src={`https://purchwp.azurewebsites.net/${leverantor?.featuredImage?.node?.sourceUrl}`}
             className="object-contain object-center rounded-xl"
           />
         </div>
-        <h1 className="text-6xl font-bold mb-4 relative text-center">{leverantor.title}</h1>
-        <div className="mb-8 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: leverantor.content }} />
+        <h1 className="text-6xl font-bold mb-4 relative text-center">{leverantor?.title}</h1>
+        <div className="mb-8 text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: leverantor?.content }} />
         <h1 className="text-6xl font-bold mb-4 relative">Avtal</h1>
-        {allAvtal.edges.filter(item => item.node.avtalstyp.valjLeverantor === leverantor.title).map((item) => (
+        {allAvtal?.edges?.filter(item => item.node.avtalstyp.valjLeverantor === leverantor?.title).map((item) => (
           <AvtalCard 
             key={item.node.id}
             id={item.node.id}

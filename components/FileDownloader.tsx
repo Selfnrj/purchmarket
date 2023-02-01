@@ -15,12 +15,12 @@ export default function FileDownloader({ url, title, size }) {
             src={PDFIcon}
           />
         </a>
-        <a className="mr-48" href={url} target="_blank">
+        <a className="mr-48" href={`https://purchwp.azurewebsites.net/${url}`} target="_blank">
           <b>{title}</b>
         </a>
         {size}
       </div>
-      <a className="flex items-center" href={url} target="_blank" download>
+      <a className="flex items-center" href={`https://purchwp.azurewebsites.net/${url}`} target="_blank" download>
         <ArrowDownTrayIcon className="h-6 w-6 mr-2"/>
         Ladda ner
       </a>
