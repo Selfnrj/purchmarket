@@ -21,21 +21,21 @@ export default function LoginBtn() {
         </>
       ) : (
         <div>
-        <Link 
-      href="/login"
-      className="bg-white hover:bg-gray-200 px-6 py-3 font-bold rounded-full border border-gray-200 flex items-center"
-    >
-        Logga in
-        <ArrowRightIcon className="h-6 w-6 ml-2 text-gray-900"/>
-        {/* <Image
-              width={40}
-              height={14}
-              className="ml-4"
-              alt="arrow right"
-              src={arrowRight} /> */}
-    </Link>
-    </div>
-    )}
+          <Link 
+            href="/login"
+            className="bg-white hover:bg-gray-200 px-6 py-3 font-bold rounded-full border border-gray-200 flex items-center"
+          >
+            Logga in
+            <ArrowRightIcon className="h-6 w-6 ml-2 text-gray-900"/>
+            {/* <Image
+                  width={40}
+                  height={14}
+                  className="ml-4"
+                  alt="arrow right"
+                  src={arrowRight} /> */}
+          </Link>
+        </div>
+      )}
     </div>
   )  
 }

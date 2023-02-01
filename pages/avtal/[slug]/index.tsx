@@ -4,8 +4,8 @@ import { getAllAvtal, getAvtal } from "../../../lib/api";
 import FileDownloader from '../../../components/FileDownloader'
 import { filesize } from "filesize";
 import Link from "next/link";
-import arrowRight from '../../../public/arrow-right.svg'
 import useAuth from "../../../hooks/useAuth";
+import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
 export default function AvtalDetail(avtal) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
@@ -16,6 +16,7 @@ export default function AvtalDetail(avtal) {
     <div className="relative flex items-end h-96 w-full mb-8">
       <Image
         fill
+        priority
         alt={avtal.title}
         src={`https://purchwp.azurewebsites.net/${avtal.featuredImage?.node.sourceUrl}`}
         className="object-cover object-center"
@@ -41,23 +42,18 @@ export default function AvtalDetail(avtal) {
           {loggedIn ? (
             <Link href="/kundnummer" className="flex items-center font-bold text-[#17375E]">
               Se mina kundnummer
-              <Image 
-                width={40}
-                height={14}
-                className="ml-4"
-                alt="arrow right"
-                src={arrowRight} />
+              <ArrowRightIcon className="h-6 w-6 ml-2 text-gray-900"/>
             </Link>
           ) : (
             ""
           )}
           { avtal.file?.pdf?.title &&
             <div className="border border-transparent mt-8 border-t-gray-300">
-{/*               <FileDownloader 
+              <FileDownloader 
                 title={avtal.file?.pdf?.title}
-                url={avtal.file?.pdf?.mediaItemUrl}
+                url={`https://purchwp.azurewebsites.net/${avtal.file?.pdf?.mediaItemUrl}`}
                 size={avtal.file?.pdf?.fileSize}
-              /> */}
+              /> 
             </div>
           }
         </div>
