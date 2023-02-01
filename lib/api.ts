@@ -148,6 +148,7 @@ export async function getAllAvtal() {
             }
             avtalstyp {
               valjkund
+              valjLeverantor
             }
           }
         }
@@ -248,12 +249,32 @@ export async function getAllLeverantorer() {
             id
             title
             content
+            slug
           }
         }
       }
     }
   `)
   return data?.allLeverantorer
+}
+
+export async function getLeverantor(slug) {
+  const data = await fetchAPI(`
+    {
+      leverantorer(id: "${slug}", idType: URI) {
+        title
+        content
+        uri
+        slug
+        featuredImage {
+          node {
+            sourceUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.leverantorer
 }
 
 export async function getAvtal(slug) {

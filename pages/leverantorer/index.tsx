@@ -1,7 +1,8 @@
 ﻿import Image from "next/image";
-import Container from "../components/container";
-import { getAllLeverantorer } from "../lib/api";
-import OmslagsBild from '../public/omslag.jpg'
+import Link from "next/link";
+import Container from "../../components/container";
+import { getAllLeverantorer } from "../../lib/api";
+import OmslagsBild from '../../public/omslag.jpg'
 
 export default function leverantorer(Leverantorer) {
   return (
@@ -36,7 +37,9 @@ export default function leverantorer(Leverantorer) {
               </div>
             )}
             <div className="flex-1">
-              <h2 className="text-4xl font-bold mb-4">{node.title}</h2>
+              <Link href={`/leverantorer/${node.slug}`}>
+                <h2 className="text-2xl font-black mb-4">{node.title}</h2>
+              </Link>
               <div
                 className="text-lg leading-relaxed mb-4"
                 dangerouslySetInnerHTML={{ __html: node.content }}
