@@ -8,6 +8,7 @@ import useAuth from "../hooks/useAuth";
 import RapportLogin from "../components/rapport-login";
 import UnAuthContent from "../components/UnAuthContent";
 import Rapporter from "../components/rapporter";
+import AuthContent from "../components/AuthContent";
 
 export default function rapporter(allRapporter) {
   const { loggedIn } = useAuth();
@@ -70,7 +71,9 @@ export default function rapporter(allRapporter) {
         </div>
         <Tab.Panels>
           <Tab.Panel>
-            <Rapporter />
+            <AuthContent>
+              <Rapporter />
+            </AuthContent>
           </Tab.Panel>
           <Tab.Panel>
             2022

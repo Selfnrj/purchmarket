@@ -1,7 +1,4 @@
-﻿import Image from "next/image";
-import PDFIcon from '../public/PDF.svg'
-import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import useAuth, { User } from "../hooks/useAuth";
+﻿import useAuth, { User } from "../hooks/useAuth";
 import { gql, useQuery } from "@apollo/client";
 import FileDownloader from "./FileDownloader";
 
@@ -40,7 +37,7 @@ export default function Rapporter() {
 
   const allRapporter = data.allRapporter.edges;
 
-  //console.log(allRapporter);
+  console.log(allRapporter);
 
   return (
     <div>

@@ -12,7 +12,7 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-[#111827] p-4 b pt-16">
+    <footer className="bg-[#111827] py-4 b pt-16">
       <Container>
       <div className="md:flex md:justify-between relative">
         <div className="mb-6 md:mb-0">
@@ -79,7 +79,7 @@ export default function Footer() {
           </button>
         </div>
       </div>
-      <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+      <hr className="my-2 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-4" />
       <div className="flex items-center justify-between">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2023 <Link href="/" className="hover:underline">Purch</Link>. All Rights Reserved.

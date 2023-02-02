@@ -22,7 +22,7 @@ export default function Index({ allPosts: { edges }, allHero, allAvtal }) {
       </Head>
       <div className="relative wp-block-cover w-full flex items-center">
         <div className="absolute h-full w-full bg-black bg-opacity-50 z-40" />
-        <div className="text-white z-40 relative container mx-auto px-5">
+        <div className="text-white z-40 relative container mx-auto px-8">
             <h1 className="max-w-2xl leading-tight mb-8 text-7xl font-black">{allHero?.edges[0]?.node.startsida.heroRubrik}</h1>
             <p className="max-w-lg text-xl leading-8">{allHero?.edges[0]?.node.startsida.heroText}</p>
         </div>
