@@ -1,21 +1,27 @@
-﻿import Image from "next/image"
+﻿import Image from "next/image";
 import Container from "../../components/container";
-import { getAllAvtal } from "../../lib/api";
-import OmslagsBild from '../../public/omslag.jpg'
+import { getAllAvtal, getCategories } from "../../lib/api";
+import OmslagsBild from "../../public/omslag.jpg";
 import AvtalCard from "../../components/avtal-card";
 import useAuth from "../../hooks/useAuth";
 import AvtalUtvalda from "../../components/avtal-utvalda";
 import { ChangeEvent, useEffect, useState } from "react";
 import PostTitle from "../../components/post-title";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import Checkbox from "../../components/checkbox";
 
-export default function Avtal(allAvtal) {
-  const { loggedIn } = useAuth();
+export default function Avtal({ allAvtal, allCategories }) {
+  //const { loggedIn } = useAuth();
   const [filteredAvtal, setFilteredAvtal] = useState(allAvtal.edges);
   const [avtalTitles, setAvtalTitles] = useState(
     allAvtal.edges.map((item) => item.node.title.toLowerCase())
   );
-  const [searchString, setSearchString] = useState('');
+  const [searchString, setSearchString] = useState("");
+  const [isAllCategory, setIsAllCategory] = useState(true);
+  const [filtercategories, setFiltercategories] = useState([]);
+
+  console.log(allAvtal.edges[0].node?.categories);
 
   useEffect(() => {
     const filteredPostsTitles: string[] = [...avtalTitles].filter(
@@ -27,65 +33,151 @@ export default function Avtal(allAvtal) {
     );
 
     setFilteredAvtal(refilteredPosts);
+  }, [searchString, avtalTitles, allAvtal.edges]);
 
-  }, [searchString, avtalTitles, allAvtal.edges])
+  useEffect(() => {
+    if (filtercategories.length > 0) {
+      setIsAllCategory(false);
+    } else {
+      setIsAllCategory(true);
+    }
+  }, [filtercategories]);
 
   return (
     <>
-    <div className="relative wp-block-cover w-full flex items-center justify-center">
-      <div className="absolute h-full w-full bg-black bg-opacity-50 z-40" />
-      <div className="text-white z-40 relative flex flex-col">
-          <h1 className="max-w-2xl leading-tight mb-8 text-7xl font-black">
+      <div className="wp-block-cover relative flex w-full items-center justify-center">
+        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
+        <div className="relative z-40 flex flex-col text-white">
+          <h1 className="mb-8 max-w-2xl text-7xl font-black leading-tight">
             Hitta inköpsavtal
           </h1>
           <form action="">
             <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
-              <MagnifyingGlassIcon className="h-6 w-6 absolute ml-3" />
-              <input 
-                type="text" 
-                className="p-4 pl-12 text-black rounded-full w-full" 
+              <MagnifyingGlassIcon className="absolute ml-3 h-6 w-6" />
+              <input
+                type="text"
+                className="w-full rounded-full p-4 pl-12 text-black"
                 placeholder="Sök avtal"
                 value={searchString}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => 
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setSearchString(e.target.value)
-                } 
+                }
               />
             </div>
           </form>
+        </div>
+        <Image
+          fill
+          placeholder="blur"
+          className="object-cover"
+          alt="header bild"
+          src={OmslagsBild}
+        />
       </div>
-      <Image 
-        fill
-        placeholder="blur"
-        className="object-cover"
-        alt="header bild"
-        src={OmslagsBild} />
-    </div>
-    <Container>
-      <div className="mt-12">
-        <h1 className="mb-8 text-4xl font-bold"></h1>
-        {filteredAvtal.length ? (
-          filteredAvtal.filter(item => item.node.avtalstyp.valjkund === "Alla").map((item) => (
-            <AvtalCard 
-              key={item.node.id}
-              id={item.node.id}
-              title={item.node.title}
-              excerpt={item.node.excerpt}
-              slug={item.node.slug}
-              categories={item.node.categories}
-              item={item}
-              sourceUrl={`https://purchwp.azurewebsites.net/${item.node.featuredImage?.node.sourceUrl}`}
-            />
-          ))
-          ) : (
-          <p className="text-center">Inga avtal hittades...</p>
-        )}
-      </div>
-    </Container>
+      <Container>
+        <div className="mt-12 grid grid-cols-4 gap-8">
+          <div>
+            <div className="flex justify-between border border-transparent border-b-gray-300 pb-4">
+              Filter
+              <button
+                className="text-sm text-blue-600 hover:underline"
+                onClick={() => {
+                  setFiltercategories([]);
+                  setIsAllCategory(true);
+                }}
+              >
+                Återställ filter
+              </button>
+            </div>
+            <h6 className="mt-8 mb-4 text-xs font-bold uppercase text-gray-500">
+              Kategori
+            </h6>
+            {allCategories.edges
+              .filter((exclude) => exclude.node?.name !== "Nyhet")
+              .filter((exclude) => exclude.node?.name !== "Press")
+              .map((category) => (
+                <Checkbox
+                  handleClick={() => {
+                    if (!filtercategories.includes(category.node.name)) {
+                      setFiltercategories([
+                        ...filtercategories,
+                        category.node.name,
+                      ]);
+                    } else {
+                      const selectedCategory = [...filtercategories].filter(
+                        (selectedCategory) =>
+                          selectedCategory !== category.node.name
+                      );
+                      setFiltercategories(selectedCategory);
+                    }
+                  }}
+                  name={category.node.name}
+                  count={category.node.count}
+                  checked={
+                    filtercategories.includes(category.node.name)
+                      ? "checked"
+                      : ""
+                  }
+                />
+              ))}
+
+            {/*             
+            <Checkbox name={"Hjälpmedel"} />
+            <Checkbox name={"Livsmedel"} />
+            <Checkbox name={"Möbler"} />
+            <Checkbox name={"Skyddsutrustning"} /> 
+            */}
+          </div>
+          <div className="col-span-3">
+            {filteredAvtal.length ? (
+              filteredAvtal
+                .filter((item) => item.node.avtalstyp.valjkund === "Alla")
+                .map((item) => {
+                  if (
+                    !isAllCategory &&
+                    item.node.categories.edges
+                      .map((item) => item.node.name)
+                      .some((category) => filtercategories.includes(category))
+                  ) {
+                    return (
+                      <AvtalCard
+                        key={item.node.id}
+                        id={item.node.id}
+                        title={item.node.title}
+                        excerpt={item.node.excerpt}
+                        slug={item.node.slug}
+                        categories={item.node.categories}
+                        item={item}
+                        sourceUrl={`https://purchwp.azurewebsites.net/${item.node.featuredImage?.node.sourceUrl}`}
+                      />
+                    );
+                  } else if (isAllCategory) {
+                    return (
+                      <AvtalCard
+                        key={item.node.id}
+                        id={item.node.id}
+                        title={item.node.title}
+                        excerpt={item.node.excerpt}
+                        slug={item.node.slug}
+                        categories={item.node.categories}
+                        item={item}
+                        sourceUrl={`https://purchwp.azurewebsites.net/${item.node.featuredImage?.node.sourceUrl}`}
+                      />
+                    );
+                  }
+                })
+            ) : (
+              <p className="text-center">Inga avtal hittades...</p>
+            )}
+          </div>
+        </div>
+      </Container>
     </>
-  )
+  );
 }
 
 export async function getStaticProps() {
   const allAvtal = await getAllAvtal();
-  return { props: allAvtal };
+  const allCategories = await getCategories();
+  return { props: { allAvtal, allCategories } };
 }

@@ -4,19 +4,17 @@ import Container from "../components/container";
 import { getAllAvtal } from "../lib/api";
 
 export default function MinaAvtal(allAvtal) {
-
   return (
     <Container>
       <div>
-        <h1 className="leading-tight my-8 text-6xl font-black">Mina Avtal</h1>
+        <h1 className="my-8 text-6xl font-black leading-tight">Mina Avtal</h1>
         <AuthContent>
-          <AvtalUtvalda allAvtal={allAvtal}/>
+          <AvtalUtvalda allAvtal={allAvtal} />
         </AuthContent>
       </div>
     </Container>
-  )
+  );
 }
-
 
 export async function getStaticProps() {
   const allAvtal = await getAllAvtal();

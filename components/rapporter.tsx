@@ -41,14 +41,16 @@ export default function Rapporter() {
 
   return (
     <div>
-      {allRapporter.filter(item => item.node.rapportUser.kopplaRapport[0].id === id).map(({ node }) => (
-        <FileDownloader 
-          key={node.id}
-          title={node.file?.pdf?.title}
-          url={`https://purchwp.azurewebsites.net/${node.file?.pdf?.mediaItemUrl}`}
-          size={node.file?.pdf?.fileSize}
-        />
-      ))}
+      {allRapporter
+        .filter((item) => item.node.rapportUser.kopplaRapport[0].id === id)
+        .map(({ node }) => (
+          <FileDownloader
+            key={node.id}
+            title={node.title}
+            url={`https://purchwp.azurewebsites.net/${node.file?.pdf?.mediaItemUrl}`}
+            size={node.file?.pdf?.fileSize}
+          />
+        ))}
     </div>
-  )
+  );
 }
