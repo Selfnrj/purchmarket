@@ -1,57 +1,33 @@
-﻿import { GetStaticProps } from "next"
-import React from 'react'
-import Container from "../../components/container"
-import PostPreview from "../../components/post-preview"
-import { getAllPostsForHome } from "../../lib/api"
-import { Tab } from '@headlessui/react'
-import { Fragment } from 'react'
+﻿import { GetStaticProps } from "next";
+import Container from "../../components/container";
+import PostPreview from "../../components/post-preview";
+import { getAllPostsForHome } from "../../lib/api";
+import { Tab } from "@headlessui/react";
+import { useState } from "react";
+import LoadmoreButton from "../../components/loadmore-button";
+import TabLink from "../../components/tab-link";
 
 export default function Nyheter({ allPosts }) {
-  const totalCount = allPosts.edges.length
+  const totalCount = allPosts.edges.length;
+  const [postNum, setPostNum] = useState(3); // Default number of posts dislplayed
 
   return (
     <Container>
       <div className="mt-12 mb-8">
         <h1 className="text-7xl font-black">Nyheter</h1>
-        <p className="text-xl leading-8">Här finns våra pressmeddelanden och andra nyheter.</p>
+        <p className="text-xl leading-8">
+          Här finns våra pressmeddelanden och andra nyheter.
+        </p>
       </div>
       <Tab.Group>
-        <div className="flex items-center justify-between border border-transparent border-b-gray-300 mb-4">
-          <Tab.List>
-            <Tab as={Fragment}>
-              {({ selected }) => (
-                <button
-                  className={`uppercase font-semibold p-4 outline-0 ${selected ? 'border-b-4 border-b-gray-900' : ''}`}
-                >
-                  Alla
-                </button>
-              )}
-            </Tab>
-            <Tab as={Fragment}>
-              {({ selected }) => (
-                <button
-                  className={`uppercase font-semibold p-4 outline-0 ${selected ? 'border-b-4 border-b-gray-900' : ''}`}
-                >
-                  Nyhet
-                </button>
-              )}
-            </Tab>
-            <Tab as={Fragment}>
-              {({ selected }) => (
-                <button
-                  className={`uppercase font-semibold p-4 outline-0 ${selected ? 'border-b-4 border-b-gray-900' : ''}`}
-                >
-                  Press
-                </button>
-              )}
-            </Tab>
-          </Tab.List>
+        <div className="mb-4 flex items-center justify-between border border-transparent border-b-gray-300">
+          <TabLink tablinks={["Alla", "Nyheter", "Press"]} />
           <p>Totalt: {totalCount} nyheter </p>
         </div>
-        
+
         <Tab.Panels>
           <Tab.Panel>
-            {allPosts.edges.map(({ node }) => (
+            {allPosts.edges.slice(0, postNum).map(({ node }) => (
               <PostPreview
                 key={node.slug}
                 title={node.title}
@@ -63,46 +39,71 @@ export default function Nyheter({ allPosts }) {
                 category={node.categories.edges[0].node.name}
               />
             ))}
+            <LoadmoreButton
+              number={postNum}
+              setNumber={setPostNum}
+              allPosts={allPosts}
+            />
           </Tab.Panel>
           <Tab.Panel>
-            {allPosts.edges.filter(item => item.node.categories?.edges[0].node.name === "Nyhet").map(({ node }) => (
-              <PostPreview
-                key={node.slug}
-                title={node.title}
-                coverImage={node.featuredImage}
-                date={node.date}
-                author={node.author}
-                slug={node.slug}
-                excerpt={node.excerpt}
-                category={node.categories.edges[0].node.name}
-              />
-            ))}
+            {allPosts.edges
+              .filter(
+                (item) => item.node.categories?.edges[0].node.name === "Nyhet"
+              )
+              .slice(0, postNum)
+              .map(({ node }) => (
+                <PostPreview
+                  key={node.slug}
+                  title={node.title}
+                  coverImage={node.featuredImage}
+                  date={node.date}
+                  author={node.author}
+                  slug={node.slug}
+                  excerpt={node.excerpt}
+                  category={node.categories.edges[0].node.name}
+                />
+              ))}
+            <LoadmoreButton
+              number={postNum}
+              setNumber={setPostNum}
+              allPosts={allPosts}
+            />
           </Tab.Panel>
           <Tab.Panel>
-            {allPosts.edges.filter(item => item.node.categories?.edges[0].node.name === "Press").map(({ node }) => (
-              <PostPreview
-                key={node.slug}
-                title={node.title}
-                coverImage={node.featuredImage}
-                date={node.date}
-                author={node.author}
-                slug={node.slug}
-                excerpt={node.excerpt}
-                category={node.categories.edges[0].node.name}
-              />
-            ))}
+            {allPosts.edges
+              .filter(
+                (item) => item.node.categories?.edges[0].node.name === "Press"
+              )
+              .slice(0, postNum)
+              .map(({ node }) => (
+                <PostPreview
+                  key={node.slug}
+                  title={node.title}
+                  coverImage={node.featuredImage}
+                  date={node.date}
+                  author={node.author}
+                  slug={node.slug}
+                  excerpt={node.excerpt}
+                  category={node.categories.edges[0].node.name}
+                />
+              ))}
+            <LoadmoreButton
+              number={postNum}
+              setNumber={setPostNum}
+              allPosts={allPosts}
+            />
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </Container>
-  )
+  );
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const allPosts = await getAllPostsForHome(preview)
+  const allPosts = await getAllPostsForHome(preview);
 
   return {
     props: { allPosts, preview },
     revalidate: 10,
-  }
-}
+  };
+};

@@ -10,9 +10,11 @@ import PostTitle from "../../components/post-title";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Checkbox from "../../components/checkbox";
+import LoadmoreButton from "../../components/loadmore-button";
 
 export default function Avtal({ allAvtal, allCategories }) {
   //const { loggedIn } = useAuth();
+  const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
   const [filteredAvtal, setFilteredAvtal] = useState(allAvtal.edges);
   const [avtalTitles, setAvtalTitles] = useState(
     allAvtal.edges.map((item) => item.node.title.toLowerCase())
@@ -132,6 +134,7 @@ export default function Avtal({ allAvtal, allCategories }) {
             {filteredAvtal.length ? (
               filteredAvtal
                 .filter((item) => item.node.avtalstyp.valjkund === "Alla")
+                .slice(0, postNum)
                 .map((item) => {
                   if (
                     !isAllCategory &&
@@ -148,7 +151,7 @@ export default function Avtal({ allAvtal, allCategories }) {
                         slug={item.node.slug}
                         categories={item.node.categories}
                         item={item}
-                        sourceUrl={`https://purchwp.azurewebsites.net/${item.node.featuredImage?.node.sourceUrl}`}
+                        sourceUrl={item.node.featuredImage?.node.sourceUrl}
                       />
                     );
                   } else if (isAllCategory) {
@@ -161,7 +164,7 @@ export default function Avtal({ allAvtal, allCategories }) {
                         slug={item.node.slug}
                         categories={item.node.categories}
                         item={item}
-                        sourceUrl={`https://purchwp.azurewebsites.net/${item.node.featuredImage?.node.sourceUrl}`}
+                        sourceUrl={item.node.featuredImage?.node.sourceUrl}
                       />
                     );
                   }
@@ -169,6 +172,11 @@ export default function Avtal({ allAvtal, allCategories }) {
             ) : (
               <p className="text-center">Inga avtal hittades...</p>
             )}
+            <LoadmoreButton
+              number={postNum}
+              setNumber={setPostNum}
+              allPosts={allAvtal}
+            />
           </div>
         </div>
       </Container>

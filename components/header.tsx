@@ -1,77 +1,123 @@
-import Image from "next/image"
-import Link from 'next/link'
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import logoBlue from '../public/logo_blue.svg'
-import LoginBtn from "./login-btn"
+import logoBlue from "../public/logo_blue.svg";
+import LoginBtn from "./login-btn";
 import NavLink from "./NavLink";
+import { gql, useQuery } from "@apollo/client";
+
+const CURRENT_USER_QUERY = gql`
+  query MainMenu {
+    menus(where: { location: PRIMARY }) {
+      nodes {
+        menuItems {
+          edges {
+            node {
+              path
+              label
+              connectedNode {
+                node {
+                  ... on Page {
+                    isPostsPage
+                    slug
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default function Header() {
   const router = useRouter();
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-
   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+  const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
+
+  const menuItems = data?.menus?.nodes[0].menuItems;
 
   const isActive = (path: string) => {
     return router.pathname.split("/").pop() === path;
   };
 
   const navlinks = [
-    {title: 'Hitta inköpsavtal', path: 'avtal'},
-    {title: 'Leverantörer', path: 'leverantorer'},
-    {title: 'Rapporter', path: 'rapporter'},
-    {title: 'Nyheter', path: 'nyheter'},
-  ]
+    { title: "Hitta inköpsavtal", path: "avtal" },
+    { title: "Leverantörer", path: "leverantorer" },
+    { title: "Rapporter", path: "rapporter" },
+    { title: "Nyheter", path: "nyheter" },
+  ];
 
   return (
-    <nav className="bg-white py-3 fixed w-full z-50 top-0 left-0 border-b border-gray-200 shadow-lg">
-      <div className="container flex flex-wrap items-center justify-between mx-auto px-8">
-      <Link href="/">
-          <Image 
+    <nav className="fixed top-0 left-0 z-50 w-full border-b border-gray-200 bg-white py-3 shadow-lg">
+      <div className="container mx-auto flex flex-wrap items-center justify-between px-8">
+        <Link href="/">
+          <Image
             width={97}
             height={40}
             alt="logo"
             priority={true}
-            src={logoBlue} />
+            src={logoBlue}
+          />
         </Link>
         <div className="flex md:order-2">
           <LoginBtn />
-          <button 
-            onClick={handleNavCollapse} 
-            data-toggle="collapse" 
-            data-target="#navbar-sticky" 
-            aria-expanded={!isNavCollapsed ? true : false} 
-            aria-label="Toggle navigation" 
-            data-collapse-toggle="navbar-sticky" 
-            type="button" 
+          <button
+            onClick={handleNavCollapse}
+            data-toggle="collapse"
+            data-target="#navbar-sticky"
+            aria-expanded={!isNavCollapsed ? true : false}
+            aria-label="Toggle navigation"
+            data-collapse-toggle="navbar-sticky"
+            type="button"
             aria-controls="navbar-sticky"
-            className="inline-flex items-center py-2 px-4 ml-4 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+            className="ml-4 inline-flex items-center rounded-lg py-2 px-4 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden"
           >
             <span className="sr-only">Open main menu</span>
-            <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"></path></svg>
-        </button>
-      </div>
-        <div className={`${isNavCollapsed ? 'hidden' : ''} items-center justify-between w-full md:flex md:w-auto md:order-1`} id="navbar-sticky">
-          <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-200 md:flex-row md:space-x-8 md:mt-0 md:text-md md:font-medium md:border-0 md:bg-white">
-          {navlinks.map(({title, path}) => (
-            <NavLink key={title} path={path} link={title} isActive={isActive(path)} />
-          ))}
+            <svg
+              className="h-6 w-6"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+        <div
+          className={`${
+            isNavCollapsed ? "hidden" : ""
+          } w-full items-center justify-between md:order-1 md:flex md:w-auto`}
+          id="navbar-sticky"
+        >
+          <ul className="md:text-md mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-200 p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:font-medium">
+            {navlinks.map(({ title, path }) => (
+              <NavLink
+                key={title}
+                path={path}
+                link={title}
+                isActive={isActive(path)}
+              />
+            ))}
+            {menuItems?.edges?.map(({ node }) => (
+              <NavLink
+                key={node.label}
+                path={node.path}
+                link={node.label}
+                isActive={isActive(node.path)}
+              />
+            ))}
           </ul>
         </div>
       </div>
-              {/* <nav className="ml-16 flex flex-1 items-center justify-end flex-grow w-full">
-          {menuItems.edges.map(({ node }) => (
-          <li key={node.path}>
-            <Link
-              className="p-4 ml-2 text-black font-medium hover:underline"
-              href={node.connectedNode.node.slug}
-            >
-              {node.label}
-            </Link>
-          </li>
-        ))} 
-    </nav> */}
     </nav>
-
-  )
+  );
 }

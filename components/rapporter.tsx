@@ -47,7 +47,7 @@ export default function Rapporter() {
           <FileDownloader
             key={node.id}
             title={node.title}
-            url={`https://purchwp.azurewebsites.net/${node.file?.pdf?.mediaItemUrl}`}
+            url={node.file?.pdf?.mediaItemUrl}
             size={node.file?.pdf?.fileSize}
           />
         ))}
