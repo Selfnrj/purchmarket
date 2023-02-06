@@ -13,7 +13,8 @@ export default function AvtalDetail(product) {
 
   return (
     <>
-      <div className="relative mb-8 flex h-96 w-full items-end">
+      <div className="wp-block-cover relative mb-16 flex w-full items-center">
+        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
         <Image
           fill
           priority
@@ -21,7 +22,7 @@ export default function AvtalDetail(product) {
           src={product.featuredImage?.node.sourceUrl}
           className="object-cover object-center"
         />
-        <div className="relative z-40 w-full bg-black bg-opacity-50 pb-6 pt-12 text-white">
+        <div className="absolute bottom-0 z-40 w-full pb-6 pt-12 text-white">
           <Container>
             <div className="flex">
               {/* <p className="mr-1">{product.author?.node.firstName}</p> */}

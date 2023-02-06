@@ -34,7 +34,7 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
           .map((item) => (
             <AvtalCard
               key={item.node.id}
-              productId={item.node.id}
+              productId={item.node.productId}
               title={item.node.title}
               excerpt={item.node.excerpt}
               slug={item.node.slug}

@@ -1,8 +1,8 @@
-import Avatar from './avatar'
-import Date from './date'
-import CoverImage from './cover-image'
-import PostTitle from './post-title'
-import Categories from './categories'
+import Avatar from "./avatar";
+import Date from "./date";
+import CoverImage from "./cover-image";
+import Categories from "./categories";
+import Container from "./container";
 
 export default function PostHeader({
   title,
@@ -13,22 +13,26 @@ export default function PostHeader({
 }) {
   return (
     <>
-      <div className="relative w-full h-[50rem]"> 
+      <div className="wp-block-cover relative mb-20 flex w-full justify-items-end">
+        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
         <CoverImage title={title} coverImage={coverImage} />
+        <div className="container absolute bottom-0 z-40 mx-auto px-8 text-white">
+          <Categories categories={categories} /> - <Date dateString={date} />
+          <h1
+            className="z-50 mb-12 text-center text-6xl font-bold leading-tight tracking-tighter text-white md:text-left md:text-7xl md:leading-none lg:text-8xl"
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
+        </div>
       </div>
-      <PostTitle>{title}</PostTitle>
-      <div className="hidden md:block md:mb-12">
+
+      {/* <div className="hidden md:mb-12 md:block">
         <Avatar author={author} />
-      </div>
-      <div className="max-w-2xl mx-auto">
-        <div className="block md:hidden mb-6">
+      </div> 
+      <div className="mx-auto max-w-2xl">
+        <div className="mb-6 block md:hidden">
           <Avatar author={author} />
         </div>
-        <div className="mb-6 text-lg">
-          Posted <Date dateString={date} />
-          <Categories categories={categories} />
-        </div>
-      </div>
+      </div>*/}
     </>
-  )
+  );
 }

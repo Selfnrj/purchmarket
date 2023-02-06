@@ -11,7 +11,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="b mt-8 bg-[#111827] py-4 pt-16">
+    <footer className="bg-[#111827] py-4 pt-16">
       <Container>
         <div className="relative md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -26,27 +26,27 @@ export default function Footer() {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <Link href="" className="hover:underline">
+                  <Link href="/avtal" className="hover:underline">
                     Hitta inköpsavtal
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="" className="hover:underline">
+                  <Link href="/leverantorer" className="hover:underline">
                     Leverantörer
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="" className="hover:underline">
+                  <Link href="/mina-sidor" className="hover:underline">
                     Min sida
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="" className="hover:underline">
+                  <Link href="/nyheter" className="hover:underline">
                     Nyheter
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="" className="hover:underline">
+                  <Link href="/omoss" className="hover:underline">
                     Om oss
                   </Link>
                 </li>
@@ -68,12 +68,12 @@ export default function Footer() {
               </h2>
               <ul className="text-gray-600 dark:text-gray-400">
                 <li className="mb-4">
-                  <Link href="" className="hover:underline">
+                  <Link href="login" className="hover:underline">
                     Logga in
                   </Link>
                 </li>
                 <li>
-                  <Link href="" className="hover:underline">
+                  <Link href="/kontakta-oss" className="hover:underline">
                     Kontakta oss
                   </Link>
                 </li>
@@ -106,37 +106,5 @@ export default function Footer() {
         </div>
       </Container>
     </footer>
-    /*     <footer >
-      <Container>
-        <div className="py-28 flex">
-          
-          <div className="flex-1 grid grid-cols-3 gap-4 ml-64 text-white relative">
-            <div className="">
-              <h6 className="uppercase text-sm text-gray-400 mb-4">Sidor</h6>
-              <ul>
-                
-              </ul>
-            </div>
-            <div>
-              <h6 className="uppercase text-sm text-gray-400 mb-4">Adress</h6>
-              <ul>
-                
-              </ul>
-            </div>
-            <div>
-              <h6 className="uppercase text-sm text-gray-400 mb-4">Komma Igång</h6>
-              <ul>
-                
-              </ul>
-            </div>
-            
-          </div>
-        </div>
-        <div className="border border-transparent border-t-gray-600 flex justify-between items-center">
-          <p className="text-gray-400 py-8"></p>
-          
-        </div>
-      </Container>
-    </footer> */
   );
 }

@@ -6,7 +6,6 @@ import AvtalCard from "../../components/avtal-card";
 import useAuth from "../../hooks/useAuth";
 import AvtalUtvalda from "../../components/avtal-utvalda";
 import { ChangeEvent, useEffect, useState } from "react";
-import PostTitle from "../../components/post-title";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Checkbox from "../../components/checkbox";

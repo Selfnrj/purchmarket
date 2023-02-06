@@ -3,10 +3,18 @@
   getPageBySlug,
   getPrimaryMenu,
 } from "../lib/api";
+import ErrorPage from "next/error";
 import Head from "next/head";
 import Container from "../components/container";
+import { useRouter } from "next/router";
 
 function Page({ page }) {
+  const router = useRouter();
+
+  if (!router.isFallback && !page?.slug) {
+    return <ErrorPage statusCode={404} />;
+  }
+
   return (
     <div className="flex flex-col p-10">
       <Head>

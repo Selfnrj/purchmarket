@@ -18,9 +18,7 @@ export default function CoverImage({ title, coverImage, slug }: Props) {
       fill
       alt={`Cover Image for ${title}`}
       src={coverImage?.node.sourceUrl}
-      className={cn("shadow-small", {
-        "rounded-xl object-cover object-center": slug,
-      })}
+      className={`object-cover object-center ${slug ? "rounded-xl" : ""}`}
     />
   );
   return (
