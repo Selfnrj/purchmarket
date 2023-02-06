@@ -111,26 +111,22 @@ export async function getAllPostsForHome(preview) {
 export async function getAllAvtal() {
   const data = await fetchAPI(`
     query Avtal {
-      allAvtal {
+      products {
         edges {
           node {
             date
             excerpt
             id
+            productId
             title
             slug
-            author {
-              node {
-                name
-              }
-            }
             featuredImage {
               node {
                 altText
                 sourceUrl
               }
             }
-            categories {
+            productCategories {
               edges {
                 node {
                   id
@@ -138,7 +134,7 @@ export async function getAllAvtal() {
                 }
               }
             }
-            tags {
+            productTags {
               edges {
                 node {
                   id
@@ -147,7 +143,9 @@ export async function getAllAvtal() {
               }
             }
             avtalstyp {
-              valjkund
+              valjkund {
+                id
+              }
               valjLeverantor
             }
           }
@@ -155,7 +153,7 @@ export async function getAllAvtal() {
       }
     }
   `);
-  return data?.allAvtal;
+  return data?.products;
 }
 
 export async function getSelectedAvtal(email) {
@@ -288,27 +286,23 @@ export async function getLeverantor(slug) {
 export async function getAvtal(slug) {
   const data = await fetchAPI(`
     {
-      avtal(id: "${slug}", idType: URI) {
+      product(id: "${slug}", idType: SLUG) {
         title
         content
         uri
+        slug
         featuredImage {
           node {
             altText
             sourceUrl
           }
         }
-        categories {
+        productCategories {
           edges {
             node {
               id
               name
             }
-          }
-        }
-        author {
-          node {
-            firstName
           }
         }
         file {
@@ -325,7 +319,7 @@ export async function getAvtal(slug) {
       }
     }
   `);
-  return data?.avtal;
+  return data?.product;
 }
 
 export async function getPostAndMorePosts(slug, preview, previewData) {
@@ -532,15 +526,16 @@ export async function getKundNummer() {
 export async function getCategories() {
   const data = await fetchAPI(`
     query Categories {
-      categories {
+      productCategories {
         edges {
           node {
             name
             count
+            id
           }
         }
       }
     }
   `);
-  return data?.categories;
+  return data?.productCategories;
 }

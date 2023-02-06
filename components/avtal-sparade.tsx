@@ -1,30 +1,32 @@
-﻿import useAuth, { User } from "../hooks/useAuth";
+﻿import { gql, useQuery } from "@apollo/client";
 import AvtalCard from "./avtal-card";
 
+const CURRENT_WISHLIST = gql`
+  query GetWishList {
+    getWishList {
+      productIds
+    }
+  }
+`;
+
 export default function AvtalSparade({ allAvtal }) {
-  const { user } = useAuth();
-  const { email } = user as User;
+  const { data } = useQuery(CURRENT_WISHLIST);
 
-  const tag = allAvtal?.edges
-    ?.filter((item) => item.node.tags.edges[0]?.node.name === email)
-    .map((item) => item.node.title);
-
-  console.log(tag);
+  const wishlist = data?.getWishList.productIds;
 
   return (
     <div>
-      {tag.length ? (
+      {allAvtal?.edges.length ? (
         allAvtal?.edges
-          .filter((item) => item.node.tags.edges[0]?.node.name === email)
+          .filter((item) => wishlist?.includes(item.node.productId))
           .map((item) => (
             <AvtalCard
               key={item.node.id}
-              id={item.node.id}
+              productId={item.node.productId}
               title={item.node.title}
               excerpt={item.node.excerpt}
               slug={item.node.slug}
-              categories={item.node.categories}
-              item={item}
+              categories={item.node.productCategories}
               sourceUrl={item.node.featuredImage?.node.sourceUrl}
             />
           ))

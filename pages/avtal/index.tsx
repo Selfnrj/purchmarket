@@ -12,30 +12,28 @@ import Link from "next/link";
 import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
 
-export default function Avtal({ allAvtal, allCategories }) {
+export default function Avtal({ products, allCategories }) {
   //const { loggedIn } = useAuth();
   const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
-  const [filteredAvtal, setFilteredAvtal] = useState(allAvtal.edges);
+  const [filteredAvtal, setFilteredAvtal] = useState(products.edges);
   const [avtalTitles, setAvtalTitles] = useState(
-    allAvtal.edges.map((item) => item.node.title.toLowerCase())
+    products.edges.map((item) => item.node.title.toLowerCase())
   );
   const [searchString, setSearchString] = useState("");
   const [isAllCategory, setIsAllCategory] = useState(true);
   const [filtercategories, setFiltercategories] = useState([]);
-
-  console.log(allAvtal.edges[0].node?.categories);
 
   useEffect(() => {
     const filteredPostsTitles: string[] = [...avtalTitles].filter(
       (title) => title.indexOf(searchString.trim().toLowerCase()) !== -1
     );
 
-    const refilteredPosts = [...allAvtal.edges].filter((item) =>
+    const refilteredPosts = [...products.edges].filter((item) =>
       filteredPostsTitles.includes(item.node.title.toLowerCase())
     );
 
     setFilteredAvtal(refilteredPosts);
-  }, [searchString, avtalTitles, allAvtal.edges]);
+  }, [searchString, avtalTitles, products.edges]);
 
   useEffect(() => {
     if (filtercategories.length > 0) {
@@ -95,10 +93,10 @@ export default function Avtal({ allAvtal, allCategories }) {
               Kategori
             </h6>
             {allCategories.edges
-              .filter((exclude) => exclude.node?.name !== "Nyhet")
-              .filter((exclude) => exclude.node?.name !== "Press")
+              /* .filter((exclude) => exclude.node?.name !== "Nyhet") */
               .map((category) => (
                 <Checkbox
+                  key={category.node.id}
                   handleClick={() => {
                     if (!filtercategories.includes(category.node.name)) {
                       setFiltercategories([
@@ -122,35 +120,29 @@ export default function Avtal({ allAvtal, allCategories }) {
                   }
                 />
               ))}
-
-            {/*             
-            <Checkbox name={"Hjälpmedel"} />
-            <Checkbox name={"Livsmedel"} />
-            <Checkbox name={"Möbler"} />
-            <Checkbox name={"Skyddsutrustning"} /> 
-            */}
           </div>
           <div className="col-span-3">
             {filteredAvtal.length ? (
               filteredAvtal
-                .filter((item) => item.node.avtalstyp.valjkund === "Alla")
+                /*                 .filter(
+                  (item) => item.node.avtalstyp.valjkund?.id === undefined
+                ) */
                 .slice(0, postNum)
                 .map((item) => {
                   if (
                     !isAllCategory &&
-                    item.node.categories.edges
+                    item.node.productCategories.edges
                       .map((item) => item.node.name)
                       .some((category) => filtercategories.includes(category))
                   ) {
                     return (
                       <AvtalCard
                         key={item.node.id}
-                        id={item.node.id}
+                        productId={item.node.productId}
                         title={item.node.title}
                         excerpt={item.node.excerpt}
                         slug={item.node.slug}
-                        categories={item.node.categories}
-                        item={item}
+                        categories={item.node.productCategories}
                         sourceUrl={item.node.featuredImage?.node.sourceUrl}
                       />
                     );
@@ -158,12 +150,11 @@ export default function Avtal({ allAvtal, allCategories }) {
                     return (
                       <AvtalCard
                         key={item.node.id}
-                        id={item.node.id}
+                        productId={item.node.productId}
                         title={item.node.title}
                         excerpt={item.node.excerpt}
                         slug={item.node.slug}
-                        categories={item.node.categories}
-                        item={item}
+                        categories={item.node.productCategories}
                         sourceUrl={item.node.featuredImage?.node.sourceUrl}
                       />
                     );
@@ -175,7 +166,7 @@ export default function Avtal({ allAvtal, allCategories }) {
             <LoadmoreButton
               number={postNum}
               setNumber={setPostNum}
-              allPosts={allAvtal}
+              allPosts={products}
             />
           </div>
         </div>
@@ -185,7 +176,7 @@ export default function Avtal({ allAvtal, allCategories }) {
 }
 
 export async function getStaticProps() {
-  const allAvtal = await getAllAvtal();
+  const products = await getAllAvtal();
   const allCategories = await getCategories();
-  return { props: { allAvtal, allCategories } };
+  return { props: { products, allCategories } };
 }

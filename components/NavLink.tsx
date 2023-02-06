@@ -4,20 +4,20 @@ type Props = {
   link: string;
   path: string;
   isActive: boolean;
-}
+};
 
-function NavLink({path, link, isActive}: Props) {
+function NavLink({ path, link, isActive }: Props) {
   return (
     <li>
-      <Link 
-        href={`/${path}`}  
-        className={`navLink ${ isActive === true ? " active" : "" }`} 
+      <Link
+        href={path}
+        className={`navLink ${isActive === true ? " active" : ""}`}
         aria-current="page"
       >
         {link}
       </Link>
     </li>
-  )
+  );
 }
 
-export default NavLink
+export default NavLink;

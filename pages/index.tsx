@@ -11,7 +11,7 @@ import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import AvtalCard from "../components/avtal-card";
 
-export default function Index({ allPosts: { edges }, allHero, allAvtal }) {
+export default function Index({ allPosts: { edges }, allHero, products }) {
   const heroPost = edges[0]?.node;
   const morePosts = edges.slice(1);
 
@@ -113,18 +113,18 @@ export default function Index({ allPosts: { edges }, allHero, allAvtal }) {
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-8">
-            {allAvtal.edges
-              .filter((item) => item.node.avtalstyp.valjkund === "Alla")
+            {products.edges
+              /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
+              .slice(0, 2)
               .map((item) => (
                 <AvtalCard
                   className="bg-white shadow-lg"
                   key={item.node.id}
-                  id={item.node.id}
+                  productId={item.node.productId}
                   title={item.node.title}
                   excerpt={item.node.excerpt}
                   slug={item.node.slug}
-                  categories={item.node.categories}
-                  item={item}
+                  categories={item.node.productCategories}
                   sourceUrl={item.node.featuredImage?.node.sourceUrl}
                 />
               ))}
@@ -166,10 +166,10 @@ export default function Index({ allPosts: { edges }, allHero, allAvtal }) {
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview);
   const allHero = await getStartsida();
-  const allAvtal = await getAllAvtal();
+  const products = await getAllAvtal();
 
   return {
-    props: { allPosts, allHero, allAvtal, preview },
+    props: { allPosts, allHero, products, preview },
     revalidate: 10,
   };
 };

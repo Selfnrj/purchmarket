@@ -9,7 +9,7 @@ export default function MinaAvtal(allAvtal) {
       <div>
         <h1 className="my-8 text-6xl font-black leading-tight">Mina Avtal</h1>
         <AuthContent>
-          <AvtalUtvalda allAvtal={allAvtal} />
+          <AvtalUtvalda />
         </AuthContent>
       </div>
     </Container>

@@ -7,31 +7,6 @@ import LoginBtn from "./login-btn";
 import NavLink from "./NavLink";
 import { gql, useQuery } from "@apollo/client";
 
-const CURRENT_USER_QUERY = gql`
-  query MainMenu {
-    menus(where: { location: PRIMARY }) {
-      nodes {
-        menuItems {
-          edges {
-            node {
-              path
-              label
-              connectedNode {
-                node {
-                  ... on Page {
-                    isPostsPage
-                    slug
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
 export default function Header() {
   const router = useRouter();
   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
@@ -45,10 +20,10 @@ export default function Header() {
   };
 
   const navlinks = [
-    { title: "Hitta inköpsavtal", path: "avtal" },
-    { title: "Leverantörer", path: "leverantorer" },
-    { title: "Rapporter", path: "rapporter" },
-    { title: "Nyheter", path: "nyheter" },
+    { title: "Hitta inköpsavtal", path: "/avtal" },
+    { title: "Leverantörer", path: "/leverantorer" },
+    { title: "Rapporter", path: "/rapporter" },
+    { title: "Nyheter", path: "/nyheter" },
   ];
 
   return (
@@ -121,3 +96,28 @@ export default function Header() {
     </nav>
   );
 }
+
+const CURRENT_USER_QUERY = gql`
+  query MainMenu {
+    menus(where: { location: PRIMARY }) {
+      nodes {
+        menuItems {
+          edges {
+            node {
+              path
+              label
+              connectedNode {
+                node {
+                  ... on Page {
+                    isPostsPage
+                    slug
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

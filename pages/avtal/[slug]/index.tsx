@@ -7,7 +7,7 @@ import Link from "next/link";
 import useAuth from "../../../hooks/useAuth";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
-export default function AvtalDetail(avtal) {
+export default function AvtalDetail(product) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
   const { loggedIn } = useAuth();
 
@@ -17,22 +17,24 @@ export default function AvtalDetail(avtal) {
         <Image
           fill
           priority
-          alt={avtal.title}
-          src={avtal.featuredImage?.node.sourceUrl}
+          alt={product.title}
+          src={product.featuredImage?.node.sourceUrl}
           className="object-cover object-center"
         />
         <div className="relative z-40 w-full bg-black bg-opacity-50 pb-6 pt-12 text-white">
           <Container>
             <div className="flex">
-              {/* <p className="mr-1">{avtal.author?.node.firstName}</p> */}
-              {avtal.categories?.edges.map(({ node }) => (
+              {/* <p className="mr-1">{product.author?.node.firstName}</p> */}
+              {product.categories?.edges.map(({ node }) => (
                 <p className="relative mr-1" key={node.id}>
                   {node.name}{" "}
                 </p>
               ))}
             </div>
 
-            <h1 className="relative mb-4 text-6xl font-bold">{avtal.title}</h1>
+            <h1 className="relative mb-4 text-6xl font-bold">
+              {product.title}
+            </h1>
           </Container>
         </div>
       </div>
@@ -42,7 +44,7 @@ export default function AvtalDetail(avtal) {
           <div className="col-span-2">
             <div
               className="mb-8"
-              dangerouslySetInnerHTML={{ __html: avtal.content }}
+              dangerouslySetInnerHTML={{ __html: product.content }}
             />
             {loggedIn ? (
               <Link
@@ -55,12 +57,12 @@ export default function AvtalDetail(avtal) {
             ) : (
               ""
             )}
-            {avtal.file?.pdf?.title && (
+            {product.file?.pdf?.title && (
               <div className="mt-8 border border-transparent border-t-gray-300">
                 <FileDownloader
-                  title={avtal.file?.pdf?.title}
-                  url={avtal.file?.pdf?.mediaItemUrl}
-                  size={avtal.file?.pdf?.fileSize}
+                  title={product.file?.pdf?.title}
+                  url={product.file?.pdf?.mediaItemUrl}
+                  size={product.file?.pdf?.fileSize}
                 />
               </div>
             )}
@@ -70,10 +72,12 @@ export default function AvtalDetail(avtal) {
               <h3 className="mb-4 text-xl font-bold">Kontakt</h3>
               <ul className="flex flex-wrap">
                 <li className="mr-8 w-6/12 py-2">Namn:</li>
-                <li className="py-2 font-semibold">{avtal.avtalsinfo?.namn}</li>
+                <li className="py-2 font-semibold">
+                  {product.avtalsinfo?.namn}
+                </li>
                 <li className="mr-8 w-6/12 py-2">Telefonnummer:</li>
                 <li className="py-2 font-semibold">
-                  {avtal.avtalsinfo?.telefonnummer}
+                  {product.avtalsinfo?.telefonnummer}
                 </li>
               </ul>
             </div>
@@ -85,9 +89,9 @@ export default function AvtalDetail(avtal) {
 }
 
 export async function getStaticProps({ params }) {
-  const avtal = await getAvtal(params.slug);
+  const product = await getAvtal(params.slug);
 
-  return { props: avtal };
+  return { props: product };
 }
 
 export async function getStaticPaths() {
