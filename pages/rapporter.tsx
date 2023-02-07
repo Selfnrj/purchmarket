@@ -10,6 +10,7 @@ import UnAuthContent from "../components/UnAuthContent";
 import Rapporter from "../components/rapporter";
 import AuthContent from "../components/AuthContent";
 import TabLink from "../components/tab-link";
+import PageCover from "../components/page-cover";
 
 export default function rapporter(allRapporter) {
   const { loggedIn } = useAuth();
@@ -17,25 +18,11 @@ export default function rapporter(allRapporter) {
 
   return (
     <>
-      <div className="wp-block-cover relative flex w-full items-center">
-        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
-        <div className="container relative z-40 mx-auto px-5 text-white">
-          <h1 className="mb-8 max-w-2xl text-7xl font-black leading-tight">
-            Rapporter
-          </h1>
-          <p className="max-w-lg text-xl leading-8">
-            Här hittar du alla rapporter
-          </p>
-        </div>
-        <Image
-          fill
-          placeholder="blur"
-          className="object-cover"
-          alt="header bild"
-          src={OmslagsBild}
-        />
-      </div>
-
+      <PageCover
+        rubrik="Rapporter"
+        text="Här hittar du alla rapporter"
+        bild={OmslagsBild}
+      />
       {loggedIn ? (
         <Container>
           <Tab.Group>

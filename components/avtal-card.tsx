@@ -36,7 +36,7 @@ export default function AvtalCard({
       >
         {loggedIn ? (
           <AuthContent>
-            <StarButton productId={productId} />
+            <StarButton icon={true} productId={productId} />
           </AuthContent>
         ) : (
           ""

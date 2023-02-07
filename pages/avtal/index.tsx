@@ -3,7 +3,7 @@ import Container from "../../components/container";
 import { getAllAvtal, getCategories } from "../../lib/api";
 import OmslagsBild from "../../public/omslag.jpg";
 import AvtalCard from "../../components/avtal-card";
-import useAuth from "../../hooks/useAuth";
+import useAuth, { User } from "../../hooks/useAuth";
 import AvtalUtvalda from "../../components/avtal-utvalda";
 import { ChangeEvent, useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -12,7 +12,6 @@ import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
 
 export default function Avtal({ products, allCategories }) {
-  //const { loggedIn } = useAuth();
   const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
   const [filteredAvtal, setFilteredAvtal] = useState(products.edges);
   const [avtalTitles, setAvtalTitles] = useState(
@@ -123,9 +122,7 @@ export default function Avtal({ products, allCategories }) {
           <div className="col-span-3">
             {filteredAvtal.length ? (
               filteredAvtal
-                /*                 .filter(
-                  (item) => item.node.avtalstyp.valjkund?.id === undefined
-                ) */
+                .filter((item) => item.node.avtalstyp.synligtKund === null)
                 .slice(0, postNum)
                 .map((item) => {
                   if (

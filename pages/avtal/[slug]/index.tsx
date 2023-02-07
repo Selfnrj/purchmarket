@@ -6,6 +6,9 @@ import { filesize } from "filesize";
 import Link from "next/link";
 import useAuth from "../../../hooks/useAuth";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import AuthContent from "../../../components/AuthContent";
+import StarButton from "../../../components/star-button";
+import { Toaster } from "react-hot-toast";
 
 export default function AvtalDetail(product) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
@@ -13,6 +16,7 @@ export default function AvtalDetail(product) {
 
   return (
     <>
+      <Toaster />
       <div className="wp-block-cover relative mb-16 flex w-full items-center">
         <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
         <Image
@@ -24,18 +28,28 @@ export default function AvtalDetail(product) {
         />
         <div className="absolute bottom-0 z-40 w-full pb-6 pt-12 text-white">
           <Container>
-            <div className="flex">
-              {/* <p className="mr-1">{product.author?.node.firstName}</p> */}
-              {product.categories?.edges.map(({ node }) => (
-                <p className="relative mr-1" key={node.id}>
-                  {node.name}{" "}
-                </p>
-              ))}
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="flex">
+                  {/* <p className="mr-1">{product.author?.node.firstName}</p> */}
+                  {product.categories?.edges.map(({ node }) => (
+                    <p className="relative mr-1" key={node.id}>
+                      {node.name}{" "}
+                    </p>
+                  ))}
+                </div>
+                <h1 className="relative mb-4 text-6xl font-bold">
+                  {product.title}
+                </h1>
+              </div>
+              {loggedIn ? (
+                <AuthContent>
+                  <StarButton icon={false} productId={product.productId} />
+                </AuthContent>
+              ) : (
+                ""
+              )}
             </div>
-
-            <h1 className="relative mb-4 text-6xl font-bold">
-              {product.title}
-            </h1>
           </Container>
         </div>
       </div>

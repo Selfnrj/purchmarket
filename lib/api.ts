@@ -147,6 +147,7 @@ export async function getAllAvtal() {
                 id
               }
               valjLeverantor
+              synligtKund
             }
           }
         }
@@ -291,6 +292,7 @@ export async function getAvtal(slug) {
         content
         uri
         slug
+        productId
         featuredImage {
           node {
             altText

@@ -1,79 +1,28 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import Container from "../components/container";
-import MoreStories from "../components/more-stories";
-import HeroPost from "../components/hero-post";
 import { getAllAvtal, getAllPostsForHome, getStartsida } from "../lib/api";
 import Link from "next/link";
-import arrowRight from "../public/arrow-right.svg";
 import OmslagsBild from "../public/omslag.jpg";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import AvtalCard from "../components/avtal-card";
+import PageCover from "../components/page-cover";
+import LatestStories from "../components/latest-stories";
 
-export default function Index({ allPosts: { edges }, allHero, products }) {
-  const heroPost = edges[0]?.node;
-  const morePosts = edges.slice(1);
-
+export default function Index({ allPosts, allHero, products }) {
   return (
     <>
       <Head>
         <title>Purchmarket</title>
       </Head>
-      <div className="wp-block-cover relative flex w-full items-center">
-        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
-        <div className="container relative z-40 mx-auto px-8 text-white">
-          <h1 className="mb-8 max-w-2xl text-7xl font-black leading-tight">
-            {allHero?.edges[0]?.node.startsida.heroRubrik}
-          </h1>
-          <p className="max-w-lg text-xl leading-8">
-            {allHero?.edges[0]?.node.startsida.heroText}
-          </p>
-        </div>
-        <Image
-          fill
-          className="object-cover"
-          alt="header bild"
-          src={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
-        />
-      </div>
+      <PageCover
+        rubrik={allHero?.edges[0]?.node.startsida.heroRubrik}
+        text={allHero?.edges[0]?.node.startsida.heroText}
+        bild={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
+      />
       <Container>
-        <section className="my-12">
-          <div className="mb-6 flex items-center justify-between">
-            <h1 className="text-6xl font-black">Nyheter</h1>
-            <Link
-              href="/nyheter"
-              className="flex items-center font-bold text-[#17375E]"
-            >
-              Visa alla nyheter
-              <Image
-                width={40}
-                height={14}
-                className="ml-4"
-                alt="arrow right"
-                src={arrowRight}
-              />
-            </Link>
-          </div>
-          <div className="sm:flex">
-            <div className="mr-5 sm:flex-1">
-              {heroPost && (
-                <HeroPost
-                  title={heroPost.title}
-                  coverImage={heroPost.featuredImage}
-                  date={heroPost.date}
-                  author={heroPost.author}
-                  slug={heroPost.slug}
-                  excerpt={heroPost.excerpt}
-                  category={heroPost.categories.edges[0].node.name}
-                />
-              )}
-            </div>
-            <div className="sm:flex-1">
-              {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-            </div>
-          </div>
-        </section>
+        <LatestStories allPosts={allPosts} />
       </Container>
       <div className="wp-block-cover relative flex w-full items-center">
         <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
@@ -115,6 +64,7 @@ export default function Index({ allPosts: { edges }, allHero, products }) {
           <div className="grid grid-cols-2 gap-8">
             {products.edges
               /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
+              .filter((item) => item.node.avtalstyp.synligtKund === null)
               .slice(0, 2)
               .map((item) => (
                 <AvtalCard

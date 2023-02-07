@@ -33,7 +33,7 @@ const REMOVE_FAVORITE = gql`
   }
 `;
 
-export default function StarButton({ productId }) {
+export default function StarButton({ productId, icon }) {
   const { data } = useQuery(CURRENT_WISHLIST);
   const [favoriteAdd] = useMutation(ADD_FAVORITE);
   const [favoriteRemove] = useMutation(REMOVE_FAVORITE);
@@ -68,15 +68,36 @@ export default function StarButton({ productId }) {
   };
 
   return (
-    <button
-      onClick={toggleAvtal}
-      className="absolute top-6 right-6 h-6 w-6 cursor-pointer text-yellow-500"
-    >
-      {wishlist?.includes(productId) ? (
-        <StarIcon className="h-6 w-6 text-[#FFAB57]" />
+    <div>
+      {icon === true ? (
+        <button
+          onClick={toggleAvtal}
+          className="absolute top-6 right-6 h-6 w-6 cursor-pointer text-yellow-500"
+        >
+          {wishlist?.includes(productId) ? (
+            <StarIcon className="h-6 w-6 text-[#FFAB57]" />
+          ) : (
+            <StarIconOutline className="h-6 w-6 text-[#FFAB57]" />
+          )}
+        </button>
       ) : (
-        <StarIconOutline className="h-6 w-6 text-[#FFAB57]" />
+        <button
+          onClick={toggleAvtal}
+          className="flex cursor-pointer items-center rounded-full border border-gray-200 bg-white px-6 py-3 font-bold text-gray-900 hover:bg-gray-200"
+        >
+          {wishlist?.includes(productId) ? (
+            <div className="flex">
+              <StarIcon className="mr-2 h-6 w-6 text-[#FFAB57]" />
+              Sparat
+            </div>
+          ) : (
+            <div className="flex">
+              <StarIconOutline className="mr-2 h-6 w-6 text-[#FFAB57]" />
+              Spara avtal
+            </div>
+          )}
+        </button>
       )}
-    </button>
+    </div>
   );
 }
