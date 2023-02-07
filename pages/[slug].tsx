@@ -3,9 +3,7 @@
   getPageBySlug,
   getPrimaryMenu,
 } from "../lib/api";
-import ErrorPage from "next/error";
 import Head from "next/head";
-import Container from "../components/container";
 import { useRouter } from "next/router";
 
 function Page({ page }) {

@@ -11,6 +11,7 @@ import Rapporter from "../components/rapporter";
 import AuthContent from "../components/AuthContent";
 import TabLink from "../components/tab-link";
 import PageCover from "../components/page-cover";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 export default function rapporter(allRapporter) {
   const { loggedIn } = useAuth();
@@ -18,6 +19,7 @@ export default function rapporter(allRapporter) {
 
   return (
     <>
+      <Breadcrumbs className="absolute z-40 text-gray-200" />
       <PageCover
         rubrik="Rapporter"
         text="Här hittar du alla rapporter"

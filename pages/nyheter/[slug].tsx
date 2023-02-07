@@ -18,6 +18,7 @@ import HeroPost from "../../components/hero-post";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 export default function Post({ post, posts, preview }) {
   const router = useRouter();
@@ -44,6 +45,7 @@ export default function Post({ post, posts, preview }) {
             categories={post.categories}
           />
           <Container>
+            <Breadcrumbs />
             <article>
               <Head>
                 <title>

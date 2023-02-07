@@ -10,6 +10,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
 export default function Avtal({ products, allCategories }) {
   const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
@@ -43,9 +44,10 @@ export default function Avtal({ products, allCategories }) {
 
   return (
     <>
+      <Breadcrumbs className="absolute z-40 text-gray-200" />
       <div className="wp-block-cover relative flex w-full items-center justify-center">
-        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
-        <div className="relative z-40 flex flex-col text-white">
+        <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
+        <div className="relative z-30 flex flex-col text-white">
           <h1 className="mb-8 max-w-2xl text-7xl font-black leading-tight">
             Hitta inköpsavtal
           </h1>
