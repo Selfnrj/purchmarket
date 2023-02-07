@@ -157,60 +157,6 @@ export async function getAllAvtal() {
   return data?.products;
 }
 
-export async function getSelectedAvtal(email) {
-  const data = await fetchAPI(
-    `
-    query SelectedAvtal(where: {tag: $email: String!}) {
-      allAvtal {
-        edges {
-          node {
-            date
-            excerpt
-            id
-            title
-            slug
-            author {
-              node {
-                name
-              }
-            }
-            featuredImage {
-              node {
-                altText
-                sourceUrl
-              }
-            }
-            categories {
-              edges {
-                node {
-                  id
-                  name
-                }
-              }
-            }
-            tags {
-              edges {
-                node {
-                  id
-                  name
-                }
-              }
-            }
-            avtalstyp {
-              valjkund
-            }
-          }
-        }
-      }
-    }
-  `,
-    {
-      variables: { email },
-    }
-  );
-  return data?.selectedAvtal;
-}
-
 export async function getAllRapporter() {
   const data = await fetchAPI(`
     query Rapporter {

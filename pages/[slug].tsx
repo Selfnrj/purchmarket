@@ -11,23 +11,21 @@ import { useRouter } from "next/router";
 function Page({ page }) {
   const router = useRouter();
 
-  if (!router.isFallback && !page?.slug) {
+  /*   if (!router.isFallback && !page?.slug) {
     return <ErrorPage statusCode={404} />;
-  }
+  } */
 
   return (
-    <div className="flex flex-col p-10">
+    <div>
       <Head>
         <title>{page?.title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <div className='mb-5 text-4xl font-bold'>{page?.title}</div> */}
-      <Container>
-        <div
-          className="text-grey-darker text-base"
-          dangerouslySetInnerHTML={{ __html: page?.content }}
-        />
-      </Container>
+      <div
+        className="text-grey-darker text-base"
+        dangerouslySetInnerHTML={{ __html: page?.content }}
+      />
     </div>
   );
 }

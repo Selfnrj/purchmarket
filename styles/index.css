@@ -15,6 +15,27 @@
   }
 }
 
+.alignwide,
+.wp-block-cover__inner-container {
+  @apply container mx-auto px-8;
+}
+
+.is-layout-constrained {
+  @apply my-16 mx-auto max-w-2xl rounded-3xl bg-[#DFEDFF] p-16;
+}
+
+.has-extra-large-font-size {
+  @apply mb-2 text-4xl font-black leading-tight;
+}
+
+.wp-element-button {
+  @apply bg-[#17375E] py-2 px-4 text-white no-underline;
+}
+
+.wp-block-media-text {
+  @apply rounded-3xl p-16;
+}
+
 .has-white-color {
   color: white;
 }
