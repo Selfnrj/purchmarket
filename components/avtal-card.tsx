@@ -50,9 +50,15 @@ export default function AvtalCard({
           />
         </div>
         <div className="flex-1">
-          <Link href={`/avtal/${slug}`}>
-            <h2 className="mb-4 text-2xl font-black">{title}</h2>
-          </Link>
+          {loggedIn ? (
+            <Link href={`/avtal/${slug}`}>
+              <h2 className="mb-4 text-2xl font-black">{title}</h2>
+            </Link>
+          ) : (
+            <Link href="/login">
+              <h2 className="mb-4 text-2xl font-black">{title}</h2>
+            </Link>
+          )}
           <div className="mb-4" dangerouslySetInnerHTML={{ __html: excerpt }} />
           <div className="flex">
             {categories.edges?.map(({ node }) => (

@@ -1,9 +1,7 @@
-﻿import Image from "next/image";
-import Container from "../components/container";
+﻿import Container from "../components/container";
 import { getAllRapporter } from "../lib/api";
 import OmslagsBild from "../public/omslag.jpg";
 import { Tab } from "@headlessui/react";
-import { Fragment } from "react";
 import useAuth from "../hooks/useAuth";
 import RapportLogin from "../components/rapport-login";
 import UnAuthContent from "../components/UnAuthContent";

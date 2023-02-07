@@ -25,32 +25,34 @@ export default function Index({ allPosts, allHero, products }) {
       <Container>
         <LatestStories allPosts={allPosts} />
       </Container>
-      <div className="wp-block-cover relative flex w-full items-center">
-        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
-        <div className="container relative z-40 mx-auto px-5 text-white">
-          <h1 className="mb-8 max-w-2xl text-5xl font-black leading-tight">
-            Vi skapar en bättre vård och omsorg
-          </h1>
-          <p className="mb-8 max-w-lg text-xl leading-8">
-            Purch är en inköpsorganisation, specialiserad på vård och omsorg,
-            som arbetar i nära samarbete med kunder och medlemmar.
-          </p>
-          <Link
-            href="/omoss"
-            className="flex items-center font-bold text-white"
-          >
-            Om oss
-            <ArrowRightIcon className="ml-2 h-6 w-6 text-white" />
-          </Link>
+      <Link href="/omoss">
+        <div className="wp-block-cover relative flex w-full items-center">
+          <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
+          <div className="container relative z-40 mx-auto px-5 text-white">
+            <h1 className="mb-8 max-w-2xl text-5xl font-black leading-tight">
+              Vi skapar en bättre vård och omsorg
+            </h1>
+            <p className="mb-8 max-w-lg text-xl leading-8">
+              Purch är en inköpsorganisation, specialiserad på vård och omsorg,
+              som arbetar i nära samarbete med kunder och medlemmar.
+            </p>
+            <Link
+              href="/omoss"
+              className="flex items-center font-bold text-white"
+            >
+              Om oss
+              <ArrowRightIcon className="ml-2 h-6 w-6 text-white" />
+            </Link>
+          </div>
+          <Image
+            fill
+            placeholder="blur"
+            className="object-cover"
+            alt="header bild"
+            src={OmslagsBild}
+          />
         </div>
-        <Image
-          fill
-          placeholder="blur"
-          className="object-cover"
-          alt="header bild"
-          src={OmslagsBild}
-        />
-      </div>
+      </Link>
       <Container>
         <AvtalList rubrik="Inköpsavtal" products={products} />
       </Container>
