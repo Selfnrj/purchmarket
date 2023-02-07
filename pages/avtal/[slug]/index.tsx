@@ -9,8 +9,9 @@ import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import AuthContent from "../../../components/AuthContent";
 import StarButton from "../../../components/star-button";
 import { Toaster } from "react-hot-toast";
+import AvtalList from "../../../components/avtal-list";
 
-export default function AvtalDetail(product) {
+export default function AvtalDetail({ product, products }) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
   const { loggedIn } = useAuth();
 
@@ -22,8 +23,8 @@ export default function AvtalDetail(product) {
         <Image
           fill
           priority
-          alt={product.title}
-          src={product.featuredImage?.node.sourceUrl}
+          alt={product?.title}
+          src={product?.featuredImage?.node.sourceUrl}
           className="object-cover object-center"
         />
         <div className="absolute bottom-0 z-40 w-full pb-6 pt-12 text-white">
@@ -32,14 +33,14 @@ export default function AvtalDetail(product) {
               <div>
                 <div className="flex">
                   {/* <p className="mr-1">{product.author?.node.firstName}</p> */}
-                  {product.categories?.edges.map(({ node }) => (
+                  {product?.categories?.edges.map(({ node }) => (
                     <p className="relative mr-1" key={node.id}>
                       {node.name}{" "}
                     </p>
                   ))}
                 </div>
                 <h1 className="relative mb-4 text-6xl font-bold">
-                  {product.title}
+                  {product?.title}
                 </h1>
               </div>
               {loggedIn ? (
@@ -59,7 +60,7 @@ export default function AvtalDetail(product) {
           <div className="col-span-2">
             <div
               className="mb-8"
-              dangerouslySetInnerHTML={{ __html: product.content }}
+              dangerouslySetInnerHTML={{ __html: product?.content }}
             />
             {loggedIn ? (
               <Link
@@ -72,12 +73,12 @@ export default function AvtalDetail(product) {
             ) : (
               ""
             )}
-            {product.file?.pdf?.title && (
+            {product?.file?.pdf?.title && (
               <div className="mt-8 border border-transparent border-t-gray-300">
                 <FileDownloader
-                  title={product.file?.pdf?.title}
-                  url={product.file?.pdf?.mediaItemUrl}
-                  size={product.file?.pdf?.fileSize}
+                  title={product?.file?.pdf?.title}
+                  url={product?.file?.pdf?.mediaItemUrl}
+                  size={product?.file?.pdf?.fileSize}
                 />
               </div>
             )}
@@ -88,16 +89,17 @@ export default function AvtalDetail(product) {
               <ul className="flex flex-wrap">
                 <li className="mr-8 w-6/12 py-2">Namn:</li>
                 <li className="py-2 font-semibold">
-                  {product.avtalsinfo?.namn}
+                  {product?.avtalsinfo?.namn}
                 </li>
                 <li className="mr-8 w-6/12 py-2">Telefonnummer:</li>
                 <li className="py-2 font-semibold">
-                  {product.avtalsinfo?.telefonnummer}
+                  {product?.avtalsinfo?.telefonnummer}
                 </li>
               </ul>
             </div>
           </div>
         </div>
+        <AvtalList products={products} rubrik="Relaterade avtal" />
       </Container>
     </>
   );
@@ -105,14 +107,15 @@ export default function AvtalDetail(product) {
 
 export async function getStaticProps({ params }) {
   const product = await getAvtal(params.slug);
+  const products = await getAllAvtal();
 
-  return { props: product };
+  return { props: { product, products } };
 }
 
 export async function getStaticPaths() {
   const avtalWithSlugs = await getAllAvtal();
   return {
-    paths: avtalWithSlugs.edges.map(({ node }) => `/avtal/${node.slug}`) || [],
+    paths: avtalWithSlugs?.edges.map(({ node }) => `/avtal/${node.slug}`) || [],
     fallback: true,
   };
 }

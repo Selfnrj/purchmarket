@@ -9,6 +9,7 @@ import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import AvtalCard from "../components/avtal-card";
 import PageCover from "../components/page-cover";
 import LatestStories from "../components/latest-stories";
+import AvtalList from "../components/avtal-list";
 
 export default function Index({ allPosts, allHero, products }) {
   return (
@@ -34,7 +35,10 @@ export default function Index({ allPosts, allHero, products }) {
             Purch är en inköpsorganisation, specialiserad på vård och omsorg,
             som arbetar i nära samarbete med kunder och medlemmar.
           </p>
-          <Link href="/" className="flex items-center font-bold text-white">
+          <Link
+            href="/omoss"
+            className="flex items-center font-bold text-white"
+          >
             Om oss
             <ArrowRightIcon className="ml-2 h-6 w-6 text-white" />
           </Link>
@@ -48,38 +52,7 @@ export default function Index({ allPosts, allHero, products }) {
         />
       </div>
       <Container>
-        <div className="my-16 rounded-3xl bg-[#FFDCB8] px-16 py-10">
-          <div className="mb-6 flex items-center justify-between">
-            <h1 className="mb-2 text-4xl font-black leading-tight">
-              Inköpsavtal
-            </h1>
-            <Link
-              href="/avtal"
-              className="flex items-center font-bold text-[#17375E]"
-            >
-              Visa alla avtal
-              <ArrowRightIcon className="ml-2 h-6 w-6 text-[#17375E]" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-8">
-            {products.edges
-              /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
-              .filter((item) => item.node.avtalstyp.synligtKund === null)
-              .slice(0, 2)
-              .map((item) => (
-                <AvtalCard
-                  className="bg-white shadow-lg"
-                  key={item.node.id}
-                  productId={item.node.productId}
-                  title={item.node.title}
-                  excerpt={item.node.excerpt}
-                  slug={item.node.slug}
-                  categories={item.node.productCategories}
-                  sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                />
-              ))}
-          </div>
-        </div>
+        <AvtalList rubrik="Inköpsavtal" products={products} />
       </Container>
       <div className="wp-block-cover flex w-full items-center bg-[#DFEDFF]">
         <div className="container mx-auto px-5">
@@ -91,7 +64,7 @@ export default function Index({ allPosts, allHero, products }) {
               <p className="mb-8 text-xl leading-8">
                 A wonderful serenity has taken possession of my entire soul.
               </p>
-              <Link href="/login" className="flex items-center font-bold">
+              <Link href="/rapporter" className="flex items-center font-bold">
                 Rapporter
                 <ArrowRightIcon className="ml-2 h-6 w-6 text-[#17375E]" />
               </Link>
