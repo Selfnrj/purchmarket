@@ -5,6 +5,7 @@
 } from "../lib/api";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Breadcrumbs from "../components/Breadcrumbs";
 
 function Page({ page }) {
   const router = useRouter();
@@ -15,6 +16,7 @@ function Page({ page }) {
 
   return (
     <div>
+      <Breadcrumbs />
       <Head>
         <title>{page?.title}</title>
         <link rel="icon" href="/favicon.ico" />

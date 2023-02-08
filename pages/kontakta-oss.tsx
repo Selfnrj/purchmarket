@@ -1,9 +1,10 @@
-﻿import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Breadcrumbs from "../components/Breadcrumbs";
 import ContactForm from "../components/contact-form";
 import Container from "../components/container";
+import PageCover from "../components/page-cover";
 import OmslagsBild from "../public/omslag.jpg";
 
 type Props = {
@@ -16,25 +17,13 @@ type Props = {
 export default function KontaktaOss({ email, message, name, checkbox }: Props) {
   return (
     <>
-      <div className="wp-block-cover relative flex w-full items-center">
-        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
-        <div className="container relative z-40 mx-auto px-5 text-white">
-          <h1 className="mb-8 max-w-2xl text-7xl font-black leading-tight">
-            Kontakta oss
-          </h1>
-          <p className="max-w-lg text-xl leading-8">
-            Boka ett telefonmöte eller skriv till oss, så ringer vi dig när det
-            passar.
-          </p>
-        </div>
-        <Image
-          fill
-          placeholder="blur"
-          className="object-cover"
-          alt="header bild"
-          src={OmslagsBild}
-        />
-      </div>
+      <Breadcrumbs className="absolute z-40 text-gray-200" />
+      <PageCover
+        rubrik="Kontakta oss"
+        text="Boka ett telefonmöte eller skriv till oss, så ringer vi dig när det
+        passar."
+        bild={OmslagsBild}
+      />
       <Container>
         <div className="my-16 rounded-3xl bg-[#FFDCB8] p-16">
           <div className="grid grid-cols-2 items-center gap-8">

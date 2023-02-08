@@ -46,7 +46,7 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li className="mb-4">
-                  <Link href="/omoss" className="hover:underline">
+                  <Link href="/om-oss" className="hover:underline">
                     Om oss
                   </Link>
                 </li>

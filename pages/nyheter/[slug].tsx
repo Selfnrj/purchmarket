@@ -33,6 +33,7 @@ export default function Post({ post, posts, preview }) {
 
   return (
     <div>
+      <Breadcrumbs className="absolute z-40 text-gray-200" />
       {router.isFallback ? (
         <span>Loading…</span>
       ) : (
@@ -45,7 +46,6 @@ export default function Post({ post, posts, preview }) {
             categories={post.categories}
           />
           <Container>
-            <Breadcrumbs />
             <article>
               <Head>
                 <title>

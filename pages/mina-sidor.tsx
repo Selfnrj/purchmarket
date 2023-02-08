@@ -22,7 +22,7 @@ export default function Profile() {
         <ProfileInfo />
         <div className="mb-16 flex justify-center">
           <Link
-            href="/settings"
+            href="/installningar"
             className="mr-4 flex items-center rounded-full border border-gray-200 
             bg-white px-6 py-3 font-bold hover:bg-gray-200"
           >

@@ -10,6 +10,7 @@ import AuthContent from "../../../components/AuthContent";
 import StarButton from "../../../components/star-button";
 import { Toaster } from "react-hot-toast";
 import AvtalList from "../../../components/avtal-list";
+import Breadcrumbs from "../../../components/Breadcrumbs";
 
 export default function AvtalDetail({ product, products }) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
@@ -17,9 +18,10 @@ export default function AvtalDetail({ product, products }) {
 
   return (
     <>
+      <Breadcrumbs className="absolute z-40 text-gray-200" />
       <Toaster />
       <div className="wp-block-cover relative mb-16 flex w-full items-center">
-        <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
+        <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
         <Image
           fill
           priority
@@ -27,7 +29,7 @@ export default function AvtalDetail({ product, products }) {
           src={product?.featuredImage?.node.sourceUrl}
           className="object-cover object-center"
         />
-        <div className="absolute bottom-0 z-40 w-full pb-6 pt-12 text-white">
+        <div className="absolute bottom-0 z-30 w-full pb-6 pt-12 text-white">
           <Container>
             <div className="flex items-center justify-between">
               <div>
