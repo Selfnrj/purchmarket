@@ -9,11 +9,7 @@ const RESET_PASSWORD = gql`
     $password: String!
   ) {
     resetUserPassword(
-      input: {
-        key: $key
-        login: $login
-        password: $password
-      }
+      input: { key: $key, login: $login, password: $password }
     ) {
       user {
         databaseId
@@ -28,16 +24,16 @@ interface Props {
 }
 
 export default function SetPasswordForm({ resetKey: key, login }: Props) {
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [clientErrorMessage, setClientErrorMessage] = useState('');
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [clientErrorMessage, setClientErrorMessage] = useState("");
   const [resetPassword, { data, loading, error }] = useMutation(RESET_PASSWORD);
   const wasPasswordReset = Boolean(data?.resetUserPassword?.user?.databaseId);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
     const isValid = validate();
-    if (!isValid) return
+    if (!isValid) return;
 
     resetPassword({
       variables: {
@@ -45,23 +41,23 @@ export default function SetPasswordForm({ resetKey: key, login }: Props) {
         login,
         password,
       },
-    }).catch(error => {
+    }).catch((error) => {
       console.error(error);
     });
   }
 
   function validate() {
-    setClientErrorMessage('');
+    setClientErrorMessage("");
 
     const isPasswordLongEnough = password.length >= 5;
     if (!isPasswordLongEnough) {
-      setClientErrorMessage('Password must be at least 5 characters.');
+      setClientErrorMessage("Lösenordet måste vara minst 5 tecken.");
       return false;
     }
 
     const doPasswordsMatch = password === passwordConfirm;
     if (!doPasswordsMatch) {
-      setClientErrorMessage('Passwords must match.');
+      setClientErrorMessage("Passwords must match.");
       return false;
     }
 
@@ -71,10 +67,17 @@ export default function SetPasswordForm({ resetKey: key, login }: Props) {
   if (wasPasswordReset) {
     return (
       <>
-        <p>Your new password has been set.</p>
-        <Link href="/login">
-          <a>Log in</a>
-        </Link>
+        <p className="leading-16 mb-8 font-semibold">
+          Ditt nya lösenord har ställts in
+        </p>
+        <div>
+          <Link
+            className="w-full rounded-full bg-[#17375E] p-4 font-bold text-white"
+            href="/login"
+          >
+            Logga in
+          </Link>
+        </div>
       </>
     );
   }
@@ -86,30 +89,34 @@ export default function SetPasswordForm({ resetKey: key, login }: Props) {
         <input
           id="new-password"
           type="password"
-          className="p-4 mt-3 mb-3 rounded-md block w-full bg-white border border-blue-300"
+          className="mt-3 mb-3 block w-full rounded-md border border-blue-300 bg-white p-4"
           value={password}
           autoComplete="new-password"
-          onChange={event => setPassword(event.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
           required
         />
         <label htmlFor="password-confirm">Confirm Password</label>
         <input
           id="password-confirm"
           type="password"
-          className="p-4 mt-3 mb-8 rounded-md block w-full bg-white border border-blue-300"
+          className="mt-3 mb-3 block w-full rounded-md border border-blue-300 bg-white p-4"
           value={passwordConfirm}
           autoComplete="new-password"
-          onChange={event => setPasswordConfirm(event.target.value)}
+          onChange={(event) => setPasswordConfirm(event.target.value)}
           required
         />
         {clientErrorMessage ? (
-          <p className="error-message">{clientErrorMessage}</p>
+          <p className="mb-4 block text-rose-500">{clientErrorMessage}</p>
         ) : null}
         {error ? (
-          <p className="error-message">{error.message}</p>
+          <p className="mb-4 block text-rose-500">{error.message}</p>
         ) : null}
-        <button className="w-full font-bold p-4 bg-[#17375E] rounded-full text-white" type="submit" disabled={loading}>
-          {loading ? 'Saving...' : 'Save password'}
+        <button
+          className="mt-4 w-full rounded-full bg-[#17375E] p-4 font-bold text-white"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "Saving..." : "Save password"}
         </button>
       </fieldset>
     </form>

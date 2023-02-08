@@ -56,34 +56,36 @@ export default function Index({ allPosts, allHero, products }) {
       <Container>
         <AvtalList rubrik="Inköpsavtal" products={products} />
       </Container>
-      <div className="wp-block-cover flex w-full items-center bg-[#DFEDFF]">
-        <div className="container mx-auto px-5">
-          <div className="grid grid-cols-2 items-center gap-8">
-            <div>
-              <h1 className="mb-8 max-w-lg text-5xl font-black leading-tight">
-                Alla dina rapporterer samlade på en sida
-              </h1>
-              <p className="mb-8 text-xl leading-8">
-                A wonderful serenity has taken possession of my entire soul.
-              </p>
-              <Link href="/rapporter" className="flex items-center font-bold">
-                Rapporter
-                <ArrowRightIcon className="ml-2 h-6 w-6 text-[#17375E]" />
-              </Link>
-            </div>
-            <div>
-              <Image
-                width={800}
-                height={800}
-                placeholder="blur"
-                className="rounded-xl object-cover"
-                alt="header bild"
-                src={OmslagsBild}
-              />
+      <Link href="/rapporter">
+        <div className="wp-block-cover flex w-full items-center bg-[#DFEDFF]">
+          <div className="container mx-auto px-5">
+            <div className="grid grid-cols-2 items-center gap-8">
+              <div>
+                <h1 className="mb-8 max-w-lg text-5xl font-black leading-tight">
+                  Alla dina rapporterer samlade på en sida
+                </h1>
+                <p className="mb-8 text-xl leading-8">
+                  A wonderful serenity has taken possession of my entire soul.
+                </p>
+                <Link href="/rapporter" className="flex items-center font-bold">
+                  Rapporter
+                  <ArrowRightIcon className="ml-2 h-6 w-6 text-[#17375E]" />
+                </Link>
+              </div>
+              <div>
+                <Image
+                  width={800}
+                  height={800}
+                  placeholder="blur"
+                  className="rounded-xl object-cover"
+                  alt="header bild"
+                  src={OmslagsBild}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 }

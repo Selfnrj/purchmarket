@@ -13,11 +13,19 @@ import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 
 export default function Avtal({ products, allCategories }) {
+  const taggs = products.edges.map((item) =>
+    item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
+  );
+
+  const tagscontact = taggs.flat(1);
+
+  console.log("Tagscontact", tagscontact);
+
   const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
   const [filteredAvtal, setFilteredAvtal] = useState(products.edges);
-  const [avtalTitles, setAvtalTitles] = useState(
-    products.edges.map((item) => item.node.title.toLowerCase())
-  );
+  const [avtalTitles, setAvtalTitles] = useState(tagscontact);
+  console.log("avtalTitles", avtalTitles);
+
   const [searchString, setSearchString] = useState("");
   const [isAllCategory, setIsAllCategory] = useState(true);
   const [filtercategories, setFiltercategories] = useState([]);
@@ -31,8 +39,12 @@ export default function Avtal({ products, allCategories }) {
       (title) => title.indexOf(searchString.trim().toLowerCase()) !== -1
     );
 
+    console.log("filteredPostsTitles", filteredPostsTitles);
+
     const refilteredPosts = [...products.edges].filter((item) =>
-      filteredPostsTitles.includes(item.node.title.toLowerCase())
+      filteredPostsTitles.includes(
+        item.node.productTags.edges[0].node.name.toLowerCase()
+      )
     );
 
     setFilteredAvtal(refilteredPosts);

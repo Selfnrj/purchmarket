@@ -2,9 +2,7 @@
 
 const SEND_PASSWORD_RESET_EMAIL = gql`
   mutation sendPasswordResetEmail($username: String!) {
-    sendPasswordResetEmail(
-      input: { username: $username }
-    ) {
+    sendPasswordResetEmail(input: { username: $username }) {
       user {
         databaseId
       }
@@ -25,22 +23,26 @@ export default function SendPasswordResetEmailForm() {
     sendPasswordResetEmail({
       variables: {
         username: email,
-      }
-    }).catch(error => {
+      },
+    }).catch((error) => {
       console.error(error);
     });
   }
 
   if (wasEmailSent) {
     return (
-      <p> Please check your email. A password reset link has been sent to you.</p>
+      <p>
+        Kontrollera din e-post. En länk för återställning av lösenord har
+        skickats till dig.
+      </p>
     );
   }
 
   return (
     <form method="post" onSubmit={handleSubmit}>
       <p className="mb-8">
-        Ange e-postadressen som är kopplad till ditt konto så får du en länk för att återställa ditt lösenord
+        Ange e-postadressen som är kopplad till ditt konto så får du en länk för
+        att återställa ditt lösenord
       </p>
       <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor="password-reset-email">Email</label>
@@ -48,15 +50,19 @@ export default function SendPasswordResetEmailForm() {
           id="password-reset-email"
           type="email"
           name="email"
-          className="p-4 mt-3 mb-8 rounded-md block w-full bg-white border border-blue-300"
+          className="mt-3 mb-8 block w-full rounded-md border border-blue-300 bg-white p-4"
           autoComplete="email"
           required
         />
-        {error ? (
-          <p className="error-message">{error.message}</p>
-        ) : null}
-        <button className="w-full font-bold p-4 bg-[#17375E] rounded-full text-white" type="submit" disabled={loading}>
-          {loading ? 'Sending...' : 'Send password reset email'}
+        {error ? <p className="error-message">{error.message}</p> : null}
+        <button
+          className="w-full rounded-full bg-[#17375E] p-4 font-bold text-white"
+          type="submit"
+          disabled={loading}
+        >
+          {loading
+            ? "Skickar..."
+            : "Skicka e-post för återställning av lösenord"}
         </button>
       </fieldset>
     </form>

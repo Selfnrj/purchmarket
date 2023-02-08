@@ -2,6 +2,7 @@
 import { Toaster } from "react-hot-toast";
 import AuthContent from "../components/AuthContent";
 import AvtalCard from "../components/avtal-card";
+import AvtalList from "../components/avtal-list";
 import AvtalSparade from "../components/avtal-sparade";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
@@ -21,6 +22,7 @@ export default function sparadeAvtal(allAvtal) {
         </div>
         <AuthContent>
           <AvtalSparade allAvtal={allAvtal} />
+          <AvtalList products={allAvtal} rubrik="Relaterade avtal" />
         </AuthContent>
       </Container>
     </>

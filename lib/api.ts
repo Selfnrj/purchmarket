@@ -199,6 +199,14 @@ export async function getAllLeverantorer() {
                 sourceUrl
               }
             }
+            productCategories {
+              edges {
+                node {
+                  id
+                  name
+                }
+              }
+            }
             id
             title
             content

@@ -1,63 +1,107 @@
-﻿import Image from "next/image";
-import Link from "next/link";
+﻿import { useEffect, useState } from "react";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Container from "../../components/container";
-import { getAllLeverantorer } from "../../lib/api";
+import Filter from "../../components/Filter";
+import LeverantorCard from "../../components/leverantor-card";
+import LoadmoreButton from "../../components/loadmore-button";
+import PageCoverInput from "../../components/page-coverInput";
+import { getAllLeverantorer, getCategories } from "../../lib/api";
 import OmslagsBild from "../../public/omslag.jpg";
 
-export default function leverantorer(Leverantorer) {
+export default function leverantorer({ allLeverantorer, allCategories }) {
+  const [filteredAvtal, setFilteredAvtal] = useState(allLeverantorer.edges);
+  const [searchString, setSearchString] = useState("");
+  const [isAllCategory, setIsAllCategory] = useState(true);
+  const [filtercategories, setFiltercategories] = useState([]);
+  const [avtalTitles, setAvtalTitles] = useState(
+    allLeverantorer.edges.map((item) => item.node.title.toLowerCase())
+  );
+  const [postNum, setPostNum] = useState(2); // Default number of posts dislplayed
+
+  useEffect(() => {
+    const filteredPostsTitles: string[] = [...avtalTitles].filter(
+      (title) => title.indexOf(searchString.trim().toLowerCase()) !== -1
+    );
+
+    const refilteredPosts = [...allLeverantorer.edges].filter((item) =>
+      filteredPostsTitles.includes(item.node.title.toLowerCase())
+    );
+
+    setFilteredAvtal(refilteredPosts);
+  }, [searchString, avtalTitles, allLeverantorer.edges]);
+
+  useEffect(() => {
+    if (filtercategories.length > 0) {
+      setIsAllCategory(false);
+    } else {
+      setIsAllCategory(true);
+    }
+  }, [filtercategories]);
+
+  const totalCount = allLeverantorer.edges.length;
+
   return (
     <>
       <Breadcrumbs className="absolute z-40 text-gray-200" />
       <div>
-        <div className="wp-block-cover relative mb-8 flex w-full items-center justify-center">
-          <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
-          <div className="relative z-30 flex flex-col text-white">
-            <h1 className="mb-8 max-w-2xl text-7xl font-black leading-tight">
-              Leverantörer
-            </h1>
-            <input
-              type="text"
-              className="rounded-full p-4 text-black"
-              placeholder="Sök leverantör"
-            />
-          </div>
-          <Image
-            fill
-            placeholder="blur"
-            className="object-cover"
-            alt="header bild"
-            src={OmslagsBild}
-          />
-        </div>
+        <PageCoverInput
+          bild={OmslagsBild}
+          rubrik="Leverantörer"
+          placeholder="Sök efter leverantörer"
+          setSearchString={setSearchString}
+        />
         <Container>
-          <div>
-            {Leverantorer.edges.map(({ node }) => (
-              <div
-                key={node.id}
-                className="mb-5 flex items-center rounded-3xl bg-[#DFEDFF] p-5"
-              >
-                {node.featuredImage && (
-                  <div className="relative mr-8 h-48 w-48 rounded-lg bg-white">
-                    <Image
-                      fill
-                      alt={node.title}
-                      src={node.featuredImage?.node.sourceUrl}
-                      className="rounded-xl object-contain object-center"
-                    />
-                  </div>
-                )}
-                <div className="flex-1">
-                  <Link href={`/leverantorer/${node.slug}`}>
-                    <h2 className="mb-4 text-2xl font-black">{node.title}</h2>
-                  </Link>
-                  <div
-                    className="mb-4 text-lg leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: node.content }}
-                  />
-                </div>
+          <div className="mt-12 grid grid-cols-4 gap-8">
+            <div>
+              <Filter
+                allCategories={allCategories}
+                setFiltercategories={setFiltercategories}
+                setIsAllCategory={setIsAllCategory}
+                filtercategories={filtercategories}
+              />
+            </div>
+            <div className="col-span-3">
+              <div className="mb-4 flex items-center justify-between border border-transparent border-b-gray-300 pb-4">
+                <p>Totalt: {totalCount} Leverantörer</p>
               </div>
-            ))}
+              {filteredAvtal.length ? (
+                filteredAvtal.slice(0, postNum).map((item) => {
+                  if (
+                    !isAllCategory &&
+                    item.node.productCategories?.edges
+                      .map((item) => item.node.name)
+                      .some((category) => filtercategories.includes(category))
+                  ) {
+                    return (
+                      <LeverantorCard
+                        key={item.node.id}
+                        title={item.node.title}
+                        slug={item.node.slug}
+                        featuredImage={item.node.featuredImage?.node.sourceUrl}
+                        content={item.node.content}
+                      />
+                    );
+                  } else if (isAllCategory) {
+                    return (
+                      <LeverantorCard
+                        key={item.node.id}
+                        title={item.node.title}
+                        slug={item.node.slug}
+                        featuredImage={item.node.featuredImage?.node.sourceUrl}
+                        content={item.node.content}
+                      />
+                    );
+                  }
+                })
+              ) : (
+                <p className="text-center">Inga avtal hittades...</p>
+              )}
+              <LoadmoreButton
+                number={postNum}
+                setNumber={setPostNum}
+                allPosts={allLeverantorer}
+              />
+            </div>
           </div>
         </Container>
       </div>
@@ -67,5 +111,6 @@ export default function leverantorer(Leverantorer) {
 
 export async function getStaticProps() {
   const allLeverantorer = await getAllLeverantorer();
-  return { props: allLeverantorer };
+  const allCategories = await getCategories();
+  return { props: { allLeverantorer, allCategories } };
 }

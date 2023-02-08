@@ -7,8 +7,8 @@ export default function SetPassword() {
   const login = String(router.query.login || "");
 
   return (
-    <div>
-      <h1>Set Password</h1>
+    <div className="mx-auto mt-16 mb-8 max-w-2xl rounded-3xl bg-[#DFEDFF] p-16">
+      <h1 className="mb-6 text-4xl font-black leading-tight">Välj lösenord</h1>
       <SetPasswordForm resetKey={resetKey} login={login} />
     </div>
   );

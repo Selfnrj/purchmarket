@@ -39,7 +39,7 @@ export default function KontaktaOss({ email, message, name, checkbox }: Props) {
             </div>
             <div>
               <h1 className="mb-8 max-w-lg text-5xl font-black leading-tight">
-                Vill du prata med oss?
+                Detta innebär det att vara medlem hos Purch
               </h1>
               <p className="mb-12 text-xl leading-8">
                 Ring, boka ett telefonmöte eller skriv till oss, så ringer vi
@@ -58,7 +58,7 @@ export default function KontaktaOss({ email, message, name, checkbox }: Props) {
           <div className="grid grid-cols-2 gap-8">
             <div>
               <h1 className="mb-8 max-w-lg text-5xl font-black leading-tight">
-                Kontakta oss via mail
+                Kontakta medarbetare
               </h1>
               <ContactForm
                 name={name}
