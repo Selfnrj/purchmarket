@@ -11,6 +11,7 @@ import StarButton from "../../../components/star-button";
 import { Toaster } from "react-hot-toast";
 import AvtalList from "../../../components/avtal-list";
 import Breadcrumbs from "../../../components/Breadcrumbs";
+import AvtalCard from "../../../components/avtal-card";
 
 export default function AvtalDetail({ product, products }) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
@@ -101,7 +102,42 @@ export default function AvtalDetail({ product, products }) {
             </div>
           </div>
         </div>
-        <AvtalList products={products} rubrik="Relaterade avtal" />
+        <div className="my-16 rounded-3xl bg-[#FFDCB8] px-16 py-10">
+          <div className="mb-6 flex items-center justify-between">
+            <h1 className="mb-2 text-4xl font-black leading-tight">
+              Relaterade avtal
+            </h1>
+            <Link
+              href="/avtal"
+              className="flex items-center font-bold text-[#17375E]"
+            >
+              Visa alla avtal
+              <ArrowRightIcon className="ml-2 h-6 w-6 text-[#17375E]" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-8">
+            {products?.edges
+              /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
+              .filter(
+                (item) =>
+                  item.node.productId !== product.productId &&
+                  item.node.avtalstyp.synligtKund === null
+              )
+              .slice(0, 2)
+              .map((item) => (
+                <AvtalCard
+                  className="bg-white shadow-lg"
+                  key={item.node.id}
+                  productId={item.node.productId}
+                  title={item.node.title}
+                  excerpt={item.node.excerpt}
+                  slug={item.node.slug}
+                  categories={item.node.productCategories}
+                  sourceUrl={item.node.featuredImage?.node.sourceUrl}
+                />
+              ))}
+          </div>
+        </div>
       </Container>
     </>
   );

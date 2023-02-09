@@ -47,6 +47,8 @@ export default function Avtal({ products, allCategories }) {
       )
     );
 
+    console.log("refilteredPosts", refilteredPosts);
+
     setFilteredAvtal(refilteredPosts);
   }, [searchString, avtalTitles, products.edges]);
 
