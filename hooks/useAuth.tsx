@@ -7,15 +7,16 @@ export interface User {
   firstName: string;
   lastName: string;
   email: string;
+  description: string;
   capabilities: string[];
   avatar: {
     url: string;
-  }
+  };
 }
 
 interface AuthData {
   loggedIn: boolean;
-  user?: User,
+  user?: User;
   loading: boolean;
   error?: ApolloError;
 }
@@ -37,6 +38,7 @@ export const GET_USER = gql`
       firstName
       lastName
       email
+      description
       capabilities
       avatar(size: 400) {
         url
@@ -57,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     error,
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 const useAuth = () => useContext(AuthContext);
