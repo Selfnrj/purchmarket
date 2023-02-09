@@ -30,10 +30,6 @@ export default function Avtal({ products, allCategories }) {
   const [isAllCategory, setIsAllCategory] = useState(true);
   const [filtercategories, setFiltercategories] = useState([]);
 
-  const totalCount = products.edges.filter(
-    (item) => item.node.avtalstyp.synligtKund === null
-  ).length;
-
   useEffect(() => {
     const filteredPostsTitles: string[] = [...avtalTitles].filter(
       (title) => title.indexOf(searchString.trim().toLowerCase()) !== -1
@@ -140,9 +136,6 @@ export default function Avtal({ products, allCategories }) {
               ))}
           </div>
           <div className="col-span-3">
-            <div className="mb-4 flex items-center justify-between border border-transparent border-b-gray-300 pb-4">
-              <p>Totalt: {totalCount} avtal</p>
-            </div>
             {filteredAvtal.length ? (
               filteredAvtal
                 .filter((item) => item.node.avtalstyp.synligtKund === null)

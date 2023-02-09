@@ -12,7 +12,7 @@
         htmlFor={name}
         className="ml-2 cursor-pointer text-sm font-medium text-gray-900 "
       >
-        {name} ({count && count > 0 ? count : "0"})
+        {name}
       </label>
     </div>
   );

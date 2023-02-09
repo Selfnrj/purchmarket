@@ -13,7 +13,7 @@ export default function HeroPost({
   slug,
 }) {
   return (
-    <section className="rounded-3xl bg-[#DFEDFF] p-12">
+    <section className="p-10">
       <div className="mb-6">
         {coverImage && (
           <div className="relative h-96 w-full">

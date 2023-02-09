@@ -38,8 +38,6 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
     }
   }, [filtercategories]);
 
-  const totalCount = allLeverantorer.edges.length;
-
   return (
     <>
       <Breadcrumbs className="absolute z-40 text-gray-200" />
@@ -61,9 +59,6 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
               />
             </div>
             <div className="col-span-3">
-              <div className="mb-4 flex items-center justify-between border border-transparent border-b-gray-300 pb-4">
-                <p>Totalt: {totalCount} Leverantörer</p>
-              </div>
               {filteredAvtal.length ? (
                 filteredAvtal.slice(0, postNum).map((item) => {
                   if (

@@ -1,14 +1,12 @@
-﻿import { TrashIcon } from "@heroicons/react/24/outline";
-import { Toaster } from "react-hot-toast";
+﻿import { Toaster } from "react-hot-toast";
 import AuthContent from "../components/AuthContent";
-import AvtalCard from "../components/avtal-card";
-import AvtalList from "../components/avtal-list";
+
 import AvtalSparade from "../components/avtal-sparade";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
 import { getAllAvtal } from "../lib/api";
 
-export default function sparadeAvtal(allAvtal) {
+export default function sparadeAvtal(products) {
   return (
     <>
       <Breadcrumbs />
@@ -21,8 +19,7 @@ export default function sparadeAvtal(allAvtal) {
           </p>
         </div>
         <AuthContent>
-          <AvtalSparade allAvtal={allAvtal} />
-          <AvtalList products={allAvtal} rubrik="Relaterade avtal" />
+          <AvtalSparade allAvtal={products} />
         </AuthContent>
       </Container>
     </>
@@ -30,6 +27,6 @@ export default function sparadeAvtal(allAvtal) {
 }
 
 export async function getStaticProps() {
-  const allAvtal = await getAllAvtal();
-  return { props: allAvtal };
+  const products = await getAllAvtal();
+  return { props: products };
 }

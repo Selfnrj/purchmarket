@@ -28,8 +28,8 @@ export default function LatestStories({ allPosts: { edges } }) {
           />
         </Link>
       </div>
-      <div className="sm:flex">
-        <div className="mr-5 sm:flex-1">
+      <div className="grid grid-cols-2 gap-5">
+        <div className="rounded-3xl bg-[#DFEDFF]">
           {heroPost && (
             <HeroPost
               title={heroPost.title}
@@ -42,7 +42,7 @@ export default function LatestStories({ allPosts: { edges } }) {
             />
           )}
         </div>
-        <div className="sm:flex-1">
+        <div className="">
           {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         </div>
       </div>
