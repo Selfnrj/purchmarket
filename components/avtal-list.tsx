@@ -4,8 +4,8 @@ import AvtalCard from "./avtal-card";
 
 export default function AvtalList({ products, rubrik }) {
   return (
-    <div className="my-16 rounded-3xl bg-[#FFDCB8] px-16 py-10">
-      <div className="mb-6 flex items-center justify-between">
+    <div className="my-16 rounded-3xl bg-[#FFDCB8] p-8 sm:p-16">
+      <div className="mb-6 items-center justify-between sm:flex">
         <h1 className="mb-2 text-4xl font-black leading-tight">{rubrik}</h1>
         <Link
           href="/avtal"
@@ -15,7 +15,7 @@ export default function AvtalList({ products, rubrik }) {
           <ArrowRightIcon className="ml-2 h-6 w-6 text-[#17375E]" />
         </Link>
       </div>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
         {products?.edges
           /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
           .filter((item) => item.node.avtalstyp.synligtKund === null)

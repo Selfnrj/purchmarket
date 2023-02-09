@@ -13,7 +13,7 @@ export default function LatestStories({ allPosts: { edges } }) {
   return (
     <section className="my-12">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-6xl font-black">Nyheter</h1>
+        <h1 className="text-5xl font-black">Nyheter</h1>
         <Link
           href="/nyheter"
           className="flex items-center font-bold text-[#17375E]"
@@ -28,7 +28,7 @@ export default function LatestStories({ allPosts: { edges } }) {
           />
         </Link>
       </div>
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
         <div className="rounded-3xl bg-[#DFEDFF]">
           {heroPost && (
             <HeroPost

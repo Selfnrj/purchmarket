@@ -57,9 +57,9 @@ export default function Index({ allPosts, allHero, products }) {
         <AvtalList rubrik="Inköpsavtal" products={products} />
       </Container>
       <Link href="/rapporter">
-        <div className="wp-block-cover flex w-full items-center bg-[#DFEDFF]">
+        <div className="flex w-full items-center bg-[#DFEDFF] py-16">
           <div className="container mx-auto px-5">
-            <div className="grid grid-cols-2 items-center gap-8">
+            <div className="grid grid-cols-1 items-center gap-8 sm:grid-cols-2">
               <div>
                 <h1 className="mb-8 max-w-lg text-5xl font-black leading-tight">
                   Alla dina rapporterer samlade på en sida

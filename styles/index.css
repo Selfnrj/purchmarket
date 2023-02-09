@@ -116,9 +116,7 @@
 }
 
 .wp-block-cover {
-  @apply flex flex-wrap items-center justify-center overflow-hidden bg-cover bg-center;
-
-  min-height: 600px;
+  @apply flex h-[40vh] flex-wrap items-center justify-center overflow-hidden bg-cover bg-center;
 }
 
 .wp-block-verse {

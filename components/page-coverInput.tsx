@@ -21,7 +21,7 @@ export default function PageCoverInput({
     <div className="wp-block-cover relative flex w-full items-center justify-center">
       <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
       <div className="relative z-30 flex flex-col text-white">
-        <h1 className="mb-8 max-w-2xl text-7xl font-black leading-tight">
+        <h1 className="mb-8 max-w-2xl text-5xl font-black leading-tight sm:text-7xl">
           {rubrik}
         </h1>
         <form action="">

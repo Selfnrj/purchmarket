@@ -62,7 +62,7 @@ export default function Avtal({ products, allCategories }) {
       <div className="wp-block-cover relative flex w-full items-center justify-center">
         <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
         <div className="relative z-30 flex flex-col text-white">
-          <h1 className="mb-8 max-w-2xl text-7xl font-black leading-tight">
+          <h1 className="mb-8 max-w-2xl text-5xl font-black leading-tight sm:text-7xl">
             Hitta inköpsavtal
           </h1>
           <form action="">
@@ -89,9 +89,9 @@ export default function Avtal({ products, allCategories }) {
         />
       </div>
       <Container>
-        <div className="mt-12 grid grid-cols-4 gap-8">
-          <div>
-            <div className="flex justify-between border border-transparent border-b-gray-300 pb-4">
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-4 sm:gap-8">
+          <div className="mb-8 sm:mb-0">
+            <div className="flex justify-between border border-transparent border-b-gray-300 pb-4 ">
               Filter
               <button
                 className="text-sm text-blue-600 hover:underline"

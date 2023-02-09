@@ -17,15 +17,15 @@ export default function Nyheter({ allPosts }) {
       <Breadcrumbs />
       <Container>
         <div className="mt-12 mb-8">
-          <h1 className="text-7xl font-black">Nyheter</h1>
+          <h1 className="text-5xl font-black sm:text-7xl">Nyheter</h1>
           <p className="text-xl leading-8">
             Här finns våra pressmeddelanden och andra nyheter.
           </p>
         </div>
         <Tab.Group>
-          <div className="mb-4 flex items-center justify-between border border-transparent border-b-gray-300">
+          <div className="mb-4  flex items-center justify-between border border-transparent border-b-gray-300">
             <TabLink tablinks={["Alla", "Nyheter", "Press"]} />
-            <p>Totalt: {totalCount} nyheter </p>
+            <p className="hidden sm:block">Totalt: {totalCount} nyheter </p>
           </div>
 
           <Tab.Panels>

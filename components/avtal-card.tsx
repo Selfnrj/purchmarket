@@ -31,17 +31,8 @@ export default function AvtalCard({
   return (
     <>
       <Toaster />
-      <div
-        className={`relative mb-6 flex rounded-3xl bg-[#DFEDFF] p-8 ${className}`}
-      >
-        {loggedIn ? (
-          <AuthContent>
-            <StarButton icon={true} productId={productId} />
-          </AuthContent>
-        ) : (
-          ""
-        )}
-        <div className="relative mr-8 h-48 w-48">
+      <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
+        <div className="relative mb-4 h-80 w-full sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
           <Image
             fill
             alt={title}
@@ -49,7 +40,14 @@ export default function AvtalCard({
             className="rounded-xl object-cover object-center"
           />
         </div>
-        <div className="flex-1">
+        <div className="relative flex-1">
+          {loggedIn ? (
+            <AuthContent>
+              <StarButton icon={true} productId={productId} />
+            </AuthContent>
+          ) : (
+            ""
+          )}
           {loggedIn ? (
             <Link href={`/avtal/${slug}`}>
               <h2 className="mb-4 text-2xl font-black">{title}</h2>

@@ -31,13 +31,13 @@ export default function Profile() {
           </Link>
           <Link
             href="/logout"
-            className="flex items-center rounded-full border border-gray-200 bg-white px-8 py-3 font-bold hover:bg-gray-200"
+            className="flex items-center rounded-full border border-gray-200 bg-white px-4 py-3 font-bold hover:bg-gray-200 sm:px-8"
           >
             <ArrowLeftOnRectangleIcon className="mr-2 h-6 w-6 text-gray-900" />
             Logga ut
           </Link>
         </div>
-        <div className="grid grid-cols-4 gap-8">
+        <div className="mb-16 grid grid-cols-1 gap-8  md:grid-cols-2 lg:grid-cols-4">
           <ProfileCard
             Icon={MinaAvtal}
             Linkto="/mina-avtal"

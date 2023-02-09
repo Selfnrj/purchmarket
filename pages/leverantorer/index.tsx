@@ -49,8 +49,8 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
           setSearchString={setSearchString}
         />
         <Container>
-          <div className="mt-12 grid grid-cols-4 gap-8">
-            <div>
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-4 sm:gap-8">
+            <div className="mb-8 sm:mb-0">
               <Filter
                 allCategories={allCategories}
                 setFiltercategories={setFiltercategories}

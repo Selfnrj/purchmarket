@@ -72,7 +72,7 @@ export default function StarButton({ productId, icon }) {
       {icon === true ? (
         <button
           onClick={toggleAvtal}
-          className="absolute top-6 right-6 h-6 w-6 cursor-pointer text-yellow-500"
+          className="absolute top-0 right-0 h-6 w-6 cursor-pointer text-yellow-500"
         >
           {wishlist?.includes(productId) ? (
             <StarIcon className="h-6 w-6 text-[#FFAB57]" />

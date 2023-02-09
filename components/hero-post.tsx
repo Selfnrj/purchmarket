@@ -13,17 +13,17 @@ export default function HeroPost({
   slug,
 }) {
   return (
-    <section className="p-10">
+    <section className="p-8">
       <div className="mb-6">
         {coverImage && (
-          <div className="relative h-96 w-full">
+          <div className="relative h-80 w-full sm:h-96">
             <CoverImage title={title} coverImage={coverImage} slug={slug} />
           </div>
         )}
       </div>
       <div>
         <div>
-          <h3 className="mb-6 text-2xl font-black leading-tight lg:text-6xl">
+          <h3 className="mb-6 text-2xl font-black leading-tight sm:text-4xl">
             <Link
               href={`/nyheter/${slug}`}
               className="hover:underline"

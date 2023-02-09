@@ -22,10 +22,10 @@ export default function LeverantorCard({
   return (
     <div
       key={id}
-      className="mb-5 flex items-center rounded-3xl bg-[#DFEDFF] p-5"
+      className="mb-5 items-center rounded-3xl bg-[#DFEDFF] p-5 sm:flex"
     >
       {featuredImage && (
-        <div className="relative mr-8 h-48 w-48 rounded-lg bg-white">
+        <div className="relative mb-4 h-80 w-80 rounded-xl bg-white sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
           <Image
             fill
             alt={title}

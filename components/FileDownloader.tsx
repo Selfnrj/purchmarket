@@ -7,7 +7,7 @@ export default function FileDownloader({ url, title, size }) {
         <a href={url} target="_blank">
           <DocumentIcon className="mr-2 h-12 w-12 text-red-600" />
         </a>
-        <a className="mr-48" href={url} target="_blank">
+        <a href={url} target="_blank">
           <b>{title}</b>
         </a>
       </div>
