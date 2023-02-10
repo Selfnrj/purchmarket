@@ -5,10 +5,13 @@ import Filter from "../../components/Filter";
 import LeverantorCard from "../../components/leverantor-card";
 import LoadmoreButton from "../../components/loadmore-button";
 import PageCoverInput from "../../components/page-coverInput";
-import { getAllLeverantorer, getCategories } from "../../lib/api";
-import OmslagsBild from "../../public/omslag.jpg";
+import { getAllLeverantorer, getCategories, getStartsida } from "../../lib/api";
 
-export default function leverantorer({ allLeverantorer, allCategories }) {
+export default function leverantorer({
+  allLeverantorer,
+  allCategories,
+  allHero,
+}) {
   const [filteredAvtal, setFilteredAvtal] = useState(allLeverantorer.edges);
   const [searchString, setSearchString] = useState("");
   const [isAllCategory, setIsAllCategory] = useState(true);
@@ -43,7 +46,7 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
       <Breadcrumbs className="absolute z-40 text-gray-200" />
       <div>
         <PageCoverInput
-          bild={OmslagsBild}
+          bild={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
           rubrik="Leverantörer"
           placeholder="Sök efter leverantörer"
           setSearchString={setSearchString}
@@ -107,5 +110,6 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
 export async function getStaticProps() {
   const allLeverantorer = await getAllLeverantorer();
   const allCategories = await getCategories();
-  return { props: { allLeverantorer, allCategories } };
+  const allHero = await getStartsida();
+  return { props: { allLeverantorer, allCategories, allHero } };
 }

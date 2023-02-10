@@ -116,6 +116,7 @@ export async function getAllAvtal() {
           node {
             date
             excerpt
+            content
             id
             productId
             title
@@ -148,6 +149,9 @@ export async function getAllAvtal() {
               }
               valjLeverantor
               synligtKund
+            }
+            sok {
+              sokord
             }
           }
         }

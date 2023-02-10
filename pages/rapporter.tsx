@@ -1,6 +1,5 @@
 ﻿import Container from "../components/container";
-import { getAllRapporter } from "../lib/api";
-import OmslagsBild from "../public/omslag.jpg";
+import { getAllRapporter, getStartsida } from "../lib/api";
 import { Tab } from "@headlessui/react";
 import useAuth from "../hooks/useAuth";
 import RapportLogin from "../components/rapport-login";
@@ -11,7 +10,7 @@ import TabLink from "../components/tab-link";
 import PageCover from "../components/page-cover";
 import Breadcrumbs from "../components/Breadcrumbs";
 
-export default function rapporter(allRapporter) {
+export default function rapporter({ allRapporter, allHero }) {
   const { loggedIn } = useAuth();
   const totalCount = allRapporter.edges.length;
 
@@ -21,7 +20,7 @@ export default function rapporter(allRapporter) {
       <PageCover
         rubrik="Rapporter"
         text="Här hittar du alla rapporter"
-        bild={OmslagsBild}
+        bild={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
       />
       {loggedIn ? (
         <Container>
@@ -52,5 +51,7 @@ export default function rapporter(allRapporter) {
 
 export async function getStaticProps() {
   const allRapporter = await getAllRapporter();
-  return { props: allRapporter };
+  const allHero = await getStartsida();
+
+  return { props: { allRapporter, allHero } };
 }

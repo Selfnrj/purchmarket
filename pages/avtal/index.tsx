@@ -1,31 +1,30 @@
 ﻿import Image from "next/image";
 import Container from "../../components/container";
-import { getAllAvtal, getCategories } from "../../lib/api";
-import OmslagsBild from "../../public/omslag.jpg";
+import { getAllAvtal, getCategories, getStartsida } from "../../lib/api";
 import AvtalCard from "../../components/avtal-card";
-import useAuth, { User } from "../../hooks/useAuth";
-import AvtalUtvalda from "../../components/avtal-utvalda";
 import { ChangeEvent, useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 
-export default function Avtal({ products, allCategories }) {
-  const taggs = products.edges.map((item) =>
+export default function Avtal({ products, allCategories, allHero }) {
+  /*   const taggs = products.edges.map((item) =>
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
 
-  const tagscontact = taggs.flat(1);
+  const tagscontact = taggs.flat(1);*/
 
-  console.log("Tagscontact", tagscontact);
+  console.log("Tagscontact", products);
 
   const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
   const [filteredAvtal, setFilteredAvtal] = useState(products.edges);
-  const [avtalTitles, setAvtalTitles] = useState(tagscontact);
-  console.log("avtalTitles", avtalTitles);
-
+  const [avtalTitles, setAvtalTitles] = useState(
+    products.edges.map((item) => item.node.title.toLowerCase())
+  );
+  const [avtalContent, setAvtalContent] = useState(
+    products.edges.map((item) => item.node.sok.sokord.toLowerCase())
+  );
   const [searchString, setSearchString] = useState("");
   const [isAllCategory, setIsAllCategory] = useState(true);
   const [filtercategories, setFiltercategories] = useState([]);
@@ -34,16 +33,15 @@ export default function Avtal({ products, allCategories }) {
     const filteredPostsTitles: string[] = [...avtalTitles].filter(
       (title) => title.indexOf(searchString.trim().toLowerCase()) !== -1
     );
-
-    console.log("filteredPostsTitles", filteredPostsTitles);
-
-    const refilteredPosts = [...products.edges].filter((item) =>
-      filteredPostsTitles.includes(
-        item.node.productTags.edges[0].node.name.toLowerCase()
-      )
+    const filteredPostsContent: string[] = [...avtalContent].filter(
+      (title) => title?.indexOf(searchString.trim().toLowerCase()) !== -1
     );
 
-    console.log("refilteredPosts", refilteredPosts);
+    const refilteredPosts = [...products.edges].filter(
+      (item) =>
+        filteredPostsTitles.includes(item.node.title.toLowerCase()) ||
+        filteredPostsContent.includes(item.node.sok.sokord.toLowerCase())
+    );
 
     setFilteredAvtal(refilteredPosts);
   }, [searchString, avtalTitles, products.edges]);
@@ -82,10 +80,9 @@ export default function Avtal({ products, allCategories }) {
         </div>
         <Image
           fill
-          placeholder="blur"
           className="object-cover"
           alt="header bild"
-          src={OmslagsBild}
+          src={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
         />
       </div>
       <Container>
@@ -190,5 +187,7 @@ export default function Avtal({ products, allCategories }) {
 export async function getStaticProps() {
   const products = await getAllAvtal();
   const allCategories = await getCategories();
-  return { props: { products, allCategories } };
+  const allHero = await getStartsida();
+
+  return { props: { products, allCategories, allHero } };
 }
