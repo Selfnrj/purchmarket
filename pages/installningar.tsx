@@ -1,5 +1,4 @@
-﻿import React from "react";
-import AuthContent from "../components/AuthContent";
+﻿import AuthContent from "../components/AuthContent";
 import Breadcrumbs from "../components/Breadcrumbs";
 import ProfileForm from "../components/profile-setting";
 

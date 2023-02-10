@@ -1,4 +1,3 @@
-import Avatar from "./avatar";
 import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
@@ -8,7 +7,6 @@ export default function PostPreview({
   coverImage,
   date,
   excerpt,
-  author,
   slug,
   category,
 }) {
@@ -36,7 +34,6 @@ export default function PostPreview({
           <span className="mx-1">-</span>
           <Date dateString={date} />
         </div>
-        {/* <Avatar author={author} /> */}
       </div>
     </div>
   );

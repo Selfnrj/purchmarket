@@ -1,5 +1,4 @@
 ﻿import Container from "../components/container";
-import Image from "next/image";
 import MinaAvtal from "../public/mina-avtal.svg";
 import KundNummer from "../public/mina-kundnummer.svg";
 import Rapporter from "../public/rapporter.svg";

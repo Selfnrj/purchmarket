@@ -2,7 +2,7 @@
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 const CURRENT_WISHLIST = gql`
@@ -41,8 +41,6 @@ export default function StarButton({ productId, icon }) {
   const router = useRouter();
 
   const wishlist = data?.getWishList?.productIds;
-
-  console.log(wishlist);
 
   /*   useEffect(() => {
     const data = window.localStorage.getItem("SAVE_FAVORITE");

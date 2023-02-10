@@ -34,9 +34,9 @@ export default async function handler(
       <p><strong>Message: </strong> ${message}</p>
       `,
     });
-    console.log("Message Sent");
+    //console.log("Message Sent");
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 
   res.status(200).json(req.body);

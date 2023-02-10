@@ -1,5 +1,4 @@
 import { AppProps } from "next/app";
-import { ClickProvider } from "../contexts/click";
 import { Lato } from "@next/font/google";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "../lib/apolloClient";
@@ -18,13 +17,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <ClickProvider>
-          <main className={`pt-20 ${lato.variable} font-sans`}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </main>
-        </ClickProvider>
+        <main className={`pt-20 ${lato.variable} font-sans`}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </main>
       </AuthProvider>
     </ApolloProvider>
   );

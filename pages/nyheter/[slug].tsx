@@ -34,7 +34,6 @@ export default function Post({ post, posts }) {
             title={post.title}
             coverImage={post.featuredImage}
             date={post.date}
-            author={post.author}
             categories={post.categories}
           />
           <Container>

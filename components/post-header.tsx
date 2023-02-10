@@ -1,16 +1,8 @@
-import Avatar from "./avatar";
 import Date from "./date";
 import CoverImage from "./cover-image";
 import Categories from "./categories";
-import Container from "./container";
 
-export default function PostHeader({
-  title,
-  coverImage,
-  date,
-  author,
-  categories,
-}) {
+export default function PostHeader({ title, coverImage, date, categories }) {
   return (
     <>
       <div className="wp-block-cover relative flex w-full justify-items-end">
@@ -24,15 +16,6 @@ export default function PostHeader({
           />
         </div>
       </div>
-
-      {/* <div className="hidden md:mb-12 md:block">
-        <Avatar author={author} />
-      </div> 
-      <div className="mx-auto max-w-2xl">
-        <div className="mb-6 block md:hidden">
-          <Avatar author={author} />
-        </div>
-      </div>*/}
     </>
   );
 }

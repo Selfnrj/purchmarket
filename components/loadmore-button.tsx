@@ -1,6 +1,4 @@
 ﻿export default function LoadmoreButton({ allPosts, number, setNumber }) {
-  console.log(number);
-
   function handleClick() {
     setNumber((prevNumber) => prevNumber + 3); // 3 is the number of posts you want to load per click
   }

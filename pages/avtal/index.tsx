@@ -15,8 +15,6 @@ export default function Avtal({ products, allCategories, allHero }) {
 
   const tagscontact = taggs.flat(1);*/
 
-  console.log("Tagscontact", products);
-
   const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
   const [filteredAvtal, setFilteredAvtal] = useState(products.edges);
   const [avtalTitles, setAvtalTitles] = useState(
@@ -123,7 +121,6 @@ export default function Avtal({ products, allCategories, allHero }) {
                     }
                   }}
                   name={category.node.name}
-                  count={category.node.count}
                   checked={
                     filtercategories.includes(category.node.name)
                       ? "checked"

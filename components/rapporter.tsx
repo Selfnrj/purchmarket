@@ -37,8 +37,6 @@ export default function Rapporter() {
 
   const allRapporter = data.allRapporter.edges;
 
-  console.log(allRapporter);
-
   return (
     <div>
       {allRapporter

@@ -1,4 +1,4 @@
-﻿export default function Checkbox({ name, handleClick, checked, count }) {
+﻿export default function Checkbox({ name, handleClick, checked }) {
   return (
     <div className="flex items-center py-2">
       <input

@@ -39,7 +39,6 @@ export default function Filter({
               }
             }}
             name={category.node.name}
-            count={category.node.count}
             checked={
               filtercategories.includes(category.node.name) ? "checked" : ""
             }
