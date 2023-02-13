@@ -1,17 +1,29 @@
-﻿import { useEffect, useState } from "react";
+﻿import { gql, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Container from "../../components/container";
 import Filter from "../../components/Filter";
 import LeverantorCard from "../../components/leverantor-card";
+import Loader from "../../components/Loader";
 import LoadmoreButton from "../../components/loadmore-button";
 import PageCoverInput from "../../components/page-coverInput";
-import { getAllLeverantorer, getCategories, getStartsida } from "../../lib/api";
+import { getAllLeverantorer, getCategories } from "../../lib/api";
 
-export default function leverantorer({
-  allLeverantorer,
-  allCategories,
-  allHero,
-}) {
+const LEVERANTORER_QUERY = gql`
+  query Leverantorer {
+    redigera(id: "cG9zdDo0MTQ=") {
+      id
+      redigera {
+        heroRubrik
+        heroBild {
+          sourceUrl
+        }
+      }
+    }
+  }
+`;
+
+export default function leverantorer({ allLeverantorer, allCategories }) {
   const [filteredAvtal, setFilteredAvtal] = useState(allLeverantorer.edges);
   const [searchString, setSearchString] = useState("");
   const [isAllCategory, setIsAllCategory] = useState(true);
@@ -41,13 +53,20 @@ export default function leverantorer({
     }
   }, [filtercategories]);
 
+  const { data, loading, error } = useQuery(LEVERANTORER_QUERY);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const { heroRubrik, heroBild } = data.redigera.redigera;
+
   return (
     <>
       <Breadcrumbs className="absolute z-40 text-gray-200" />
       <div>
         <PageCoverInput
-          bild={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
-          rubrik="Leverantörer"
+          bild={heroBild.sourceUrl}
+          rubrik={heroRubrik}
           placeholder="Sök efter leverantörer"
           setSearchString={setSearchString}
         />
@@ -110,6 +129,5 @@ export default function leverantorer({
 export async function getStaticProps() {
   const allLeverantorer = await getAllLeverantorer();
   const allCategories = await getCategories();
-  const allHero = await getStartsida();
-  return { props: { allLeverantorer, allCategories, allHero } };
+  return { props: { allLeverantorer, allCategories } };
 }

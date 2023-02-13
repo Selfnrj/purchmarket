@@ -1,15 +1,38 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import Container from "../components/container";
-import { getAllAvtal, getAllPostsForHome, getStartsida } from "../lib/api";
+import { getAllAvtal, getAllPostsForHome } from "../lib/api";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import PageCover from "../components/page-cover";
 import LatestStories from "../components/latest-stories";
 import AvtalList from "../components/avtal-list";
+import { gql, useQuery } from "@apollo/client";
+import Loader from "../components/Loader";
 
-export default function Index({ allPosts, allHero, products }) {
+const STARTSIDA_QUERY = gql`
+  query Startsida {
+    redigera(id: "cG9zdDo0MTI=") {
+      id
+      redigera {
+        heroText
+        heroRubrik
+        heroBild {
+          sourceUrl
+        }
+      }
+    }
+  }
+`;
+
+export default function Index({ allPosts, products }) {
+  const { data, loading, error } = useQuery(STARTSIDA_QUERY);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const { heroText, heroRubrik, heroBild } = data.redigera.redigera;
   return (
     <>
       <Head>
@@ -17,9 +40,9 @@ export default function Index({ allPosts, allHero, products }) {
       </Head>
       <div>
         <PageCover
-          rubrik={allHero?.edges[0]?.node.startsida.heroRubrik}
-          text={allHero?.edges[0]?.node.startsida.heroText}
-          bild={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
+          rubrik={heroRubrik}
+          text={heroText}
+          bild={heroBild.sourceUrl}
         />
         <Container>
           <LatestStories allPosts={allPosts} />
@@ -35,19 +58,16 @@ export default function Index({ allPosts, allHero, products }) {
                 Purch är en inköpsorganisation, specialiserad på vård och
                 omsorg, som arbetar i nära samarbete med kunder och medlemmar.
               </p>
-              <Link
-                href="/omoss"
-                className="flex items-center font-bold text-white"
-              >
+              <b className="flex items-center font-bold text-white">
                 Om oss
                 <ArrowRightIcon className="ml-2 h-6 w-6 text-white" />
-              </Link>
+              </b>
             </div>
             <Image
               fill
               className="object-cover"
               alt="header bild"
-              src={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
+              src={heroBild.sourceUrl}
             />
           </div>
         </Link>
@@ -65,13 +85,10 @@ export default function Index({ allPosts, allHero, products }) {
                   <p className="mb-8 text-xl leading-8">
                     A wonderful serenity has taken possession of my entire soul.
                   </p>
-                  <Link
-                    href="/rapporter"
-                    className="flex items-center font-bold"
-                  >
+                  <b className="flex items-center font-bold">
                     Rapporter
                     <ArrowRightIcon className="ml-2 h-6 w-6 text-[#17375E]" />
-                  </Link>
+                  </b>
                 </div>
                 <div>
                   <Image
@@ -79,7 +96,7 @@ export default function Index({ allPosts, allHero, products }) {
                     height={800}
                     className="rounded-xl object-cover"
                     alt="header bild"
-                    src={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
+                    src={heroBild.sourceUrl}
                   />
                 </div>
               </div>
@@ -93,11 +110,10 @@ export default function Index({ allPosts, allHero, products }) {
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview);
-  const allHero = await getStartsida();
   const products = await getAllAvtal();
 
   return {
-    props: { allPosts, allHero, products, preview },
+    props: { allPosts, products, preview },
     revalidate: 10,
   };
 };

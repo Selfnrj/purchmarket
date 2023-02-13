@@ -1,14 +1,30 @@
 ﻿import Image from "next/image";
 import Container from "../../components/container";
-import { getAllAvtal, getCategories, getStartsida } from "../../lib/api";
+import { getAllAvtal, getCategories } from "../../lib/api";
 import AvtalCard from "../../components/avtal-card";
 import { ChangeEvent, useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
+import { gql, useQuery } from "@apollo/client";
+import Loader from "../../components/Loader";
 
-export default function Avtal({ products, allCategories, allHero }) {
+const AVTAL_QUERY = gql`
+  query Leverantorer {
+    redigera(id: "cG9zdDo0MTY=") {
+      id
+      redigera {
+        heroRubrik
+        heroBild {
+          sourceUrl
+        }
+      }
+    }
+  }
+`;
+
+export default function Avtal({ products, allCategories }) {
   /*   const taggs = products.edges.map((item) =>
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
@@ -52,6 +68,13 @@ export default function Avtal({ products, allCategories, allHero }) {
     }
   }, [filtercategories]);
 
+  const { data, loading, error } = useQuery(AVTAL_QUERY);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const { heroRubrik, heroBild } = data.redigera.redigera;
+
   return (
     <>
       <Breadcrumbs className="absolute z-40 text-gray-200" />
@@ -59,7 +82,7 @@ export default function Avtal({ products, allCategories, allHero }) {
         <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
         <div className="relative z-30 flex flex-col text-white">
           <h1 className="mb-8 max-w-2xl text-5xl font-black leading-tight sm:text-7xl">
-            Hitta inköpsavtal
+            {heroRubrik}
           </h1>
           <form action="">
             <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
@@ -80,7 +103,7 @@ export default function Avtal({ products, allCategories, allHero }) {
           fill
           className="object-cover"
           alt="header bild"
-          src={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
+          src={heroBild.sourceUrl}
         />
       </div>
       <Container>
@@ -184,7 +207,6 @@ export default function Avtal({ products, allCategories, allHero }) {
 export async function getStaticProps() {
   const products = await getAllAvtal();
   const allCategories = await getCategories();
-  const allHero = await getStartsida();
 
-  return { props: { products, allCategories, allHero } };
+  return { props: { products, allCategories } };
 }

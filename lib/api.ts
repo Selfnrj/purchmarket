@@ -273,8 +273,17 @@ export async function getAvtal(slug) {
           }
         }
         avtalsinfo {
+          adress
+          hemsida
+          kontaktpersonEmail
+          kontaktpersonNamn
+          kontaktpersonRoll
+          kontaktpersonTelefonnummer
+          kundtjanstEmail
+          kundtjanstTelefonnummer
           namn
-          telefonnummer
+          orderEmail
+          webbshop
         }
       }
     }
@@ -448,13 +457,13 @@ export async function getPageBySlug(slug) {
   return data?.page;
 }
 
-export async function getStartsida() {
+export async function getAllRedigera() {
   const data = await fetchAPI(`
-    query Startsidan {
-      allStartsida {
+    query Redigera {
+      allRedigera {
         edges {
           node {
-            startsida {
+            redigera {
               heroBild {
                 sourceUrl
               }
@@ -466,7 +475,7 @@ export async function getStartsida() {
       }
     }
   `);
-  return data?.allStartsida;
+  return data?.allRedigera;
 }
 
 export async function getKundNummer() {

@@ -87,19 +87,111 @@ export default function AvtalDetail({ product, products }) {
             )}
           </div>
           <div>
-            <div className="rounded-lg bg-[#DFEDFF] p-8">
-              <h3 className="mb-4 text-xl font-bold">Kontakt</h3>
-              <ul className="flex flex-wrap">
-                <li className="mr-8 w-6/12 py-2">Namn:</li>
-                <li className="py-2 font-semibold">
-                  {product?.avtalsinfo?.namn}
-                </li>
-                <li className="mr-8 w-6/12 py-2">Telefonnummer:</li>
-                <li className="py-2 font-semibold">
-                  {product?.avtalsinfo?.telefonnummer}
-                </li>
-              </ul>
-            </div>
+            {product?.avtalsinfo?.namn && (
+              <div className="rounded-lg bg-[#DFEDFF] p-8">
+                <h3 className="mb-4 text-xl font-bold">Kontaktinformation</h3>
+                <ul className="mb-8 flex flex-wrap">
+                  {product?.avtalsinfo?.namn && ( // if product.avtalsinfo.namn exists
+                    <>
+                      <li className="w-4/12 py-2">Namn:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.namn}
+                      </li>
+                    </>
+                  )}
+                  {product?.avtalsinfo?.adress && ( // if product.avtalsinfo.adress exists
+                    <>
+                      <li className="w-4/12 py-2">Adress:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.adress}
+                      </li>
+                    </>
+                  )}
+                </ul>
+                {product?.avtalsinfo?.kundtjanstTelefonnummer && (
+                  <h3 className="mb-4 text-xl font-bold">Kundtjänst</h3>
+                )}
+                <ul className="mb-8 flex flex-wrap">
+                  {product?.avtalsinfo?.kundtjanstTelefonnummer && (
+                    <>
+                      <li className="w-4/12 py-2">Telefonnummer:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.kundtjanstTelefonnummer}
+                      </li>
+                    </>
+                  )}
+                  {product?.avtalsinfo?.kundtjanstEmail && (
+                    <>
+                      <li className="w-4/12 py-2">Email:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.kundtjanstEmail}
+                      </li>
+                    </>
+                  )}
+                  {product?.avtalsinfo?.orderEmail && (
+                    <>
+                      <li className="w-4/12 py-2">Order email:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.orderEmail}
+                      </li>
+                    </>
+                  )}
+                  {product?.avtalsinfo?.webbshop && (
+                    <>
+                      <li className="w-4/12 py-2">Webbshop:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.webbshop}
+                      </li>
+                    </>
+                  )}
+                  {product?.avtalsinfo?.hemsida && (
+                    <>
+                      <li className="w-4/12 py-2">Hemsida:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.hemsida}
+                      </li>
+                    </>
+                  )}
+                </ul>
+                {product?.avtalsinfo?.kontaktpersonNamn && (
+                  <h3 className="mb-4 text-xl font-bold">Kontaktperson</h3>
+                )}
+                <ul className="flex flex-wrap">
+                  {product?.avtalsinfo?.kontaktpersonNamn && (
+                    <>
+                      <li className="w-4/12 py-2">Namn:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.kontaktpersonNamn}
+                      </li>
+                    </>
+                  )}
+                  {product?.avtalsinfo?.kontaktpersonRoll && (
+                    <>
+                      <li className="w-4/12 py-2">Roll:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.kontaktpersonRoll}
+                      </li>
+                    </>
+                  )}
+                  {product?.avtalsinfo?.kontaktpersonEmail && (
+                    <>
+                      <li className="w-4/12 py-2">Email:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.kontaktpersonEmail}
+                      </li>
+                    </>
+                  )}
+                  {product?.avtalsinfo?.kontaktpersonTelefonnummer && (
+                    <>
+                      <li className="w-4/12 py-2">Telefonnummer:</li>
+                      <li className="w-8/12 py-2">
+                        {product?.avtalsinfo?.kontaktpersonTelefonnummer}
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
         <div className="my-16 rounded-3xl bg-[#FFDCB8] px-16 py-10">

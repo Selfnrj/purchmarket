@@ -1,5 +1,5 @@
 ﻿import Container from "../components/container";
-import { getAllRapporter, getStartsida } from "../lib/api";
+import { getAllRapporter, getAllRedigera } from "../lib/api";
 import { Tab } from "@headlessui/react";
 import useAuth from "../hooks/useAuth";
 import RapportLogin from "../components/rapport-login";
@@ -9,18 +9,41 @@ import AuthContent from "../components/AuthContent";
 import TabLink from "../components/tab-link";
 import PageCover from "../components/page-cover";
 import Breadcrumbs from "../components/Breadcrumbs";
+import { gql, useQuery } from "@apollo/client";
+import Loader from "../components/Loader";
 
-export default function rapporter({ allRapporter, allHero }) {
+const RAPPORTER_QUERY = gql`
+  query Rapporter {
+    redigera(id: "cG9zdDo0MTM=") {
+      id
+      redigera {
+        heroText
+        heroRubrik
+        heroBild {
+          sourceUrl
+        }
+      }
+    }
+  }
+`;
+
+export default function rapporter({ allRapporter }) {
   const { loggedIn } = useAuth();
   const totalCount = allRapporter.edges.length;
+  const { data, loading, error } = useQuery(RAPPORTER_QUERY);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const { heroText, heroRubrik, heroBild } = data.redigera.redigera;
 
   return (
     <>
       <Breadcrumbs className="absolute z-40 text-gray-200" />
       <PageCover
-        rubrik="Rapporter"
-        text="Här hittar du alla rapporter"
-        bild={allHero?.edges[0]?.node.startsida.heroBild.sourceUrl}
+        rubrik={heroRubrik}
+        text={heroText}
+        bild={heroBild.sourceUrl}
       />
       {loggedIn ? (
         <Container>
@@ -51,7 +74,6 @@ export default function rapporter({ allRapporter, allHero }) {
 
 export async function getStaticProps() {
   const allRapporter = await getAllRapporter();
-  const allHero = await getStartsida();
 
-  return { props: { allRapporter, allHero } };
+  return { props: { allRapporter } };
 }
