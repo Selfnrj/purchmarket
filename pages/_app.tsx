@@ -1,4 +1,5 @@
 import { AppProps } from "next/app";
+import { ClickProvider } from "../contexts/click";
 import { Lato } from "@next/font/google";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "../lib/apolloClient";

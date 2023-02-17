@@ -13,6 +13,7 @@ interface Props {
   sourceUrl: string;
   className?: string;
   productId?: number;
+  id?: string;
 }
 
 export default function AvtalCard({
@@ -23,9 +24,8 @@ export default function AvtalCard({
   sourceUrl,
   className,
   productId,
+  id,
 }: Props) {
-  //const [favorite, setFavorite] = useContext(MenuContext);
-
   const { loggedIn } = useAuth();
 
   return (

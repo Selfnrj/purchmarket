@@ -1,7 +1,10 @@
 ﻿import { gql, useQuery } from "@apollo/client";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useContext } from "react";
+import MenuContext from "../contexts/click";
 import AvtalCard from "./avtal-card";
+import Loader from "./Loader";
 
 const CURRENT_WISHLIST = gql`
   query GetWishList {
@@ -12,7 +15,9 @@ const CURRENT_WISHLIST = gql`
 `;
 
 export default function AvtalSparade({ allAvtal }) {
-  const { data } = useQuery(CURRENT_WISHLIST);
+  const { data, loading } = useQuery(CURRENT_WISHLIST);
+
+  if (loading) return <Loader />;
 
   const wishlist = data?.getWishList.productIds;
 

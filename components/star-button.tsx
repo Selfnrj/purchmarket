@@ -2,8 +2,10 @@
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import MenuContext from "../contexts/click";
+import Loader from "./Loader";
 
 const CURRENT_WISHLIST = gql`
   query GetWishList {
@@ -34,53 +36,67 @@ const REMOVE_FAVORITE = gql`
 `;
 
 export default function StarButton({ productId, icon }) {
-  const { data } = useQuery(CURRENT_WISHLIST);
+  const { data, loading, refetch } = useQuery(CURRENT_WISHLIST);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   const [favoriteAdd] = useMutation(ADD_FAVORITE);
   const [favoriteRemove] = useMutation(REMOVE_FAVORITE);
-  const [favorite, setFavorite] = useState<Boolean>(false);
   const router = useRouter();
 
   const wishlist = data?.getWishList?.productIds;
 
-  /*   useEffect(() => {
-    const data = window.localStorage.getItem("SAVE_FAVORITE");
-    if (data !== null) setFavorite(JSON.parse(data));
-  }, []);
+  //const [favorite, setFavorite] = useState(wishlist);
+  const [favorite, setFavorite] = useState(wishlist);
 
-  useEffect(() => {
-    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
-  }, [favorite]); */
-
-  const toggleAvtal = () => {
-    if (wishlist.includes(productId)) {
-      toast.success("Avtalet har tagits bort");
-      setFavorite(false);
-      favoriteRemove({ variables: { productId: productId } });
-      router.reload();
-    } else {
-      toast.success("Avtalet är sparat");
-      setFavorite(true);
-      favoriteAdd({ variables: { productId: productId } });
-      router.reload();
-    }
+  const RemoveFavorite = (productId) => {
+    favoriteRemove({ variables: { productId: productId } });
+    setFavorite((prevFavorite) =>
+      prevFavorite.filter((id) => id !== productId)
+    );
+    toast.success("Avtalet har tagits bort");
+    //router.reload();
+    refetch();
   };
+
+  const AddFavorite = (productId) => {
+    //setFavorite(true);
+    favoriteAdd({ variables: { productId: productId } });
+    setFavorite((prevFavorite) => [...prevFavorite, productId]);
+    toast.success("Avtalet är sparat");
+    //router.reload();
+    refetch();
+  };
+
+  console.log("wishlist", wishlist);
+  //console.log("favorites", favorite);
 
   return (
     <div>
-      {icon === true ? (
+      {favorite?.includes(productId) ? (
         <button
-          onClick={toggleAvtal}
+          onClick={() => {
+            RemoveFavorite(productId);
+          }}
           className="absolute top-0 right-0 h-6 w-6 cursor-pointer text-yellow-500"
         >
-          {wishlist?.includes(productId) ? (
-            <StarIcon className="h-6 w-6 text-[#FFAB57]" />
-          ) : (
-            <StarIconOutline className="h-6 w-6 text-[#FFAB57]" />
-          )}
+          <StarIcon className="h-6 w-6 text-[#FFAB57]" />
         </button>
       ) : (
         <button
-          onClick={toggleAvtal}
+          onClick={() => {
+            AddFavorite(productId);
+          }}
+          className="absolute top-0 right-0 h-6 w-6 cursor-pointer text-yellow-500"
+        >
+          <StarIconOutline className="h-6 w-6 text-[#FFAB57]" />
+        </button>
+      )}
+      {icon !== true && (
+        <button
+          onClick={AddFavorite}
           className="flex cursor-pointer items-center rounded-full border border-gray-200 bg-white px-6 py-3 font-bold text-gray-900 hover:bg-gray-200"
         >
           {wishlist?.includes(productId) ? (
