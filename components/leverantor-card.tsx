@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 type Props = {
   id?: string;
   title: string;
-  content: string;
+  excerpt: string;
   featuredImage: any;
   slug: string;
 };
@@ -13,9 +13,9 @@ type Props = {
 export default function LeverantorCard({
   id,
   title,
-  content,
   featuredImage,
   slug,
+  excerpt,
 }: Props) {
   const { loggedIn } = useAuth();
 
@@ -30,7 +30,7 @@ export default function LeverantorCard({
             fill
             alt={title}
             src={featuredImage}
-            className="rounded-xl object-contain object-center"
+            className="rounded-xl object-cover object-center"
           />
         </div>
       )}
@@ -46,7 +46,7 @@ export default function LeverantorCard({
         )}
         <div
           className="mb-4 text-lg leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: content }}
+          dangerouslySetInnerHTML={{ __html: excerpt }}
         />
       </div>
     </div>

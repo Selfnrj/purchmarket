@@ -31,7 +31,7 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
   const [avtalTitles, setAvtalTitles] = useState(
     allLeverantorer.edges.map((item) => item.node.title.toLowerCase())
   );
-  const [postNum, setPostNum] = useState(2); // Default number of posts dislplayed
+  const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
 
   useEffect(() => {
     const filteredPostsTitles: string[] = [...avtalTitles].filter(
@@ -95,7 +95,7 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
                         title={item.node.title}
                         slug={item.node.slug}
                         featuredImage={item.node.featuredImage?.node.sourceUrl}
-                        content={item.node.content}
+                        excerpt={item.node.excerpt}
                       />
                     );
                   } else if (isAllCategory) {
@@ -105,7 +105,7 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
                         title={item.node.title}
                         slug={item.node.slug}
                         featuredImage={item.node.featuredImage?.node.sourceUrl}
-                        content={item.node.content}
+                        excerpt={item.node.excerpt}
                       />
                     );
                   }
@@ -129,5 +129,5 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
 export async function getStaticProps() {
   const allLeverantorer = await getAllLeverantorer();
   const allCategories = await getCategories();
-  return { props: { allLeverantorer, allCategories } };
+  return { props: { allLeverantorer, allCategories }, revalidate: 10 };
 }

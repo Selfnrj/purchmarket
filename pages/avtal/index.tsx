@@ -208,5 +208,5 @@ export async function getStaticProps() {
   const products = await getAllAvtal();
   const allCategories = await getCategories();
 
-  return { props: { products, allCategories } };
+  return { props: { products, allCategories }, revalidate: 10 };
 }
