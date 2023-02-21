@@ -1,17 +1,10 @@
-﻿import { gql, useMutation, useQuery } from "@apollo/client";
+﻿import { gql, useMutation } from "@apollo/client";
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
-import { useState } from "react";
 import { toast } from "react-hot-toast";
-
-const CURRENT_WISHLIST = gql`
-  query GetWishList {
-    getWishList {
-      productIds
-    }
-  }
-`;
+import { useAtom } from "jotai";
+import { myQueryDataAtom } from "../contexts/atom";
 
 const ADD_FAVORITE = gql`
   mutation ADD_FAVORITE($productId: Int!) {
@@ -33,16 +26,21 @@ const REMOVE_FAVORITE = gql`
   }
 `;
 
-export default function StarButton({ productId, icon }) {
-  const { data } = useQuery(CURRENT_WISHLIST);
+export default function StarButton({ productId, icon, data }) {
   const [favoriteAdd] = useMutation(ADD_FAVORITE);
   const [favoriteRemove] = useMutation(REMOVE_FAVORITE);
-  const [favorite, setFavorite] = useState<Boolean>(false);
-  const router = useRouter();
 
-  const wishlist = data?.getWishList?.productIds;
+  //const router = useRouter();
+  //console.log("countAtom", countAtom);
 
-  /*   useEffect(() => {
+  //const [favorite, setFavorite] = useState(wishlist);
+  const wishlist = data.getWishList?.productIds;
+
+  const [favorite, setFavorite] = useAtom(myQueryDataAtom);
+
+  console.log("wishlist", favorite);
+
+  /* useEffect(() => {
     const data = window.localStorage.getItem("SAVE_FAVORITE");
     if (data !== null) setFavorite(JSON.parse(data));
   }, []);
@@ -52,16 +50,20 @@ export default function StarButton({ productId, icon }) {
   }, [favorite]); */
 
   const toggleAvtal = () => {
-    if (wishlist.includes(productId)) {
+    if (favorite.includes(productId)) {
       toast.success("Avtalet har tagits bort");
-      setFavorite(false);
       favoriteRemove({ variables: { productId: productId } });
-      router.reload();
+      setFavorite((prevFavorite) =>
+        prevFavorite.filter((id) => id !== productId)
+      );
+      //refetch();
+      //router.reload();
     } else {
       toast.success("Avtalet är sparat");
-      setFavorite(true);
       favoriteAdd({ variables: { productId: productId } });
-      router.reload();
+      setFavorite((prevFavorite) => [...prevFavorite, productId]);
+      //refetch();
+      //router.reload();
     }
   };
 
@@ -72,7 +74,7 @@ export default function StarButton({ productId, icon }) {
           onClick={toggleAvtal}
           className="absolute top-0 right-0 h-6 w-6 cursor-pointer text-yellow-500"
         >
-          {wishlist?.includes(productId) ? (
+          {favorite?.includes(productId) ? (
             <StarIcon className="h-6 w-6 text-[#FFAB57]" />
           ) : (
             <StarIconOutline className="h-6 w-6 text-[#FFAB57]" />
@@ -83,7 +85,7 @@ export default function StarButton({ productId, icon }) {
           onClick={toggleAvtal}
           className="flex cursor-pointer items-center rounded-full border border-gray-200 bg-white px-6 py-3 font-bold text-gray-900 hover:bg-gray-200"
         >
-          {wishlist?.includes(productId) ? (
+          {favorite?.includes(productId) ? (
             <div className="flex">
               <StarIcon className="mr-2 h-6 w-6 text-[#FFAB57]" />
               Sparat

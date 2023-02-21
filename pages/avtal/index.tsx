@@ -9,6 +9,7 @@ import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { gql, useQuery } from "@apollo/client";
 import Loader from "../../components/Loader";
+import { Toaster } from "react-hot-toast";
 
 const AVTAL_QUERY = gql`
   query Leverantorer {
@@ -77,6 +78,7 @@ export default function Avtal({ products, allCategories }) {
 
   return (
     <>
+      <Toaster />
       <Breadcrumbs className="absolute z-40 text-gray-200" />
       <div className="wp-block-cover relative flex w-full items-center justify-center">
         <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />

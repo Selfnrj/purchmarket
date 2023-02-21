@@ -1,9 +1,17 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
-import { Toaster } from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import StarButton from "./star-button";
 import AuthContent from "./AuthContent";
+import { gql, useQuery } from "@apollo/client";
+
+const CURRENT_WISHLIST = gql`
+  query GetWishList {
+    getWishList {
+      productIds
+    }
+  }
+`;
 
 interface Props {
   title: string;
@@ -27,6 +35,7 @@ export default function AvtalCard({
   //const [favorite, setFavorite] = useContext(MenuContext);
 
   const { loggedIn } = useAuth();
+  const { data } = useQuery(CURRENT_WISHLIST);
 
   return (
     <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
@@ -41,7 +50,9 @@ export default function AvtalCard({
       <div className="relative flex-1">
         {loggedIn ? (
           <AuthContent>
-            <StarButton icon={true} productId={productId} />
+            {data && (
+              <StarButton icon={true} productId={productId} data={data} />
+            )}
           </AuthContent>
         ) : (
           ""

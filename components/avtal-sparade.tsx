@@ -1,27 +1,19 @@
-﻿import { gql, useQuery } from "@apollo/client";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
+﻿import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { useContext, useState } from "react";
+import MenuContext from "../contexts/click";
 import AvtalCard from "./avtal-card";
 
-const CURRENT_WISHLIST = gql`
-  query GetWishList {
-    getWishList {
-      productIds
-    }
-  }
-`;
-
-export default function AvtalSparade({ allAvtal }) {
-  const { data } = useQuery(CURRENT_WISHLIST);
-
-  const wishlist = data?.getWishList.productIds;
+export default function AvtalSparade({ allAvtal, data }) {
+  const wishlist = data.getWishList.productIds;
+  const [favorite, setFavorite] = useContext(MenuContext);
 
   return (
     <>
       <div>
         {allAvtal?.edges.length ? (
           allAvtal?.edges
-            .filter((item) => wishlist?.includes(item.node.productId))
+            .filter((item) => favorite.includes(item.node.productId))
             .map((item) => (
               <AvtalCard
                 key={item.node.id}
@@ -56,7 +48,7 @@ export default function AvtalSparade({ allAvtal }) {
 
             .filter(
               (item) =>
-                !wishlist?.includes(item.node.productId) &&
+                !favorite?.includes(item.node.productId) &&
                 item.node.avtalstyp.synligtKund === null
             )
             .slice(0, 2)

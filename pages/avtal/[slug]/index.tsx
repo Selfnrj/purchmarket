@@ -12,10 +12,20 @@ import { Toaster } from "react-hot-toast";
 import AvtalList from "../../../components/avtal-list";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import AvtalCard from "../../../components/avtal-card";
+import { gql, useQuery } from "@apollo/client";
+
+const CURRENT_WISHLIST = gql`
+  query GetWishList {
+    getWishList {
+      productIds
+    }
+  }
+`;
 
 export default function AvtalDetail({ product, products }) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
   const { loggedIn } = useAuth();
+  const { data } = useQuery(CURRENT_WISHLIST);
 
   return (
     <>
@@ -48,7 +58,13 @@ export default function AvtalDetail({ product, products }) {
               </div>
               {loggedIn ? (
                 <AuthContent>
-                  <StarButton icon={false} productId={product.productId} />
+                  {data && (
+                    <StarButton
+                      icon={false}
+                      productId={product.productId}
+                      data={data}
+                    />
+                  )}
                 </AuthContent>
               ) : (
                 ""
