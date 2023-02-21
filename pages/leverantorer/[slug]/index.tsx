@@ -19,7 +19,7 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
               fill
               alt={leverantor?.title}
               src={leverantor?.featuredImage?.node?.sourceUrl}
-              className="rounded-xl object-cover object-center"
+              className="rounded-xl object-contain object-center"
             />
           </div>
           <h1 className="relative mb-4 text-center text-6xl font-bold">
