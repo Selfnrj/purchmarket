@@ -30,7 +30,7 @@ export default function AvtalCard({
 
   return (
     <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
-      <div className="relative mb-4 h-80 w-full sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
+      <div className="relative mb-4 h-80 w-full shrink-0 sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
         <Image
           fill
           alt={title}
@@ -38,7 +38,7 @@ export default function AvtalCard({
           className="rounded-xl object-cover object-center"
         />
       </div>
-      <div className="relative flex-1">
+      <div className="relative">
         {loggedIn ? (
           <AuthContent>
             <StarButton icon={true} productId={productId} />
@@ -56,10 +56,10 @@ export default function AvtalCard({
           </Link>
         )}
         <div className="mb-4" dangerouslySetInnerHTML={{ __html: excerpt }} />
-        <div className="flex">
+        <div className="flex flex-wrap">
           {categories.edges?.map(({ node }) => (
             <div
-              className="mr-2 rounded-full bg-blue-300 px-4 py-1 text-xs font-bold"
+              className="mr-2 mb-2 rounded-full bg-blue-300 px-4 py-1 text-xs font-bold"
               key={node.id}
             >
               {node.name}
