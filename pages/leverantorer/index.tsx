@@ -53,6 +53,29 @@ export default function leverantorer({ allLeverantorer, allCategories }) {
     }
   }, [filtercategories]);
 
+  useEffect(() => {
+    const storedItems = localStorage.getItem("postNum");
+    if (storedItems) {
+      setPostNum(JSON.parse(storedItems));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("postNum", JSON.stringify(postNum));
+  }, [postNum]);
+
+  useEffect(() => {
+    function handleBeforeUnload() {
+      localStorage.removeItem("postNum");
+    }
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
   const { data, loading, error } = useQuery(LEVERANTORER_QUERY);
 
   if (loading) return <Loader />;
