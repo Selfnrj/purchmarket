@@ -194,7 +194,7 @@ export async function getAllRapporter() {
 export async function getAllLeverantorer() {
   const data = await fetchAPI(`
     query Leverantorer {
-      allLeverantorer {
+      allLeverantorer (first:100) {
         edges {
           node {
             excerpt
