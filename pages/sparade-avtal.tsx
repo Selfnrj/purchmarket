@@ -7,7 +7,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
 import { getAllAvtal, getWishList } from "../lib/api";
 
-export default function sparadeAvtal({ products, wishList }) {
+export default function SparadeAvtal({ products, wishList }) {
   return (
     <>
       <Breadcrumbs />

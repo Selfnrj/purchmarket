@@ -2,9 +2,8 @@
 import AvtalUtvalda from "../components/avtal-utvalda";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
-import { getAllAvtal } from "../lib/api";
 
-export default function MinaAvtal(allAvtal) {
+export default function MinaAvtal() {
   return (
     <>
       <Breadcrumbs />
@@ -18,9 +17,4 @@ export default function MinaAvtal(allAvtal) {
       </Container>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const allAvtal = await getAllAvtal();
-  return { props: allAvtal };
 }

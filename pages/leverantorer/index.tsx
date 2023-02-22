@@ -23,7 +23,7 @@ const LEVERANTORER_QUERY = gql`
   }
 `;
 
-export default function leverantorer({ allLeverantorer, allCategories }) {
+export default function Leverantorer({ allLeverantorer, allCategories }) {
   const [filteredAvtal, setFilteredAvtal] = useState(allLeverantorer.edges);
   const [searchString, setSearchString] = useState("");
   const [isAllCategory, setIsAllCategory] = useState(true);

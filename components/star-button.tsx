@@ -28,10 +28,9 @@ const REMOVE_FAVORITE = gql`
 export default function StarButton({ productId, icon, wishList }) {
   const [favoriteAdd] = useMutation(ADD_FAVORITE);
   const [favoriteRemove] = useMutation(REMOVE_FAVORITE);
-  //const router = useRouter();
-
   const [favorite, setFavorite] = useState(wishList.productIds);
 
+  //const router = useRouter();
   //console.log("wishlist", favorite);
 
   /* useEffect(() => {

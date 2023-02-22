@@ -2,7 +2,7 @@
 import Breadcrumbs from "../components/Breadcrumbs";
 import ProfileForm from "../components/profile-setting";
 
-export default function settings() {
+export default function Installningar() {
   return (
     <AuthContent>
       <Breadcrumbs />

@@ -14,7 +14,7 @@ const CURRENT_USER_QUERY = gql`
   }
 `;
 
-export default function kundnummer() {
+export default function KundNummer() {
   const { data, loading, error } = useQuery(CURRENT_USER_QUERY);
 
   if (loading)

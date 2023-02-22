@@ -27,7 +27,7 @@ const RAPPORTER_QUERY = gql`
   }
 `;
 
-export default function rapporter({ allRapporter }) {
+export default function RapporterPage({ allRapporter }) {
   const { loggedIn } = useAuth();
   const totalCount = allRapporter.edges.length;
   const { data, loading, error } = useQuery(RAPPORTER_QUERY);

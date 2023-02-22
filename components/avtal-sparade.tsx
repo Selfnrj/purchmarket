@@ -1,17 +1,14 @@
 ﻿import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useState } from "react";
 import AvtalCard from "./avtal-card";
 
 export default function AvtalSparade({ allAvtal, wishList }) {
-  const [favorite, setFavorite] = useState(wishList.productIds);
-
   return (
     <>
       <div>
         {allAvtal?.edges.length ? (
           allAvtal?.edges
-            .filter((item) => favorite.includes(item.node.productId))
+            .filter((item) => wishList.productIds.includes(item.node.productId))
             .map((item) => (
               <AvtalCard
                 key={item.node.id}
@@ -47,7 +44,7 @@ export default function AvtalSparade({ allAvtal, wishList }) {
 
             .filter(
               (item) =>
-                !favorite?.includes(item.node.productId) &&
+                !wishList.productIds.includes(item.node.productId) &&
                 item.node.avtalstyp.synligtKund === null
             )
             .slice(0, 2)
