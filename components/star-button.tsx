@@ -31,7 +31,7 @@ export default function StarButton({ productId, icon, wishList }) {
   const [favorite, setFavorite] = useState(wishList.productIds);
 
   //const router = useRouter();
-  //console.log("wishlist", favorite);
+  console.log("wishlist", favorite);
 
   /* useEffect(() => {
     const data = window.localStorage.getItem("SAVE_FAVORITE");
