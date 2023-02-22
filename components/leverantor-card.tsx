@@ -30,7 +30,7 @@ export default function LeverantorCard({
             fill
             alt={title}
             src={featuredImage}
-            className="rounded-xl object-cover object-center"
+            className="rounded-xl object-contain object-center"
           />
         </div>
       )}

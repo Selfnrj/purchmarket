@@ -14,19 +14,21 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
       <Breadcrumbs />
       <Container>
         <div className="mx-auto mt-16 max-w-2xl">
-          <div className="relative mx-auto mb-4 h-48 w-48 rounded-lg border">
-            <Image
-              fill
-              alt={leverantor?.title}
-              src={leverantor?.featuredImage?.node?.sourceUrl}
-              className="rounded-xl object-cover object-center"
-            />
-          </div>
+          {leverantor?.featuredImage?.node?.sourceUrl && (
+            <div className="relative mx-auto mb-4 h-48 w-48 rounded-lg border">
+              <Image
+                fill
+                alt={leverantor?.title}
+                src={leverantor?.featuredImage?.node?.sourceUrl}
+                className="rounded-xl object-contain object-center"
+              />
+            </div>
+          )}
           <h1 className="relative mb-4 text-center text-6xl font-bold">
             {leverantor?.title}
           </h1>
           <div
-            className="mb-8 text-lg leading-relaxed"
+            className="gutenberg-text mb-8 text-lg leading-relaxed"
             dangerouslySetInnerHTML={{ __html: leverantor?.content }}
           />
           <h1 className="relative mb-4 text-6xl font-bold">Avtal</h1>
