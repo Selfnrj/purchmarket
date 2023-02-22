@@ -3,8 +3,7 @@ import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
-import { useAtom } from "jotai";
-import { myQueryDataAtom } from "../contexts/atom";
+import { useState } from "react";
 
 const ADD_FAVORITE = gql`
   mutation ADD_FAVORITE($productId: Int!) {
@@ -26,19 +25,14 @@ const REMOVE_FAVORITE = gql`
   }
 `;
 
-export default function StarButton({ productId, icon, data }) {
+export default function StarButton({ productId, icon, wishList }) {
   const [favoriteAdd] = useMutation(ADD_FAVORITE);
   const [favoriteRemove] = useMutation(REMOVE_FAVORITE);
-
   //const router = useRouter();
-  //console.log("countAtom", countAtom);
 
-  //const [favorite, setFavorite] = useState(wishlist);
-  const wishlist = data.getWishList?.productIds;
+  const [favorite, setFavorite] = useState(wishList.productIds);
 
-  const [favorite, setFavorite] = useAtom(myQueryDataAtom);
-
-  console.log("wishlist", favorite);
+  //console.log("wishlist", favorite);
 
   /* useEffect(() => {
     const data = window.localStorage.getItem("SAVE_FAVORITE");

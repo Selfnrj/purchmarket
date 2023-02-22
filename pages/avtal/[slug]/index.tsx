@@ -1,6 +1,6 @@
 ﻿import Image from "next/image";
 import Container from "../../../components/container";
-import { getAllAvtal, getAvtal } from "../../../lib/api";
+import { getAllAvtal, getAvtal, getWishList } from "../../../lib/api";
 import FileDownloader from "../../../components/FileDownloader";
 import { filesize } from "filesize";
 import Link from "next/link";
@@ -12,20 +12,10 @@ import { Toaster } from "react-hot-toast";
 import AvtalList from "../../../components/avtal-list";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import AvtalCard from "../../../components/avtal-card";
-import { gql, useQuery } from "@apollo/client";
 
-const CURRENT_WISHLIST = gql`
-  query GetWishList {
-    getWishList {
-      productIds
-    }
-  }
-`;
-
-export default function AvtalDetail({ product, products }) {
+export default function AvtalDetail({ product, products, wishList }) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
   const { loggedIn } = useAuth();
-  const { data } = useQuery(CURRENT_WISHLIST);
 
   return (
     <>
@@ -58,13 +48,11 @@ export default function AvtalDetail({ product, products }) {
               </div>
               {loggedIn ? (
                 <AuthContent>
-                  {data && (
-                    <StarButton
-                      icon={false}
-                      productId={product.productId}
-                      data={data}
-                    />
-                  )}
+                  <StarButton
+                    icon={false}
+                    productId={product.productId}
+                    wishList={wishList}
+                  />
                 </AuthContent>
               ) : (
                 ""
@@ -242,6 +230,7 @@ export default function AvtalDetail({ product, products }) {
                   slug={item.node.slug}
                   categories={item.node.productCategories}
                   sourceUrl={item.node.featuredImage?.node.sourceUrl}
+                  wishList={wishList}
                 />
               ))}
           </div>
@@ -254,8 +243,9 @@ export default function AvtalDetail({ product, products }) {
 export async function getStaticProps({ params }) {
   const product = await getAvtal(params.slug);
   const products = await getAllAvtal();
+  const wishList = await getWishList();
 
-  return { props: { product, products } };
+  return { props: { product, products, wishList } };
 }
 
 export async function getStaticPaths() {

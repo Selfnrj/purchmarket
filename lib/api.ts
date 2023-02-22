@@ -59,6 +59,17 @@ export async function getAllPostsWithSlug() {
   return data?.posts;
 }
 
+export async function getWishList() {
+  const data = await fetchAPI(`
+    query WishList {
+      getWishList {
+        productIds
+      }
+    }
+  `);
+  return data?.getWishList;
+}
+
 export async function getAllPostsForHome(preview) {
   const data = await fetchAPI(
     `

@@ -1,12 +1,10 @@
 ﻿import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useContext, useState } from "react";
-import MenuContext from "../contexts/click";
+import { useState } from "react";
 import AvtalCard from "./avtal-card";
 
-export default function AvtalSparade({ allAvtal, data }) {
-  const wishlist = data.getWishList.productIds;
-  const [favorite, setFavorite] = useContext(MenuContext);
+export default function AvtalSparade({ allAvtal, wishList }) {
+  const [favorite, setFavorite] = useState(wishList.productIds);
 
   return (
     <>
@@ -23,6 +21,7 @@ export default function AvtalSparade({ allAvtal, data }) {
                 slug={item.node.slug}
                 categories={item.node.productCategories}
                 sourceUrl={item.node.featuredImage?.node.sourceUrl}
+                wishList={wishList}
               />
             ))
         ) : (
@@ -62,6 +61,7 @@ export default function AvtalSparade({ allAvtal, data }) {
                 slug={item.node.slug}
                 categories={item.node.productCategories}
                 sourceUrl={item.node.featuredImage?.node.sourceUrl}
+                wishList={wishList}
               />
             ))}
         </div>

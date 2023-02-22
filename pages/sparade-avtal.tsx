@@ -5,22 +5,9 @@ import AuthContent from "../components/AuthContent";
 import AvtalSparade from "../components/avtal-sparade";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
-import Loader from "../components/Loader";
-import { getAllAvtal } from "../lib/api";
+import { getAllAvtal, getWishList } from "../lib/api";
 
-const CURRENT_WISHLIST = gql`
-  query GetWishList {
-    getWishList {
-      productIds
-    }
-  }
-`;
-
-export default function sparadeAvtal(products) {
-  const { data, error, loading } = useQuery(CURRENT_WISHLIST);
-  if (loading) return <Loader />;
-  if (error) return <p>Error: {error.message}</p>;
-
+export default function sparadeAvtal({ products, wishList }) {
   return (
     <>
       <Breadcrumbs />
@@ -33,7 +20,7 @@ export default function sparadeAvtal(products) {
           </p>
         </div>
         <AuthContent>
-          {data && <AvtalSparade allAvtal={products} data={data} />}
+          <AvtalSparade allAvtal={products} wishList={wishList} />
         </AuthContent>
       </Container>
     </>
@@ -42,5 +29,6 @@ export default function sparadeAvtal(products) {
 
 export async function getStaticProps() {
   const products = await getAllAvtal();
-  return { props: products };
+  const wishList = await getWishList();
+  return { props: { products, wishList } };
 }

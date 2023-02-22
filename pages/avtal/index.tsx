@@ -1,6 +1,6 @@
 ﻿import Image from "next/image";
 import Container from "../../components/container";
-import { getAllAvtal, getCategories } from "../../lib/api";
+import { getAllAvtal, getCategories, getWishList } from "../../lib/api";
 import AvtalCard from "../../components/avtal-card";
 import { ChangeEvent, useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -10,6 +10,7 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import { gql, useQuery } from "@apollo/client";
 import Loader from "../../components/Loader";
 import { Toaster } from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
 const AVTAL_QUERY = gql`
   query Leverantorer {
@@ -25,7 +26,7 @@ const AVTAL_QUERY = gql`
   }
 `;
 
-export default function Avtal({ products, allCategories }) {
+export default function Avtal({ products, allCategories, wishList }) {
   /*   const taggs = products.edges.map((item) =>
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
@@ -175,6 +176,7 @@ export default function Avtal({ products, allCategories }) {
                         slug={item.node.slug}
                         categories={item.node.productCategories}
                         sourceUrl={item.node.featuredImage?.node.sourceUrl}
+                        wishList={wishList}
                       />
                     );
                   } else if (isAllCategory) {
@@ -187,6 +189,7 @@ export default function Avtal({ products, allCategories }) {
                         slug={item.node.slug}
                         categories={item.node.productCategories}
                         sourceUrl={item.node.featuredImage?.node.sourceUrl}
+                        wishList={wishList}
                       />
                     );
                   }
@@ -209,6 +212,7 @@ export default function Avtal({ products, allCategories }) {
 export async function getStaticProps() {
   const products = await getAllAvtal();
   const allCategories = await getCategories();
+  const wishList = await getWishList();
 
-  return { props: { products, allCategories }, revalidate: 10 };
+  return { props: { products, allCategories, wishList }, revalidate: 10 };
 }

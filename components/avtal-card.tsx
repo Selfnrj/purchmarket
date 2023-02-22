@@ -3,15 +3,6 @@ import Link from "next/link";
 import useAuth from "../hooks/useAuth";
 import StarButton from "./star-button";
 import AuthContent from "./AuthContent";
-import { gql, useQuery } from "@apollo/client";
-
-const CURRENT_WISHLIST = gql`
-  query GetWishList {
-    getWishList {
-      productIds
-    }
-  }
-`;
 
 interface Props {
   title: string;
@@ -21,6 +12,7 @@ interface Props {
   sourceUrl: string;
   className?: string;
   productId?: number;
+  wishList?: number[];
 }
 
 export default function AvtalCard({
@@ -31,11 +23,9 @@ export default function AvtalCard({
   sourceUrl,
   className,
   productId,
+  wishList,
 }: Props) {
-  //const [favorite, setFavorite] = useContext(MenuContext);
-
   const { loggedIn } = useAuth();
-  const { data } = useQuery(CURRENT_WISHLIST);
 
   return (
     <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
@@ -50,9 +40,7 @@ export default function AvtalCard({
       <div className="relative flex-1">
         {loggedIn ? (
           <AuthContent>
-            {data && (
-              <StarButton icon={true} productId={productId} data={data} />
-            )}
+            <StarButton icon={true} productId={productId} wishList={wishList} />
           </AuthContent>
         ) : (
           ""

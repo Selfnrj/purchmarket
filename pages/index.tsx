@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import Container from "../components/container";
-import { getAllAvtal, getAllPostsForHome } from "../lib/api";
+import { getAllAvtal, getAllPostsForHome, getWishList } from "../lib/api";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -10,6 +10,7 @@ import LatestStories from "../components/latest-stories";
 import AvtalList from "../components/avtal-list";
 import { gql, useQuery } from "@apollo/client";
 import Loader from "../components/Loader";
+import { Toaster } from "react-hot-toast";
 
 const STARTSIDA_QUERY = gql`
   query Startsida {
@@ -26,7 +27,7 @@ const STARTSIDA_QUERY = gql`
   }
 `;
 
-export default function Index({ allPosts, products }) {
+export default function Index({ allPosts, products, wishList }) {
   const { data, loading, error } = useQuery(STARTSIDA_QUERY);
 
   if (loading) return <Loader />;
@@ -38,6 +39,7 @@ export default function Index({ allPosts, products }) {
       <Head>
         <title>Purchmarket</title>
       </Head>
+      <Toaster />
       <div>
         <PageCover
           rubrik={heroRubrik}
@@ -72,7 +74,11 @@ export default function Index({ allPosts, products }) {
           </div>
         </Link>
         <Container>
-          <AvtalList rubrik="Inköpsavtal" products={products} />
+          <AvtalList
+            rubrik="Inköpsavtal"
+            products={products}
+            wishList={wishList}
+          />
         </Container>
         <Link href="/rapporter">
           <div className="flex w-full items-center bg-[#DFEDFF] py-16">
@@ -111,9 +117,10 @@ export default function Index({ allPosts, products }) {
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview);
   const products = await getAllAvtal();
+  const wishList = await getWishList();
 
   return {
-    props: { allPosts, products, preview },
+    props: { allPosts, products, preview, wishList },
     revalidate: 10,
   };
 };
