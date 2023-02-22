@@ -1,6 +1,6 @@
-import Footer from './footer'
-import Header from "./header"
-import Meta from './meta'
+import Footer from "./footer";
+import Header from "./header";
+import Meta from "./meta";
 
 export default function Layout({ children }) {
   return (
@@ -13,5 +13,5 @@ export default function Layout({ children }) {
       </div>
       <Footer />
     </>
-  )
+  );
 }

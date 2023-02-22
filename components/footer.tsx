@@ -1,9 +1,9 @@
 import Container from "./container";
 import logoWhite from "../public/logo_white.svg";
 import arrowUp from "../public/arrow-up.svg";
+import linkedin from "../public/linkedin.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { SocialIcon } from "react-social-icons";
 
 export default function Footer() {
   const handleScrollToTop = () => {
@@ -21,10 +21,10 @@ export default function Footer() {
           </div>
           <div className="my-16 grid grid-cols-2 gap-8 sm:my-0 sm:mr-24 sm:grid-cols-3 sm:gap-6">
             <div className="sm:mx-12">
-              <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+              <h2 className="mb-6 text-sm font-semibold uppercase text-white">
                 Sidor
               </h2>
-              <ul className="text-gray-600 dark:text-gray-400">
+              <ul className="text-gray-400">
                 <li className="mb-4">
                   <Link href="/avtal" className="hover:underline">
                     Hitta inköpsavtal
@@ -53,20 +53,20 @@ export default function Footer() {
               </ul>
             </div>
             <div className="sm:mx-12">
-              <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+              <h2 className="mb-6 text-sm font-semibold uppercase text-white">
                 Adress
               </h2>
-              <ul className="text-gray-600 dark:text-gray-400">
+              <ul className="text-gray-400">
                 <li className="mb-4">Kungsportsavenyn 37</li>
                 <li className="mb-4">411 36 Göteborg</li>
                 <li>Sverige</li>
               </ul>
             </div>
             <div className="sm:mx-12">
-              <h2 className="mb-6 text-sm font-semibold uppercase text-gray-900 dark:text-white">
+              <h2 className="mb-6 text-sm font-semibold uppercase text-white">
                 Komma Igång
               </h2>
-              <ul className="text-gray-600 dark:text-gray-400">
+              <ul className="text-gray-400">
                 <li className="mb-4">
                   <Link href="login" className="hover:underline">
                     Logga in
@@ -87,9 +87,9 @@ export default function Footer() {
             </button>
           </div>
         </div>
-        <hr className="my-2 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-4" />
+        <hr className="my-2 border-gray-700 sm:mx-auto lg:my-4" />
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-500 dark:text-gray-400 sm:text-center">
+          <span className="text-sm text-gray-400 sm:text-center">
             © 2023{" "}
             <Link href="/" className="hover:underline">
               Purch
@@ -97,11 +97,9 @@ export default function Footer() {
             . All Rights Reserved.
           </span>
           <div className="flex space-x-6 sm:mt-0 sm:justify-center">
-            <SocialIcon
-              url="https://linkedin.com/in/"
-              fgColor="gray"
-              bgColor="transparent"
-            />
+            <a href="https://linkedin.com/in/" target="_blank">
+              <Image width={24} height={24} alt="linkedin" src={linkedin} />
+            </a>
           </div>
         </div>
       </Container>
