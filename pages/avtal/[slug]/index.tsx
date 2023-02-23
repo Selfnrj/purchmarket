@@ -2,20 +2,30 @@
 import Container from "../../../components/container";
 import { getAllAvtal, getAvtal, getWishList } from "../../../lib/api";
 import FileDownloader from "../../../components/FileDownloader";
-import { filesize } from "filesize";
 import Link from "next/link";
 import useAuth from "../../../hooks/useAuth";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import AuthContent from "../../../components/AuthContent";
 import StarButton from "../../../components/star-button";
 import { Toaster } from "react-hot-toast";
-import AvtalList from "../../../components/avtal-list";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import AvtalCard from "../../../components/avtal-card";
+import { useEffect, useState } from "react";
 
 export default function AvtalDetail({ product, products, wishList }) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
   const { loggedIn } = useAuth();
+
+  const [favorite, setFavorite] = useState(wishList?.productIds);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("SAVE_FAVORITE");
+    if (data !== null) setFavorite(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
+  }, [favorite]);
 
   return (
     <>
@@ -51,7 +61,8 @@ export default function AvtalDetail({ product, products, wishList }) {
                   <StarButton
                     icon={false}
                     productId={product.productId}
-                    wishList={wishList}
+                    favorite={favorite}
+                    setFavorite={setFavorite}
                   />
                 </AuthContent>
               ) : (
@@ -230,7 +241,8 @@ export default function AvtalDetail({ product, products, wishList }) {
                   slug={item.node.slug}
                   categories={item.node.productCategories}
                   sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                  wishList={wishList}
+                  favorite={favorite}
+                  setFavorite={setFavorite}
                 />
               ))}
           </div>

@@ -11,6 +11,7 @@ import AvtalList from "../components/avtal-list";
 import { gql, useQuery } from "@apollo/client";
 import Loader from "../components/Loader";
 import { Toaster } from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 const STARTSIDA_QUERY = gql`
   query Startsida {
@@ -29,6 +30,18 @@ const STARTSIDA_QUERY = gql`
 
 export default function Index({ allPosts, products, wishList }) {
   const { data, loading, error } = useQuery(STARTSIDA_QUERY);
+  const [favorite, setFavorite] = useState(wishList.productIds);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("SAVE_FAVORITE");
+    if (data !== null) setFavorite(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
+  }, [favorite]);
+
+  console.log("wishlist", favorite);
 
   if (loading) return <Loader />;
   if (error) return <p>Error: {error.message}</p>;
@@ -77,7 +90,8 @@ export default function Index({ allPosts, products, wishList }) {
           <AvtalList
             rubrik="Inköpsavtal"
             products={products}
-            wishList={wishList}
+            favorite={favorite}
+            setFavorite={setFavorite}
           />
         </Container>
         <Link href="/rapporter">
@@ -121,6 +135,6 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
 
   return {
     props: { allPosts, products, preview, wishList },
-    revalidate: 10,
+    revalidate: 1,
   };
 };

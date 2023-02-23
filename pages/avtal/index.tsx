@@ -10,7 +10,6 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import { gql, useQuery } from "@apollo/client";
 import Loader from "../../components/Loader";
 import { Toaster } from "react-hot-toast";
-import useAuth from "../../hooks/useAuth";
 
 const AVTAL_QUERY = gql`
   query Leverantorer {
@@ -30,8 +29,17 @@ export default function Avtal({ products, allCategories, wishList }) {
   /*   const taggs = products.edges.map((item) =>
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
-
   const tagscontact = taggs.flat(1);*/
+  const [favorite, setFavorite] = useState(wishList.productIds);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("SAVE_FAVORITE");
+    if (data !== null) setFavorite(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
+  }, [favorite]);
 
   const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
   const [filteredAvtal, setFilteredAvtal] = useState(products.edges);
@@ -176,7 +184,8 @@ export default function Avtal({ products, allCategories, wishList }) {
                         slug={item.node.slug}
                         categories={item.node.productCategories}
                         sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                        wishList={wishList}
+                        setFavorite={setFavorite}
+                        favorite={favorite}
                       />
                     );
                   } else if (isAllCategory) {
@@ -189,7 +198,8 @@ export default function Avtal({ products, allCategories, wishList }) {
                         slug={item.node.slug}
                         categories={item.node.productCategories}
                         sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                        wishList={wishList}
+                        setFavorite={setFavorite}
+                        favorite={favorite}
                       />
                     );
                   }
@@ -214,5 +224,5 @@ export async function getStaticProps() {
   const allCategories = await getCategories();
   const wishList = await getWishList();
 
-  return { props: { products, allCategories, wishList }, revalidate: 10 };
+  return { props: { products, allCategories, wishList }, revalidate: 1 };
 }

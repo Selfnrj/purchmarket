@@ -1,4 +1,4 @@
-﻿import { gql, useQuery } from "@apollo/client";
+﻿import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import AuthContent from "../components/AuthContent";
 
@@ -8,6 +8,17 @@ import Container from "../components/container";
 import { getAllAvtal, getWishList } from "../lib/api";
 
 export default function SparadeAvtal({ products, wishList }) {
+  const [favorite, setFavorite] = useState(wishList.productIds);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("SAVE_FAVORITE");
+    if (data !== null) setFavorite(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
+  }, [favorite]);
+
   return (
     <>
       <Breadcrumbs />
@@ -20,7 +31,11 @@ export default function SparadeAvtal({ products, wishList }) {
           </p>
         </div>
         <AuthContent>
-          <AvtalSparade allAvtal={products} wishList={wishList} />
+          <AvtalSparade
+            allAvtal={products}
+            favorite={favorite}
+            setFavorite={setFavorite}
+          />
         </AuthContent>
       </Container>
     </>

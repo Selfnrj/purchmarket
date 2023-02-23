@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import AvtalCard from "./avtal-card";
 
-export default function AvtalList({ products, rubrik, wishList }) {
+export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const carousel = useRef(null);
@@ -85,7 +85,8 @@ export default function AvtalList({ products, rubrik, wishList }) {
               slug={item.node.slug}
               categories={item.node.productCategories}
               sourceUrl={item.node.featuredImage?.node.sourceUrl}
-              wishList={wishList}
+              favorite={favorite}
+              setFavorite={setFavorite}
             />
           ))}
       </div>

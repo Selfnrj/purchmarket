@@ -2,13 +2,13 @@
 import Link from "next/link";
 import AvtalCard from "./avtal-card";
 
-export default function AvtalSparade({ allAvtal, wishList }) {
+export default function AvtalSparade({ allAvtal, favorite, setFavorite }) {
   return (
     <>
       <div>
         {allAvtal?.edges.length ? (
           allAvtal?.edges
-            .filter((item) => wishList.productIds.includes(item.node.productId))
+            .filter((item) => favorite.includes(item.node.productId))
             .map((item) => (
               <AvtalCard
                 key={item.node.id}
@@ -18,7 +18,8 @@ export default function AvtalSparade({ allAvtal, wishList }) {
                 slug={item.node.slug}
                 categories={item.node.productCategories}
                 sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                wishList={wishList}
+                favorite={favorite}
+                setFavorite={setFavorite}
               />
             ))
         ) : (
@@ -44,7 +45,7 @@ export default function AvtalSparade({ allAvtal, wishList }) {
 
             .filter(
               (item) =>
-                !wishList.productIds.includes(item.node.productId) &&
+                !favorite.includes(item.node.productId) &&
                 item.node.avtalstyp.synligtKund === null
             )
             .slice(0, 2)
@@ -58,7 +59,8 @@ export default function AvtalSparade({ allAvtal, wishList }) {
                 slug={item.node.slug}
                 categories={item.node.productCategories}
                 sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                wishList={wishList}
+                favorite={favorite}
+                setFavorite={setFavorite}
               />
             ))}
         </div>

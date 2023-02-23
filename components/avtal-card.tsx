@@ -12,7 +12,8 @@ interface Props {
   sourceUrl: string;
   className?: string;
   productId?: number;
-  wishList?: number[];
+  favorite?: number[];
+  setFavorite?: any;
 }
 
 export default function AvtalCard({
@@ -23,7 +24,8 @@ export default function AvtalCard({
   sourceUrl,
   className,
   productId,
-  wishList,
+  favorite,
+  setFavorite,
 }: Props) {
   const { loggedIn } = useAuth();
 
@@ -40,7 +42,12 @@ export default function AvtalCard({
       <div className="relative">
         {loggedIn ? (
           <AuthContent>
-            <StarButton icon={true} productId={productId} wishList={wishList} />
+            <StarButton
+              icon={true}
+              productId={productId}
+              favorite={favorite}
+              setFavorite={setFavorite}
+            />
           </AuthContent>
         ) : (
           ""
