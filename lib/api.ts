@@ -491,6 +491,7 @@ export async function getAllRedigera() {
 
 export async function getKundNummer() {
   const data = await fetchAPI(`
+  query Kundnummer {
     viewer {
       kundnummer {
         catell
@@ -499,8 +500,9 @@ export async function getKundNummer() {
         mediqSverige
       }
     }
+  }
   `);
-  return data?.user;
+  return data?.viewer;
 }
 
 export async function getCategories() {

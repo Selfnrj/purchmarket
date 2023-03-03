@@ -1,8 +1,7 @@
 ﻿import Image from "next/image";
 import Link from "next/link";
-import useAuth from "../hooks/useAuth";
 import StarButton from "./star-button";
-import AuthContent from "./AuthContent";
+import { useSession } from "next-auth/react";
 
 interface Props {
   title: string;
@@ -27,7 +26,7 @@ export default function AvtalCard({
   favorite,
   setFavorite,
 }: Props) {
-  const { loggedIn } = useAuth();
+  const { status } = useSession();
 
   return (
     <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
@@ -40,19 +39,17 @@ export default function AvtalCard({
         />
       </div>
       <div className="relative">
-        {loggedIn ? (
-          <AuthContent>
-            <StarButton
-              icon={true}
-              productId={productId}
-              favorite={favorite}
-              setFavorite={setFavorite}
-            />
-          </AuthContent>
+        {status === "authenticated" ? (
+          <StarButton
+            icon={true}
+            productId={productId}
+            favorite={favorite}
+            setFavorite={setFavorite}
+          />
         ) : (
           ""
         )}
-        {loggedIn ? (
+        {status === "authenticated" ? (
           <Link href={`/avtal/${slug}`}>
             <h2 className="mb-4 text-2xl font-black">{title}</h2>
           </Link>

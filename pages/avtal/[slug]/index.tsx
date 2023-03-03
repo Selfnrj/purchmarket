@@ -3,18 +3,17 @@ import Container from "../../../components/container";
 import { getAllAvtal, getAvtal, getWishList } from "../../../lib/api";
 import FileDownloader from "../../../components/FileDownloader";
 import Link from "next/link";
-import useAuth from "../../../hooks/useAuth";
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
-import AuthContent from "../../../components/AuthContent";
 import StarButton from "../../../components/star-button";
 import { Toaster } from "react-hot-toast";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import AvtalCard from "../../../components/avtal-card";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
 export default function AvtalDetail({ product, products, wishList }) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
-  const { loggedIn } = useAuth();
+  const { status } = useSession();
 
   const [favorite, setFavorite] = useState(wishList?.productIds);
 
@@ -56,15 +55,13 @@ export default function AvtalDetail({ product, products, wishList }) {
                   {product?.title}
                 </h1>
               </div>
-              {loggedIn ? (
-                <AuthContent>
-                  <StarButton
-                    icon={false}
-                    productId={product.productId}
-                    favorite={favorite}
-                    setFavorite={setFavorite}
-                  />
-                </AuthContent>
+              {status === "authenticated" ? (
+                <StarButton
+                  icon={false}
+                  productId={product.productId}
+                  favorite={favorite}
+                  setFavorite={setFavorite}
+                />
               ) : (
                 ""
               )}
@@ -80,7 +77,7 @@ export default function AvtalDetail({ product, products, wishList }) {
               className="mb-8"
               dangerouslySetInnerHTML={{ __html: product?.content }}
             />
-            {loggedIn ? (
+            {status === "authenticated" ? (
               <Link
                 href="/kundnummer"
                 className="flex items-center font-bold text-[#17375E]"

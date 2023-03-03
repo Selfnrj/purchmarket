@@ -9,13 +9,27 @@ import {
   ArrowLeftOnRectangleIcon,
   Cog8ToothIcon,
 } from "@heroicons/react/24/outline";
-import AuthContent from "../components/AuthContent";
 import Link from "next/link";
 import Breadcrumbs from "../components/Breadcrumbs";
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Profile() {
+  const router = useRouter();
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      // The user is not authenticated, handle it here.
+      router.replace("/");
+    },
+  });
+
+  if (status === "loading") {
+    return "Loading or not authenticated...";
+  }
+
   return (
-    <AuthContent>
+    <div>
       <Breadcrumbs />
       <Container>
         <ProfileInfo />
@@ -28,13 +42,13 @@ export default function Profile() {
             <Cog8ToothIcon className="mr-2 h-6 w-6 text-gray-900" />
             Inställningar
           </Link>
-          <Link
-            href="/logout"
+          <button
             className="flex items-center rounded-full border border-gray-200 bg-white px-4 py-3 font-bold hover:bg-gray-200 sm:px-8"
+            onClick={() => signOut()}
           >
             <ArrowLeftOnRectangleIcon className="mr-2 h-6 w-6 text-gray-900" />
             Logga ut
-          </Link>
+          </button>
         </div>
         <div className="mb-16 grid grid-cols-1 gap-8  md:grid-cols-2 lg:grid-cols-4">
           <ProfileCard
@@ -63,6 +77,6 @@ export default function Profile() {
           />
         </div>
       </Container>
-    </AuthContent>
+    </div>
   );
 }
