@@ -1,4 +1,5 @@
 ﻿import Image from "next/image";
+import { useState } from "react";
 import AvtalCard from "../../../components/avtal-card";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import Container from "../../../components/container";
@@ -6,9 +7,12 @@ import {
   getAllAvtal,
   getAllLeverantorer,
   getLeverantor,
+  getWishList,
 } from "../../../lib/api";
 
-export default function LeverantorDetalj({ leverantor, allAvtal }) {
+export default function LeverantorDetalj({ leverantor, allAvtal, wishList }) {
+  const [favorite, setFavorite] = useState(wishList?.productIds);
+
   return (
     <>
       <Breadcrumbs />
@@ -33,8 +37,10 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
           />
           <h1 className="relative mb-4 text-6xl font-bold">Avtal</h1>
           {allAvtal?.edges
-            ?.filter(
-              (item) => item.node.avtalstyp.valjLeverantor === leverantor?.title
+            .filter((name) => name.node?.avtalstyp?.leverantor !== null)
+            .filter(
+              (name) =>
+                name.node?.avtalstyp?.leverantor[0].title === leverantor?.title
             )
             .map((item) => (
               <AvtalCard
@@ -45,6 +51,8 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
                 slug={item.node.slug}
                 categories={item.node.productCategories}
                 sourceUrl={item.node.featuredImage?.node.sourceUrl}
+                setFavorite={setFavorite}
+                favorite={favorite}
               />
             ))}
         </div>
@@ -56,8 +64,9 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
 export async function getStaticProps({ params }) {
   const leverantor = await getLeverantor(params.slug);
   const allAvtal = await getAllAvtal();
+  const wishList = await getWishList();
 
-  return { props: { leverantor, allAvtal } };
+  return { props: { leverantor, allAvtal, wishList } };
 }
 
 export async function getStaticPaths() {

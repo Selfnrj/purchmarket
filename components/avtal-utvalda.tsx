@@ -39,7 +39,11 @@ const PRODUCT_QUERY = gql`
             valjkund {
               id
             }
-            valjLeverantor
+            leverantor {
+              ... on Leverantorer {
+                title
+              }
+            }
           }
         }
       }
