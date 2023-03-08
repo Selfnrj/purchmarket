@@ -16,7 +16,13 @@ export default function Footer() {
         <div className="relative md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
             <Link href="/" className="hover:underline">
-              <Image width={120} height={50} alt="logo" src={logoWhite} />
+              <Image
+                className="h-auto w-auto"
+                width={120}
+                height={50}
+                alt="logo"
+                src={logoWhite}
+              />
             </Link>
           </div>
           <div className="my-16 grid grid-cols-2 gap-8 sm:my-0 sm:mr-24 sm:grid-cols-3 sm:gap-6">

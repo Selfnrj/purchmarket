@@ -15,20 +15,25 @@ export default function CoverImage({ title, coverImage, slug }: Props) {
   const image = (
     <Image
       fill
+      sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
       alt={`Cover Image for ${title}`}
       src={coverImage?.node.sourceUrl}
-      className={`object-cover object-center ${slug ? "rounded-xl" : ""}`}
+      className={`h-auto w-full object-cover object-center ${
+        slug ? "rounded-xl" : ""
+      }`}
     />
   );
   return (
-    <div className="sm:mx-0">
-      {slug ? (
-        <Link href={`/nyheter/${slug}`} aria-label={title}>
-          {image}
-        </Link>
-      ) : (
-        image
-      )}
-    </div>
+    <Link
+      rel="preload"
+      as="image"
+      className="relative block h-full w-full"
+      href={`/nyheter/${slug}`}
+      aria-label={title}
+    >
+      {image}
+    </Link>
   );
 }
