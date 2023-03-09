@@ -62,7 +62,7 @@ export default function Index({ allPosts, products, wishList }) {
         <Container>
           <LatestStories allPosts={allPosts} />
         </Container>
-        <Link href="/omoss">
+        <Link href="/omoss" rel="preload" as="image">
           <div className="wp-block-cover relative flex w-full items-center">
             <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
             <div className="container relative z-40 mx-auto px-5 text-white">
@@ -80,6 +80,7 @@ export default function Index({ allPosts, products, wishList }) {
             </div>
             <Image
               fill
+              sizes="100vw"
               className="object-cover"
               alt="header bild"
               src={heroBild.sourceUrl}
@@ -94,7 +95,7 @@ export default function Index({ allPosts, products, wishList }) {
             setFavorite={setFavorite}
           />
         </Container>
-        <Link href="/rapporter">
+        <Link href="/rapporter" rel="preload" as="image">
           <div className="flex w-full items-center bg-[#DFEDFF] py-16">
             <div className="container mx-auto px-5">
               <div className="grid grid-cols-1 items-center gap-8 sm:grid-cols-2">

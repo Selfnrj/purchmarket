@@ -11,7 +11,16 @@ function PageCover({ rubrik, text, bild }) {
         </h1>
         <p className="max-w-lg text-xl leading-8">{text}</p>
       </div>
-      <Image fill className="object-cover" alt="header bild" src={bild} />
+      <Image
+        fill
+        priority
+        sizes="(max-width: 768px) 100vw,
+              (max-width: 1200px) 50vw,
+              33vw"
+        className="h-auto w-full object-cover"
+        alt="header bild"
+        src={bild}
+      />
     </div>
   );
 }

@@ -158,7 +158,11 @@ export async function getAllAvtal() {
               valjkund {
                 id
               }
-              valjLeverantor
+              leverantor {
+                ... on Leverantorer {
+                  title
+                }
+              }
               synligtKund
             }
             sok {

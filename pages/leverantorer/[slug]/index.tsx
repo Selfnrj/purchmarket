@@ -1,4 +1,5 @@
 ﻿import Image from "next/image";
+import { useState } from "react";
 import AvtalCard from "../../../components/avtal-card";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import Container from "../../../components/container";
@@ -6,9 +7,18 @@ import {
   getAllAvtal,
   getAllLeverantorer,
   getLeverantor,
+  getWishList,
 } from "../../../lib/api";
 
-export default function LeverantorDetalj({ leverantor, allAvtal }) {
+export default function LeverantorDetalj({ leverantor, allAvtal, wishList }) {
+  const [favorite, setFavorite] = useState(wishList?.productIds);
+
+  const visibleAvtal = allAvtal?.edges.filter(
+    (name) =>
+      name.node?.avtalstyp?.leverantor !== null &&
+      name.node?.avtalstyp?.leverantor[0].title === leverantor?.title
+  );
+
   return (
     <>
       <Breadcrumbs />
@@ -31,22 +41,24 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
             className="gutenberg-text mb-8 text-lg leading-relaxed"
             dangerouslySetInnerHTML={{ __html: leverantor?.content }}
           />
-          <h1 className="relative mb-4 text-6xl font-bold">Avtal</h1>
-          {allAvtal?.edges
-            ?.filter(
-              (item) => item.node.avtalstyp.valjLeverantor === leverantor?.title
-            )
-            .map((item) => (
-              <AvtalCard
-                key={item.node.id}
-                productId={item.node.productId}
-                title={item.node.title}
-                excerpt={item.node.excerpt}
-                slug={item.node.slug}
-                categories={item.node.productCategories}
-                sourceUrl={item.node.featuredImage?.node.sourceUrl}
-              />
-            ))}
+
+          {visibleAvtal?.length ? (
+            <h1 className="relative mb-4 text-6xl font-bold">Avtal</h1>
+          ) : null}
+
+          {visibleAvtal?.map((item) => (
+            <AvtalCard
+              key={item.node.id}
+              productId={item.node.productId}
+              title={item.node.title}
+              excerpt={item.node.excerpt}
+              slug={item.node.slug}
+              categories={item.node.productCategories}
+              sourceUrl={item.node.featuredImage?.node.sourceUrl}
+              setFavorite={setFavorite}
+              favorite={favorite}
+            />
+          ))}
         </div>
       </Container>
     </>
@@ -56,8 +68,9 @@ export default function LeverantorDetalj({ leverantor, allAvtal }) {
 export async function getStaticProps({ params }) {
   const leverantor = await getLeverantor(params.slug);
   const allAvtal = await getAllAvtal();
+  const wishList = await getWishList();
 
-  return { props: { leverantor, allAvtal } };
+  return { props: { leverantor, allAvtal, wishList } };
 }
 
 export async function getStaticPaths() {

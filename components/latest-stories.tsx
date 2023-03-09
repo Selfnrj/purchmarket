@@ -1,10 +1,9 @@
-﻿import { GetStaticProps } from "next";
-import Image from "next/image";
+﻿import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { GetStaticProps } from "next";
 import Link from "next/link";
 import { getAllPostsForHome } from "../lib/api";
 import HeroPost from "./hero-post";
 import MoreStories from "./more-stories";
-import arrowRight from "../public/arrow-right.svg";
 
 export default function LatestStories({ allPosts: { edges } }) {
   const heroPost = edges[0]?.node;
@@ -19,13 +18,7 @@ export default function LatestStories({ allPosts: { edges } }) {
           className="flex items-center font-bold text-[#17375E]"
         >
           Visa alla nyheter
-          <Image
-            width={40}
-            height={14}
-            className="ml-4"
-            alt="arrow right"
-            src={arrowRight}
-          />
+          <ArrowRightIcon className="ml-2 h-6 w-6 text-gray-900" />
         </Link>
       </div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
