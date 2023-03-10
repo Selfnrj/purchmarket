@@ -21,14 +21,6 @@ const options: NextAuthOptions = {
                 login(input: { username: $email, password: $password }) {
                   authToken
                   refreshToken
-                  user {
-                    id
-                    name
-                    email
-                    avatar(size: 400) {
-                      url
-                    }
-                  }
                 }
               }
             `,
@@ -38,27 +30,10 @@ const options: NextAuthOptions = {
             },
           });
           if (data?.login?.authToken) {
-            console.log(data.login.user.avatar.url);
-            const allviewer = await client.query({
-              query: gql`
-                query Viewer {
-                  viewer {
-                    id
-                    name
-                    email
-                  }
-                }
-              `,
-            });
-
-            // Return user object with viewer data
-            const user: any = {
-              id: allviewer.data.viewer.id,
-              name: allviewer.data.viewer.name,
-              email: allviewer.data.viewer.email,
+            return {
+              accessToken: data.login.authToken,
+              refreshToken: data.login.refreshToken,
             };
-
-            return user;
           } else {
             throw new Error("Invalid credentials");
           }

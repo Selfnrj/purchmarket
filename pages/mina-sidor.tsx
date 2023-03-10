@@ -13,8 +13,11 @@ import Link from "next/link";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
+import { GetStaticProps } from "next";
+import { getUser } from "../lib/api";
+import Loader from "../components/Loader";
 
-export default function Profile() {
+export default function Profile({ viewer }) {
   const router = useRouter();
   const { status } = useSession({
     required: true,
@@ -24,15 +27,20 @@ export default function Profile() {
     },
   });
 
+  const { data: session } = useSession();
+  console.log("session", session);
+
   if (status === "loading") {
-    return "Loading or not authenticated...";
+    return <Loader />;
   }
+
+  console.log(viewer);
 
   return (
     <div>
       <Breadcrumbs />
       <Container>
-        <ProfileInfo />
+        <ProfileInfo viewer={viewer} />
         <div className="mb-16 flex justify-center">
           <Link
             href="/installningar"
@@ -80,3 +88,12 @@ export default function Profile() {
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const viewer = await getUser();
+
+  return {
+    props: { viewer },
+    revalidate: 10,
+  };
+};

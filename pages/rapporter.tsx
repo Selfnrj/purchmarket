@@ -1,16 +1,14 @@
 ﻿import Container from "../components/container";
-import { getAllRapporter, getAllRedigera } from "../lib/api";
+import { getAllRapporter, getAllRedigera, getUser } from "../lib/api";
 import { Tab } from "@headlessui/react";
-import useAuth from "../hooks/useAuth";
 import RapportLogin from "../components/rapport-login";
-import UnAuthContent from "../components/UnAuthContent";
 import Rapporter from "../components/rapporter";
-import AuthContent from "../components/AuthContent";
 import TabLink from "../components/tab-link";
 import PageCover from "../components/page-cover";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { gql, useQuery } from "@apollo/client";
 import Loader from "../components/Loader";
+import { useSession } from "next-auth/react";
 
 const RAPPORTER_QUERY = gql`
   query Rapporter {
@@ -27,8 +25,8 @@ const RAPPORTER_QUERY = gql`
   }
 `;
 
-export default function RapporterPage({ allRapporter }) {
-  const { loggedIn } = useAuth();
+export default function RapporterPage({ allRapporter, viewer }) {
+  const { status } = useSession();
   const totalCount = allRapporter.edges.length;
   const { data, loading, error } = useQuery(RAPPORTER_QUERY);
 
@@ -45,7 +43,7 @@ export default function RapporterPage({ allRapporter }) {
         text={heroText}
         bild={heroBild.sourceUrl}
       />
-      {loggedIn ? (
+      {status === "authenticated" ? (
         <Container>
           <Tab.Group>
             <div className="flex items-center justify-between border border-transparent border-b-gray-300">
@@ -54,9 +52,7 @@ export default function RapporterPage({ allRapporter }) {
             </div>
             <Tab.Panels>
               <Tab.Panel>
-                <AuthContent>
-                  <Rapporter />
-                </AuthContent>
+                <Rapporter viewer={viewer} />
               </Tab.Panel>
               <Tab.Panel>2022</Tab.Panel>
               <Tab.Panel>2021</Tab.Panel>
@@ -64,9 +60,7 @@ export default function RapporterPage({ allRapporter }) {
           </Tab.Group>
         </Container>
       ) : (
-        <UnAuthContent>
-          <RapportLogin />
-        </UnAuthContent>
+        <RapportLogin />
       )}
     </>
   );
@@ -74,6 +68,7 @@ export default function RapporterPage({ allRapporter }) {
 
 export async function getStaticProps() {
   const allRapporter = await getAllRapporter();
+  const viewer = await getUser();
 
-  return { props: { allRapporter } };
+  return { props: { allRapporter, viewer } };
 }

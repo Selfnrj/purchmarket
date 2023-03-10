@@ -1,6 +1,5 @@
 ﻿import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
-import AuthContent from "../components/AuthContent";
 
 import AvtalSparade from "../components/avtal-sparade";
 import Breadcrumbs from "../components/Breadcrumbs";
@@ -30,13 +29,11 @@ export default function SparadeAvtal({ products, wishList }) {
             Här hittar du alla dina sparade avtal.
           </p>
         </div>
-        <AuthContent>
-          <AvtalSparade
-            allAvtal={products}
-            favorite={favorite}
-            setFavorite={setFavorite}
-          />
-        </AuthContent>
+        <AvtalSparade
+          allAvtal={products}
+          favorite={favorite}
+          setFavorite={setFavorite}
+        />
       </Container>
     </>
   );

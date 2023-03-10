@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 
-export default function profileInfo() {
+export default function profileInfo({ viewer }) {
   const { data: session } = useSession();
   //const { user } = useAuth();
   //const { firstName, lastName, avatar } = user as User;
@@ -16,9 +16,9 @@ export default function profileInfo() {
         height={200}
         className="mb-4 rounded-full"
         alt="arrow right"
-        src={""}
+        src={viewer.avatar.url}
       />
-      <h2 className="text-4xl font-bold">{session.user.name}</h2>
+      <h2 className="text-4xl font-bold">{viewer.name}</h2>
     </div>
   );
 }

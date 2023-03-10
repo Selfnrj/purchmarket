@@ -44,7 +44,7 @@ export default function AvtalCard({
   return (
     <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
       <div className="relative mb-4 h-80 w-full shrink-0 sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
-        {loggedIn ? (
+        {status === "authenticated" ? (
           <Link
             href={`/avtal/${slug}`}
             className="relative block h-full w-full"

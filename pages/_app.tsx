@@ -18,13 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <ApolloProvider client={client}>
-        <AuthProvider>
-          <main className={`pt-20 ${lato.variable} font-sans`}>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </main>
-        </AuthProvider>
+        <main className={`pt-20 ${lato.variable} font-sans`}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </main>
       </ApolloProvider>
     </SessionProvider>
   );

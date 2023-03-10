@@ -1,5 +1,4 @@
 ﻿import { gql, useQuery } from "@apollo/client";
-import useAuth, { User } from "../hooks/useAuth";
 import AvtalCard from "./avtal-card";
 
 const PRODUCT_QUERY = gql`
@@ -51,10 +50,9 @@ const PRODUCT_QUERY = gql`
   }
 `;
 
-export default function AvtalUtvalda() {
+export default function AvtalUtvalda({ viewer, favorite, setFavorite }) {
   const { data, loading, error } = useQuery(PRODUCT_QUERY);
-  const { user } = useAuth();
-  const { id } = user as User;
+  const { id } = viewer;
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -74,6 +72,8 @@ export default function AvtalUtvalda() {
             slug={item.node.slug}
             categories={item.node.productCategories}
             sourceUrl={item.node.featuredImage.node.sourceUrl}
+            favorite={favorite}
+            setFavorite={setFavorite}
           />
         ))}
     </div>
