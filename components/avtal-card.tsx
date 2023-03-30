@@ -49,18 +49,11 @@ export default function AvtalCard({
           <Link
             href={`/avtal/${slug}`}
             className="relative block h-full w-full"
-            rel="preload"
-            as="image"
           >
             {cardImage}
           </Link>
         ) : (
-          <Link
-            href="/login"
-            className="relative block h-full w-full"
-            rel="preload"
-            as="image"
-          >
+          <Link href="/login" className="relative block h-full w-full">
             {cardImage}
           </Link>
         )}
@@ -79,11 +72,11 @@ export default function AvtalCard({
           ""
         )}
         {loggedIn ? (
-          <Link href={`/avtal/${slug}`} rel="preload" as="image">
+          <Link href={`/avtal/${slug}`}>
             <h2 className="mb-4 text-2xl font-black">{title}</h2>
           </Link>
         ) : (
-          <Link href="/login" rel="preload" as="image">
+          <Link href="/login">
             <h2 className="mb-4 text-2xl font-black">{title}</h2>
           </Link>
         )}
