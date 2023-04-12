@@ -11,7 +11,7 @@ export default function PostPreview({
   category,
 }) {
   return (
-    <div className="mb-5 rounded-3xl bg-[#DFEDFF] p-8 last:mb-0 sm:flex">
+    <div className="mb-5 rounded-3xl bg-[#DFEDFF] p-6 last:mb-0 sm:flex">
       {coverImage && (
         <div className="relative mb-4 h-80 w-full sm:mr-5 sm:mb-0 sm:h-44 sm:w-44">
           <CoverImage title={title} coverImage={coverImage} slug={slug} />

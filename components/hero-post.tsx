@@ -13,10 +13,10 @@ export default function HeroPost({
   slug,
 }) {
   return (
-    <section className="p-8">
+    <section className="p-6">
       <div className="mb-6">
         {coverImage && (
-          <div className="relative h-80 w-full sm:h-96">
+          <div className="relative h-96 w-full sm:h-96">
             <CoverImage title={title} coverImage={coverImage} slug={slug} />
           </div>
         )}

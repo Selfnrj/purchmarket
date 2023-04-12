@@ -38,7 +38,7 @@ export default function LeverantorDetalj({ leverantor, allAvtal, wishList }) {
             {leverantor?.title}
           </h1>
           <div
-            className="gutenberg-text mb-8 text-lg leading-relaxed"
+            className="content mb-8 text-lg leading-relaxed"
             dangerouslySetInnerHTML={{ __html: leverantor?.content }}
           />
 

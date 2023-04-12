@@ -73,7 +73,7 @@ export default function AvtalCard({
         )}
         {loggedIn ? (
           <Link href={`/avtal/${slug}`}>
-            <h2 className="mb-4 text-2xl font-black">{title}</h2>
+            <h2 className="mb-4 pr-6 text-2xl font-black">{title}</h2>
           </Link>
         ) : (
           <Link href="/login">

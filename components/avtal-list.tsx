@@ -8,11 +8,26 @@ import { useEffect, useRef, useState } from "react";
 import AvtalCard from "./avtal-card";
 
 export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
+  const [shuffledItems, setShuffledItems] = useState([]);
+
+  useEffect(() => {
+    // Shuffle the items array when component mounts
+    const shuffleArray = (array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+
+    setShuffledItems(shuffleArray(products?.edges));
+  }, []);
+
+  console.log("shuffle", shuffledItems);
+
+  const carousel = useRef(null);
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const carousel = useRef(null);
-
-  const count = products?.edges.length;
 
   const movePrev = () => {
     if (currentIndex > 0) {
@@ -71,7 +86,7 @@ export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
         ref={carousel}
         className="relative z-0 flex touch-pan-x snap-x snap-mandatory gap-3 overflow-hidden scroll-smooth scrollbar"
       >
-        {products?.edges
+        {shuffledItems
           /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
           .filter((item) => item.node.avtalstyp.synligtKund === null)
           .slice(0, 4)

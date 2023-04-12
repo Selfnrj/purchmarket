@@ -7,7 +7,7 @@ import MoreStories from "./more-stories";
 
 export default function LatestStories({ allPosts: { edges } }) {
   const heroPost = edges[0]?.node;
-  const morePosts = edges.slice(1);
+  const morePosts = edges.slice(1, 4);
 
   return (
     <section className="my-12">

@@ -137,16 +137,8 @@
   @apply relative h-0 w-full pb-[56.25%];
 }
 
-.gutenberg-text ul {
-  @apply list-inside list-disc;
-}
-
-.gutenberg-text p {
-  @apply mb-4;
-}
-
 .content {
-  @apply text-lg leading-relaxed;
+  @apply leading-relaxed;
 }
 
 .content p,
@@ -166,7 +158,7 @@
 }
 
 .content ul {
-  @apply list-disc;
+  @apply list-inside list-disc;
 }
 
 .content ol {
@@ -183,15 +175,15 @@
 }
 
 .content h2 {
-  @apply mt-12 mb-4 text-3xl leading-snug;
+  @apply mt-12 mb-4 text-3xl font-bold leading-snug;
 }
 
 .content h3 {
-  @apply mt-8 mb-4 text-2xl leading-snug;
+  @apply mt-8 mb-4 text-2xl font-bold leading-snug;
 }
 
 .content h4 {
-  @apply mt-6 mb-4 text-xl leading-snug;
+  @apply mt-6 mb-4 text-xl font-bold leading-snug;
 }
 
 .content pre {
