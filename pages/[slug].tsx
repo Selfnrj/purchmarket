@@ -23,7 +23,7 @@ function Page({ page }) {
       </Head>
       {/* <div className='mb-5 text-4xl font-bold'>{page?.title}</div> */}
       <div
-        className="text-grey-darker text-base"
+        className="content text-grey-darker text-base"
         dangerouslySetInnerHTML={{ __html: page?.content }}
       />
     </div>
