@@ -24,6 +24,18 @@ const STARTSIDA_QUERY = gql`
           sourceUrl
         }
       }
+      landingSection {
+        omossRubrik
+        omossText
+        omossBild {
+          sourceUrl
+        }
+        rapporterRubrik
+        rapporterText
+        rapporterBild {
+          sourceUrl
+        }
+      }
     }
   }
 `;
@@ -47,6 +59,14 @@ export default function Index({ allPosts, products, wishList }) {
   if (error) return <p>Error: {error.message}</p>;
 
   const { heroText, heroRubrik, heroBild } = data.redigera.redigera;
+  const {
+    omossRubrik,
+    omossText,
+    omossBild,
+    rapporterRubrik,
+    rapporterText,
+    rapporterBild,
+  } = data.redigera.landingSection;
   return (
     <>
       <Head>
@@ -67,12 +87,9 @@ export default function Index({ allPosts, products, wishList }) {
             <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
             <div className="container relative z-40 mx-auto px-5 text-white">
               <h1 className="mb-8 max-w-2xl text-5xl font-black leading-tight">
-                Vi skapar en bättre vård och omsorg
+                {omossRubrik}
               </h1>
-              <p className="mb-8 max-w-lg text-xl leading-8">
-                Purch är en inköpsorganisation, specialiserad på vård och
-                omsorg, som arbetar i nära samarbete med kunder och medlemmar.
-              </p>
+              <p className="mb-8 max-w-lg text-xl leading-8">{omossText}</p>
               <b className="flex items-center font-bold text-white">
                 Om oss
                 <ArrowRightIcon className="ml-2 h-6 w-6 text-white" />
@@ -83,7 +100,7 @@ export default function Index({ allPosts, products, wishList }) {
               sizes="100vw"
               className="object-cover"
               alt="header bild"
-              src={heroBild.sourceUrl}
+              src={omossBild?.sourceUrl}
             />
           </div>
         </Link>
@@ -101,11 +118,9 @@ export default function Index({ allPosts, products, wishList }) {
               <div className="grid grid-cols-1 items-center gap-8 sm:grid-cols-2">
                 <div>
                   <h1 className="mb-8 max-w-lg text-5xl font-black leading-tight">
-                    Alla dina rapporterer samlade på en sida
+                    {rapporterRubrik}
                   </h1>
-                  <p className="mb-8 text-xl leading-8">
-                    A wonderful serenity has taken possession of my entire soul.
-                  </p>
+                  <p className="mb-8 text-xl leading-8">{rapporterText}</p>
                   <b className="flex items-center font-bold">
                     Rapporter
                     <ArrowRightIcon className="ml-2 h-6 w-6 text-[#17375E]" />
@@ -117,7 +132,7 @@ export default function Index({ allPosts, products, wishList }) {
                     height={800}
                     className="rounded-xl object-cover"
                     alt="header bild"
-                    src={heroBild.sourceUrl}
+                    src={rapporterBild?.sourceUrl}
                   />
                 </div>
               </div>
