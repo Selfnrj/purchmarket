@@ -1,47 +1,22 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
 import Container from "../components/container";
-import { getAllAvtal, getAllPostsForHome, getWishList } from "../lib/api";
+import {
+  getAllAvtal,
+  getAllPostsForHome,
+  getIndex,
+  getWishList,
+} from "../lib/api";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import PageCover from "../components/page-cover";
 import LatestStories from "../components/latest-stories";
 import AvtalList from "../components/avtal-list";
-import { gql, useQuery } from "@apollo/client";
-import Loader from "../components/Loader";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 
-const STARTSIDA_QUERY = gql`
-  query Startsida {
-    redigera(id: "cG9zdDo0MTI=") {
-      id
-      redigera {
-        heroText
-        heroRubrik
-        heroBild {
-          sourceUrl
-        }
-      }
-      landingSection {
-        omossRubrik
-        omossText
-        omossBild {
-          sourceUrl
-        }
-        rapporterRubrik
-        rapporterText
-        rapporterBild {
-          sourceUrl
-        }
-      }
-    }
-  }
-`;
-
-export default function Index({ allPosts, products, wishList }) {
-  const { data, loading, error } = useQuery(STARTSIDA_QUERY);
+export default function Index({ allPosts, products, wishList, IndexData }) {
   const [favorite, setFavorite] = useState(wishList.productIds);
 
   useEffect(() => {
@@ -53,12 +28,7 @@ export default function Index({ allPosts, products, wishList }) {
     window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
   }, [favorite]);
 
-  console.log("wishlist", favorite);
-
-  if (loading) return <Loader />;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const { heroText, heroRubrik, heroBild } = data.redigera.redigera;
+  const { heroText, heroRubrik, heroBild } = IndexData.redigera;
   const {
     omossRubrik,
     omossText,
@@ -66,7 +36,7 @@ export default function Index({ allPosts, products, wishList }) {
     rapporterRubrik,
     rapporterText,
     rapporterBild,
-  } = data.redigera.landingSection;
+  } = IndexData.landingSection;
   return (
     <>
       <Head>
@@ -148,9 +118,10 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const allPosts = await getAllPostsForHome(preview);
   const products = await getAllAvtal();
   const wishList = await getWishList();
+  const IndexData = await getIndex();
 
   return {
-    props: { allPosts, products, preview, wishList },
+    props: { allPosts, products, preview, wishList, IndexData },
     revalidate: 10,
   };
 };

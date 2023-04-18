@@ -42,6 +42,16 @@ export default function AvtalCard({
     />
   );
 
+  const maxExcerptLength = 140; // Set your desired excerpt length here
+
+  // Function to truncate the excerpt to the desired length
+  const truncateExcerpt = (text) => {
+    if (text.length > maxExcerptLength) {
+      return `${text.substr(0, maxExcerptLength)}...`;
+    }
+    return text;
+  };
+
   return (
     <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
       <div className="relative mb-4 h-80 w-full shrink-0 sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
@@ -80,7 +90,10 @@ export default function AvtalCard({
             <h2 className="mb-4 text-2xl font-black">{title}</h2>
           </Link>
         )}
-        <div className="mb-4" dangerouslySetInnerHTML={{ __html: excerpt }} />
+        <div
+          className="mb-4"
+          dangerouslySetInnerHTML={{ __html: truncateExcerpt(excerpt) }}
+        />
         <div className="flex flex-wrap">
           {categories.edges?.map(({ node }) => (
             <div

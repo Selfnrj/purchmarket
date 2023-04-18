@@ -306,6 +306,88 @@ export async function getAvtal(slug) {
   return data?.product;
 }
 
+export async function getIndex() {
+  const data = await fetchAPI(`
+    {
+      redigera(id: "cG9zdDo0MTI=") {
+        id
+        redigera {
+          heroText
+          heroRubrik
+          heroBild {
+            sourceUrl
+          }
+        }
+        landingSection {
+          omossRubrik
+          omossText
+          omossBild {
+            sourceUrl
+          }
+          rapporterRubrik
+          rapporterText
+          rapporterBild {
+            sourceUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.redigera;
+}
+
+export async function getHeroAvtal() {
+  const data = await fetchAPI(`
+    {
+      redigera(id: "cG9zdDo0MTY=") {
+        id
+        redigera {
+          heroRubrik
+          heroBild {
+            sourceUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.redigera;
+}
+
+export async function getHeroLeverantor() {
+  const data = await fetchAPI(`
+    {
+      redigera(id: "cG9zdDo0MTQ=") {
+        id
+        redigera {
+          heroRubrik
+          heroBild {
+            sourceUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.redigera;
+}
+
+export async function getHeroRapporter() {
+  const data = await fetchAPI(`
+    {
+      redigera(id: "cG9zdDo0MTM=") {
+        id
+        redigera {
+          heroText
+          heroRubrik
+          heroBild {
+            sourceUrl
+          }
+        }
+      }
+    }
+  `);
+  return data?.redigera;
+}
+
 export async function getPostAndMorePosts(slug, preview, previewData) {
   const postPreview = preview && previewData?.post;
   // The slug may be the id of an unpublished post

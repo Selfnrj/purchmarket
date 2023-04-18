@@ -8,26 +8,10 @@ import { useEffect, useRef, useState } from "react";
 import AvtalCard from "./avtal-card";
 
 export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
-  const [shuffledItems, setShuffledItems] = useState([]);
-
-  useEffect(() => {
-    // Shuffle the items array when component mounts
-    const shuffleArray = (array) => {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    };
-
-    setShuffledItems(shuffleArray(products?.edges));
-  }, []);
-
-  console.log("shuffle", shuffledItems);
-
   const carousel = useRef(null);
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [shuffledItems, setShuffledItems] = useState(products?.edges);
 
   const movePrev = () => {
     if (currentIndex > 0) {
@@ -70,6 +54,19 @@ export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
       : 0;
   }, []);
 
+  useEffect(() => {
+    // Shuffle the items array when component mounts
+    const shuffleArray = (array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    };
+
+    setShuffledItems(shuffleArray(products?.edges));
+  }, []);
+
   return (
     <div className="my-16 rounded-3xl bg-[#FFDCB8] p-8 sm:p-16">
       <div className="mb-6 items-center justify-between sm:flex">
@@ -89,7 +86,7 @@ export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
         {shuffledItems
           /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
           .filter((item) => item.node.avtalstyp.synligtKund === null)
-          .slice(0, 4)
+          .slice(0, 6)
           .map((item, index) => (
             <AvtalCard
               className="w-full shrink-0 snap-start bg-white lg:w-[425px] xl:w-[550px] 2xl:w-[678px]"

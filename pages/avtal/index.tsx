@@ -1,31 +1,25 @@
 ﻿import Image from "next/image";
 import Container from "../../components/container";
-import { getAllAvtal, getCategories, getWishList } from "../../lib/api";
+import {
+  getAllAvtal,
+  getCategories,
+  getHeroAvtal,
+  getWishList,
+} from "../../lib/api";
 import AvtalCard from "../../components/avtal-card";
 import { ChangeEvent, useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
-import { gql, useQuery } from "@apollo/client";
-import Loader from "../../components/Loader";
 import { Toaster } from "react-hot-toast";
 
-const AVTAL_QUERY = gql`
-  query Leverantorer {
-    redigera(id: "cG9zdDo0MTY=") {
-      id
-      redigera {
-        heroRubrik
-        heroBild {
-          sourceUrl
-        }
-      }
-    }
-  }
-`;
-
-export default function Avtal({ products, allCategories, wishList }) {
+export default function Avtal({
+  products,
+  allCategories,
+  wishList,
+  heroAvtal,
+}) {
   /*   const taggs = products.edges.map((item) =>
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
@@ -78,12 +72,7 @@ export default function Avtal({ products, allCategories, wishList }) {
     }
   }, [filtercategories]);
 
-  const { data, loading, error } = useQuery(AVTAL_QUERY);
-
-  if (loading) return <Loader />;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const { heroRubrik, heroBild } = data.redigera.redigera;
+  const { heroRubrik, heroBild } = heroAvtal.redigera;
 
   return (
     <>
@@ -207,11 +196,7 @@ export default function Avtal({ products, allCategories, wishList }) {
             ) : (
               <p className="text-center">Inga avtal hittades...</p>
             )}
-            <LoadmoreButton
-              number={postNum}
-              setNumber={setPostNum}
-              allPosts={products}
-            />
+            <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
           </div>
         </div>
       </Container>
@@ -223,6 +208,10 @@ export async function getStaticProps() {
   const products = await getAllAvtal();
   const allCategories = await getCategories();
   const wishList = await getWishList();
+  const heroAvtal = await getHeroAvtal();
 
-  return { props: { products, allCategories, wishList }, revalidate: 1 };
+  return {
+    props: { products, allCategories, wishList, heroAvtal },
+    revalidate: 10,
+  };
 }

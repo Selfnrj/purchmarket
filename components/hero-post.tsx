@@ -16,7 +16,7 @@ export default function HeroPost({
     <section className="p-6">
       <div className="mb-6">
         {coverImage && (
-          <div className="relative h-96 w-full sm:h-96">
+          <div className="relative h-96 w-full sm:h-[480px]">
             <CoverImage title={title} coverImage={coverImage} slug={slug} />
           </div>
         )}
