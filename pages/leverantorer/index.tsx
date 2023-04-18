@@ -125,7 +125,9 @@ export default function Leverantorer({
               ) : (
                 <p className="text-center">Inga avtal hittades...</p>
               )}
-              <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
+              {postNum < allLeverantorer?.edges.length && (
+                <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
+              )}
             </div>
           </div>
         </Container>

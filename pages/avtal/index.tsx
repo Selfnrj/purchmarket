@@ -196,7 +196,9 @@ export default function Avtal({
             ) : (
               <p className="text-center">Inga avtal hittades...</p>
             )}
-            <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
+            {postNum < products?.edges.length && (
+              <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
+            )}
           </div>
         </div>
       </Container>

@@ -122,7 +122,7 @@ export async function getAllPostsForHome(preview) {
 export async function getAllAvtal() {
   const data = await fetchAPI(`
     query Avtal {
-      products {
+      products(first: 10000) {
         edges {
           node {
             date
@@ -179,7 +179,7 @@ export async function getAllAvtal() {
 export async function getAllRapporter() {
   const data = await fetchAPI(`
     query Rapporter {
-      allRapporter {
+      allRapporter(first: 10000) {
         edges {
           node {
             file {
@@ -209,7 +209,7 @@ export async function getAllRapporter() {
 export async function getAllLeverantorer() {
   const data = await fetchAPI(`
     query Leverantorer {
-      allLeverantorer (first:100) {
+      allLeverantorer(first: 10000) {
         edges {
           node {
             excerpt
