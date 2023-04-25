@@ -23,6 +23,7 @@ export default function LogOut() {
 
   useEffect(() => {
     logOut();
+    localStorage.clear();
     router.push("/");
   }, [logOut]);
 
