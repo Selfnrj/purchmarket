@@ -21,16 +21,14 @@ export default function Index({ allPosts, products, wishList, IndexData }) {
   const [favorite, setFavorite] = useState(wishList.productIds);
   const { loggedIn } = useAuth();
 
-  if (loggedIn) {
-    useEffect(() => {
-      const data = window.localStorage.getItem("SAVE_FAVORITE");
-      if (data !== null) setFavorite(JSON.parse(data));
-    }, []);
+  useEffect(() => {
+    const data = window.localStorage.getItem("SAVE_FAVORITE");
+    if (data !== null) setFavorite(JSON.parse(data));
+  }, []);
 
-    useEffect(() => {
-      window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
-    }, [favorite]);
-  }
+  useEffect(() => {
+    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
+  }, [favorite]);
 
   const { heroText, heroRubrik, heroBild } = IndexData.redigera;
   const {

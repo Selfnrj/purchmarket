@@ -592,7 +592,7 @@ export async function getKundNummer() {
 export async function getCategories() {
   const data = await fetchAPI(`
     query Categories {
-      productCategories {
+      productCategories(first: 10000) {
         edges {
           node {
             name

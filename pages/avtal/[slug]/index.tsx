@@ -11,6 +11,8 @@ import { Toaster } from "react-hot-toast";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import AvtalCard from "../../../components/avtal-card";
 import { useEffect, useState } from "react";
+import Script from "next/script";
+import Head from "next/head";
 
 export default function AvtalDetail({ product, products, wishList }) {
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
@@ -29,6 +31,12 @@ export default function AvtalDetail({ product, products, wishList }) {
 
   return (
     <>
+      {product?.title === "Resor – SJ" ? (
+        <Head>
+          <script src="https://www.sj.se/microsite-widget/microsite-widget.min.js"></script>
+        </Head>
+      ) : null}
+
       <Breadcrumbs className="absolute z-40 text-gray-200" />
       <Toaster />
       <div className="wp-block-cover relative mb-16 flex w-full items-center">
@@ -80,6 +88,24 @@ export default function AvtalDetail({ product, products, wishList }) {
               className="content mb-8"
               dangerouslySetInnerHTML={{ __html: product?.content }}
             />
+            {product?.title === "Resor – SJ" ? (
+              <>
+                <div id="sj-widget"></div>
+                <Script
+                  strategy="afterInteractive"
+                  dangerouslySetInnerHTML={{
+                    __html: `(function(root) {
+                      var SJ = root.SJ;
+                      var configuration = {
+                        micrositeId: "2aa09860-c034-4db9-87b5-340cfc053e44",
+                        language: "sv"
+                      };
+                      SJ.widget.init(configuration);
+                    }(this));`,
+                  }}
+                />
+              </>
+            ) : null}
             {loggedIn ? (
               <Link
                 href="/kundnummer"
