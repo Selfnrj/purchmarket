@@ -156,7 +156,7 @@ export default function Avtal({
             {filteredAvtal.length ? (
               filteredAvtal
                 .filter((item) => item.node.avtalstyp.synligtKund === null)
-                .slice(0, postNum)
+                .slice(...(isAllCategory ? [0, postNum] : [0, 1000]))
                 .map((item) => {
                   if (
                     !isAllCategory &&
@@ -196,9 +196,9 @@ export default function Avtal({
             ) : (
               <p className="text-center">Inga avtal hittades...</p>
             )}
-            {postNum < products?.edges.length && (
+            {postNum < filteredAvtal.length && isAllCategory ? (
               <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
-            )}
+            ) : null}
           </div>
         </div>
       </Container>

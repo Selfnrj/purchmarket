@@ -9,7 +9,7 @@ interface Props {
   slug: string;
   excerpt: string;
   categories: any;
-  sourceUrl: string;
+  sourceUrl?: string;
   className?: string;
   productId?: number;
   favorite?: number[];
@@ -54,20 +54,22 @@ export default function AvtalCard({
 
   return (
     <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
-      <div className="relative mb-4 h-80 w-full shrink-0 sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
-        {loggedIn ? (
-          <Link
-            href={`/avtal/${slug}`}
-            className="relative block h-full w-full"
-          >
-            {cardImage}
-          </Link>
-        ) : (
-          <Link href="/login" className="relative block h-full w-full">
-            {cardImage}
-          </Link>
-        )}
-      </div>
+      {sourceUrl !== undefined ? (
+        <div className="relative mb-4 h-80 w-full shrink-0 sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
+          {loggedIn ? (
+            <Link
+              href={`/avtal/${slug}`}
+              className="relative block h-full w-full"
+            >
+              {cardImage}
+            </Link>
+          ) : (
+            <Link href="/login" className="relative block h-full w-full">
+              {cardImage}
+            </Link>
+          )}
+        </div>
+      ) : null}
       <div className="relative">
         {loggedIn ? (
           <AuthContent>

@@ -94,40 +94,46 @@ export default function Leverantorer({
             </div>
             <div className="col-span-3">
               {filteredAvtal.length ? (
-                filteredAvtal.slice(0, postNum).map((item) => {
-                  if (
-                    !isAllCategory &&
-                    item.node.productCategories?.edges
-                      .map((item) => item.node.name)
-                      .some((category) => filtercategories.includes(category))
-                  ) {
-                    return (
-                      <LeverantorCard
-                        key={item.node.id}
-                        title={item.node.title}
-                        slug={item.node.slug}
-                        featuredImage={item.node.featuredImage?.node.sourceUrl}
-                        excerpt={item.node.excerpt}
-                      />
-                    );
-                  } else if (isAllCategory) {
-                    return (
-                      <LeverantorCard
-                        key={item.node.id}
-                        title={item.node.title}
-                        slug={item.node.slug}
-                        featuredImage={item.node.featuredImage?.node.sourceUrl}
-                        excerpt={item.node.excerpt}
-                      />
-                    );
-                  }
-                })
+                filteredAvtal
+                  .slice(...(isAllCategory ? [0, postNum] : [0, 1000]))
+                  .map((item) => {
+                    if (
+                      !isAllCategory &&
+                      item.node.productCategories?.edges
+                        .map((item) => item.node.name)
+                        .some((category) => filtercategories.includes(category))
+                    ) {
+                      return (
+                        <LeverantorCard
+                          key={item.node.id}
+                          title={item.node.title}
+                          slug={item.node.slug}
+                          featuredImage={
+                            item.node.featuredImage?.node.sourceUrl
+                          }
+                          excerpt={item.node.excerpt}
+                        />
+                      );
+                    } else if (isAllCategory) {
+                      return (
+                        <LeverantorCard
+                          key={item.node.id}
+                          title={item.node.title}
+                          slug={item.node.slug}
+                          featuredImage={
+                            item.node.featuredImage?.node.sourceUrl
+                          }
+                          excerpt={item.node.excerpt}
+                        />
+                      );
+                    }
+                  })
               ) : (
-                <p className="text-center">Inga avtal hittades...</p>
+                <p className="text-center">Inga leverantörer hittades...</p>
               )}
-              {postNum < allLeverantorer?.edges.length && (
+              {postNum < filteredAvtal.length && isAllCategory ? (
                 <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
-              )}
+              ) : null}
             </div>
           </div>
         </Container>
