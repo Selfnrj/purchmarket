@@ -49,7 +49,9 @@ export default function Index({ allPosts, products, wishList, IndexData }) {
         <PageCover
           rubrik={heroRubrik}
           text={heroText}
+          video={heroBild.mediaItemUrl}
           bild={heroBild.sourceUrl}
+          type={heroBild.mediaType}
         />
         <Container>
           <LatestStories allPosts={allPosts} />

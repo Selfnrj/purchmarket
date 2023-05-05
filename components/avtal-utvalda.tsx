@@ -51,7 +51,7 @@ const PRODUCT_QUERY = gql`
   }
 `;
 
-export default function AvtalUtvalda() {
+export default function AvtalUtvalda({ favorite, setFavorite }) {
   const { data, loading, error } = useQuery(PRODUCT_QUERY);
   const { user } = useAuth();
   const { id } = user as User;
@@ -74,6 +74,8 @@ export default function AvtalUtvalda() {
             slug={item.node.slug}
             categories={item.node.productCategories}
             sourceUrl={item.node.featuredImage.node.sourceUrl}
+            favorite={favorite}
+            setFavorite={setFavorite}
           />
         ))}
     </div>

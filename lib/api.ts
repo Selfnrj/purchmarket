@@ -316,6 +316,8 @@ export async function getIndex() {
           heroRubrik
           heroBild {
             sourceUrl
+            mediaItemUrl
+            mediaType
           }
         }
         landingSection {
@@ -345,6 +347,8 @@ export async function getHeroAvtal() {
           heroRubrik
           heroBild {
             sourceUrl
+            mediaItemUrl
+            mediaType
           }
         }
       }
@@ -362,6 +366,8 @@ export async function getHeroLeverantor() {
           heroRubrik
           heroBild {
             sourceUrl
+            mediaItemUrl
+            mediaType
           }
         }
       }
@@ -380,6 +386,8 @@ export async function getHeroRapporter() {
           heroRubrik
           heroBild {
             sourceUrl
+            mediaItemUrl
+            mediaType
           }
         }
       }
