@@ -122,7 +122,7 @@ export async function getAllPostsForHome(preview) {
 export async function getAllAvtal() {
   const data = await fetchAPI(`
     query Avtal {
-      products(first: 10000) {
+      products(where: {orderby: {field: MENU_ORDER, order: ASC}}, first: 10000) {
         edges {
           node {
             date
