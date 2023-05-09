@@ -21,6 +21,12 @@ module.exports = {
   },
 };
 
+const nextConfig = {
+  env: {
+    REVALIDATION_TOKEN: process.env.REVALIDATION_TOKEN,
+  },
+};
+
 /* const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });

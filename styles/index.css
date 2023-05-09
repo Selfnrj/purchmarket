@@ -227,5 +227,19 @@
   width: 24px;
   height: 24px;
   margin-left: 8px;
-  @apply text-[#];
+}
+
+.Lank-vit {
+  display: flex;
+  font-weight: bold;
+  color: white;
+}
+
+.Lank-vit::after {
+  content: "";
+  display: block;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="%23ffffff"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>');
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
 }

@@ -10,6 +10,16 @@ export default function PostPreview({
   slug,
   category,
 }) {
+  const maxExcerptLength = 200; // Set your desired excerpt length here
+
+  // Function to truncate the excerpt to the desired length
+  const truncateExcerpt = (text) => {
+    if (text.length > maxExcerptLength) {
+      return `${text.substr(0, maxExcerptLength)}...`;
+    }
+    return text;
+  };
+
   return (
     <div className="mb-5 rounded-3xl bg-[#DFEDFF] p-6 last:mb-0 sm:flex">
       {coverImage && (
@@ -27,7 +37,7 @@ export default function PostPreview({
         </h3>
         <div
           className="mb-4 text-lg leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: excerpt }}
+          dangerouslySetInnerHTML={{ __html: truncateExcerpt(excerpt) }}
         />
         <div className="flex text-sm">
           {category}

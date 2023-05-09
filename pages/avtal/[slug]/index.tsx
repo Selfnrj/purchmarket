@@ -39,15 +39,26 @@ export default function AvtalDetail({ product, products, wishList }) {
 
       <Breadcrumbs className="absolute z-40 text-gray-200" />
       <Toaster />
-      <div className="wp-block-cover relative mb-16 flex w-full items-center">
-        <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
-        <Image
-          fill
-          priority
-          alt={product?.title}
-          src={product?.featuredImage?.node.sourceUrl}
-          className="object-cover object-center"
-        />
+      <div
+        className={`${
+          product?.avtalsinfo?.avtalsbild !== null ? "wp-block-cover" : "h-96"
+        } relative mb-16 flex w-full items-center`}
+      >
+        {product?.avtalsinfo?.avtalsbild !== null ? (
+          <>
+            <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
+            <Image
+              fill
+              priority
+              alt={product?.title}
+              src={product?.avtalsinfo?.avtalsbild?.sourceUrl}
+              className="object-cover object-center"
+            />
+          </>
+        ) : (
+          <div className="absolute z-20 h-full w-full bg-[#111827]" />
+        )}
+
         <div className="absolute bottom-0 z-30 w-full pb-6 pt-12 text-white">
           <Container>
             <div className="flex items-center justify-between">

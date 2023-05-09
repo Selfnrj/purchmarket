@@ -299,6 +299,9 @@ export async function getAvtal(slug) {
           namn
           orderEmail
           webbshop
+          avtalsbild {
+            sourceUrl
+          }
         }
       }
     }
