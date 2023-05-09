@@ -70,7 +70,7 @@ export default function AvtalCard({
           )}
         </div>
       ) : null}
-      <div className="relative">
+      <div className="relative w-full">
         {loggedIn ? (
           <AuthContent>
             <StarButton
