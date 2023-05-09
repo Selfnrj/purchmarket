@@ -243,3 +243,15 @@
   height: 24px;
   margin-left: 8px;
 }
+
+.kontakt-box {
+  @apply m-6 rounded-lg;
+}
+
+.margin {
+  @apply m-6;
+}
+
+.no-margin {
+  @apply m-0;
+}
