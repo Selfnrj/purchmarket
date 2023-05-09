@@ -33,7 +33,7 @@ export default function OmossPage({ page }) {
 export async function getStaticPaths() {
   const pagesWithSlugs = await getAllPagesWithSlugs();
   return {
-    paths: pagesWithSlugs.edges.map(({ node }) => `/${node.slug}`) || [],
+    paths: pagesWithSlugs.edges.map(({ node }) => `/om-oss/${node.slug}`) || [],
     fallback: false,
   };
 }
