@@ -2,11 +2,11 @@
   getAllPagesWithSlugs,
   getPageBySlug,
   getPrimaryMenu,
-} from "../lib/api";
+} from "../../lib/api";
 import Head from "next/head";
-import Breadcrumbs from "../components/Breadcrumbs";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
-export default function Page({ page }) {
+export default function OmossPage({ page }) {
   /*   
   const router = useRouter();
 
