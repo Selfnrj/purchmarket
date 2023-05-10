@@ -1,8 +1,4 @@
-﻿import {
-  getAllPagesWithSlugs,
-  getPageBySlug,
-  getPrimaryMenu,
-} from "../lib/api";
+﻿import { getAllPagesWithSlugs, getPageBySlug } from "../lib/api";
 import Head from "next/head";
 import Breadcrumbs from "../components/Breadcrumbs";
 
@@ -40,10 +36,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const page = await getPageBySlug(params.slug);
-  const menuItems = await getPrimaryMenu();
 
   return {
-    props: { page, menuItems },
+    props: { page },
     revalidate: 10,
   };
 }

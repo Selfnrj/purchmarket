@@ -176,7 +176,14 @@ export default function AvtalDetail({ product, products, wishList }) {
                     <>
                       <li className="w-5/12 py-2 font-bold">Email</li>
                       <li className="w-7/12 py-2">
-                        {product?.avtalsinfo?.kundtjanstEmail}
+                        <a
+                          className="underline"
+                          href={`mailto:${product?.avtalsinfo?.kundtjanstEmail}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.kundtjanstEmail}
+                        </a>
                       </li>
                     </>
                   )}
@@ -184,7 +191,14 @@ export default function AvtalDetail({ product, products, wishList }) {
                     <>
                       <li className="w-5/12 py-2 font-bold">Order email</li>
                       <li className="w-7/12 py-2">
-                        {product?.avtalsinfo?.orderEmail}
+                        <a
+                          className="underline"
+                          href={`mailto:${product?.avtalsinfo?.orderEmail}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.orderEmail}
+                        </a>
                       </li>
                     </>
                   )}
@@ -192,7 +206,14 @@ export default function AvtalDetail({ product, products, wishList }) {
                     <>
                       <li className="w-5/12 py-2 font-bold">Webbshop</li>
                       <li className="w-7/12 py-2">
-                        {product?.avtalsinfo?.webbshop}
+                        <a
+                          className="underline"
+                          href={product?.avtalsinfo?.webbshop}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.webbshop}
+                        </a>
                       </li>
                     </>
                   )}
@@ -200,7 +221,14 @@ export default function AvtalDetail({ product, products, wishList }) {
                     <>
                       <li className="w-5/12 py-2 font-bold">Hemsida</li>
                       <li className="w-7/12 py-2">
-                        {product?.avtalsinfo?.hemsida}
+                        <a
+                          className="underline"
+                          href={product?.avtalsinfo?.hemsida}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.hemsida}
+                        </a>
                       </li>
                     </>
                   )}
@@ -229,7 +257,14 @@ export default function AvtalDetail({ product, products, wishList }) {
                     <>
                       <li className="w-5/12 py-2 font-bold">Email</li>
                       <li className="w-7/12 py-2">
-                        {product?.avtalsinfo?.kontaktpersonEmail}
+                        <a
+                          className="underline"
+                          href={`mailto:${product?.avtalsinfo?.kontaktpersonEmail}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.kontaktpersonEmail}
+                        </a>
                       </li>
                     </>
                   )}
@@ -237,7 +272,14 @@ export default function AvtalDetail({ product, products, wishList }) {
                     <>
                       <li className="w-5/12 py-2 font-bold">Telefonnummer</li>
                       <li className="w-7/12 py-2">
-                        {product?.avtalsinfo?.kontaktpersonTelefonnummer}
+                        <a
+                          className="underline"
+                          href={`tel:${product?.avtalsinfo?.kontaktpersonTelefonnummer}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.kontaktpersonTelefonnummer}
+                        </a>
                       </li>
                     </>
                   )}
