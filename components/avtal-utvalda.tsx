@@ -62,7 +62,9 @@ export default function AvtalUtvalda({ viewer, favorite, setFavorite }) {
   return (
     <div>
       {allProducts
-        .filter((item) => item.node.avtalstyp.valjkund?.id === id)
+        .filter((item) =>
+          item.node.avtalstyp.valjkund?.filter((item) => item.id.includes(id))
+        )
         .map((item) => (
           <AvtalCard
             key={item.node.id}

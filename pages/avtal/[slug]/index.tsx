@@ -9,6 +9,8 @@ import { Toaster } from "react-hot-toast";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import AvtalCard from "../../../components/avtal-card";
 import { useEffect, useState } from "react";
+import Script from "next/script";
+import Head from "next/head";
 import { useSession } from "next-auth/react";
 
 export default function AvtalDetail({ product, products, wishList }) {
@@ -28,17 +30,34 @@ export default function AvtalDetail({ product, products, wishList }) {
 
   return (
     <>
+      {product?.title === "Resor – SJ" ? (
+        <Head>
+          <script src="https://www.sj.se/microsite-widget/microsite-widget.min.js"></script>
+        </Head>
+      ) : null}
+
       <Breadcrumbs className="absolute z-40 text-gray-200" />
       <Toaster />
-      <div className="wp-block-cover relative mb-16 flex w-full items-center">
-        <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
-        <Image
-          fill
-          priority
-          alt={product?.title}
-          src={product?.featuredImage?.node.sourceUrl}
-          className="object-cover object-center"
-        />
+      <div
+        className={`${
+          product?.avtalsinfo?.avtalsbild !== null ? "wp-block-cover" : "h-96"
+        } relative mb-16 flex w-full items-center`}
+      >
+        {product?.avtalsinfo?.avtalsbild !== null ? (
+          <>
+            <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
+            <Image
+              fill
+              priority
+              alt={product?.title}
+              src={product?.avtalsinfo?.avtalsbild?.sourceUrl}
+              className="object-cover object-center"
+            />
+          </>
+        ) : (
+          <div className="absolute z-20 h-full w-full bg-[#111827]" />
+        )}
+
         <div className="absolute bottom-0 z-30 w-full pb-6 pt-12 text-white">
           <Container>
             <div className="flex items-center justify-between">
@@ -74,9 +93,27 @@ export default function AvtalDetail({ product, products, wishList }) {
         <div className="grid grid-cols-3 gap-8">
           <div className="col-span-2">
             <div
-              className="mb-8"
+              className="content mb-8"
               dangerouslySetInnerHTML={{ __html: product?.content }}
             />
+            {product?.title === "Resor – SJ" ? (
+              <>
+                <div id="sj-widget"></div>
+                <Script
+                  strategy="afterInteractive"
+                  dangerouslySetInnerHTML={{
+                    __html: `(function(root) {
+                      var SJ = root.SJ;
+                      var configuration = {
+                        micrositeId: "2aa09860-c034-4db9-87b5-340cfc053e44",
+                        language: "sv"
+                      };
+                      SJ.widget.init(configuration);
+                    }(this));`,
+                  }}
+                />
+              </>
+            ) : null}
             {status === "authenticated" ? (
               <Link
                 href="/kundnummer"
@@ -105,16 +142,16 @@ export default function AvtalDetail({ product, products, wishList }) {
                 <ul className="mb-8 flex flex-wrap">
                   {product?.avtalsinfo?.namn && ( // if product.avtalsinfo.namn exists
                     <>
-                      <li className="w-4/12 py-2">Namn:</li>
-                      <li className="w-8/12 py-2">
+                      <li className="w-5/12 py-2 font-bold">Namn</li>
+                      <li className="w-7/12 py-2">
                         {product?.avtalsinfo?.namn}
                       </li>
                     </>
                   )}
                   {product?.avtalsinfo?.adress && ( // if product.avtalsinfo.adress exists
                     <>
-                      <li className="w-4/12 py-2">Adress:</li>
-                      <li className="w-8/12 py-2">
+                      <li className="w-5/12 py-2 font-bold">Adress</li>
+                      <li className="w-7/12 py-2">
                         {product?.avtalsinfo?.adress}
                       </li>
                     </>
@@ -126,41 +163,69 @@ export default function AvtalDetail({ product, products, wishList }) {
                 <ul className="mb-8 flex flex-wrap">
                   {product?.avtalsinfo?.kundtjanstTelefonnummer && (
                     <>
-                      <li className="w-4/12 py-2">Telefonnummer:</li>
-                      <li className="w-8/12 py-2">
+                      <li className="w-5/12 py-2 font-bold">Telefonnummer</li>
+                      <li className="w-7/12 py-2">
                         {product?.avtalsinfo?.kundtjanstTelefonnummer}
                       </li>
                     </>
                   )}
                   {product?.avtalsinfo?.kundtjanstEmail && (
                     <>
-                      <li className="w-4/12 py-2">Email:</li>
-                      <li className="w-8/12 py-2">
-                        {product?.avtalsinfo?.kundtjanstEmail}
+                      <li className="w-5/12 py-2 font-bold">Email</li>
+                      <li className="w-7/12 py-2">
+                        <a
+                          className="underline"
+                          href={`mailto:${product?.avtalsinfo?.kundtjanstEmail}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.kundtjanstEmail}
+                        </a>
                       </li>
                     </>
                   )}
                   {product?.avtalsinfo?.orderEmail && (
                     <>
-                      <li className="w-4/12 py-2">Order email:</li>
-                      <li className="w-8/12 py-2">
-                        {product?.avtalsinfo?.orderEmail}
+                      <li className="w-5/12 py-2 font-bold">Order email</li>
+                      <li className="w-7/12 py-2">
+                        <a
+                          className="underline"
+                          href={`mailto:${product?.avtalsinfo?.orderEmail}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.orderEmail}
+                        </a>
                       </li>
                     </>
                   )}
                   {product?.avtalsinfo?.webbshop && (
                     <>
-                      <li className="w-4/12 py-2">Webbshop:</li>
-                      <li className="w-8/12 py-2">
-                        {product?.avtalsinfo?.webbshop}
+                      <li className="w-5/12 py-2 font-bold">Webbshop</li>
+                      <li className="w-7/12 py-2">
+                        <a
+                          className="underline"
+                          href={product?.avtalsinfo?.webbshop}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.webbshop}
+                        </a>
                       </li>
                     </>
                   )}
                   {product?.avtalsinfo?.hemsida && (
                     <>
-                      <li className="w-4/12 py-2">Hemsida:</li>
-                      <li className="w-8/12 py-2">
-                        {product?.avtalsinfo?.hemsida}
+                      <li className="w-5/12 py-2 font-bold">Hemsida</li>
+                      <li className="w-7/12 py-2">
+                        <a
+                          className="underline"
+                          href={product?.avtalsinfo?.hemsida}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.hemsida}
+                        </a>
                       </li>
                     </>
                   )}
@@ -171,33 +236,47 @@ export default function AvtalDetail({ product, products, wishList }) {
                 <ul className="flex flex-wrap">
                   {product?.avtalsinfo?.kontaktpersonNamn && (
                     <>
-                      <li className="w-4/12 py-2">Namn:</li>
-                      <li className="w-8/12 py-2">
+                      <li className="w-5/12 py-2 font-bold">Namn</li>
+                      <li className="w-7/12 py-2">
                         {product?.avtalsinfo?.kontaktpersonNamn}
                       </li>
                     </>
                   )}
                   {product?.avtalsinfo?.kontaktpersonRoll && (
                     <>
-                      <li className="w-4/12 py-2">Roll:</li>
-                      <li className="w-8/12 py-2">
+                      <li className="w-5/12 py-2 font-bold">Roll</li>
+                      <li className="w-7/12 py-2">
                         {product?.avtalsinfo?.kontaktpersonRoll}
                       </li>
                     </>
                   )}
                   {product?.avtalsinfo?.kontaktpersonEmail && (
                     <>
-                      <li className="w-4/12 py-2">Email:</li>
-                      <li className="w-8/12 py-2">
-                        {product?.avtalsinfo?.kontaktpersonEmail}
+                      <li className="w-5/12 py-2 font-bold">Email</li>
+                      <li className="w-7/12 py-2">
+                        <a
+                          className="underline"
+                          href={`mailto:${product?.avtalsinfo?.kontaktpersonEmail}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.kontaktpersonEmail}
+                        </a>
                       </li>
                     </>
                   )}
                   {product?.avtalsinfo?.kontaktpersonTelefonnummer && (
                     <>
-                      <li className="w-4/12 py-2">Telefonnummer:</li>
-                      <li className="w-8/12 py-2">
-                        {product?.avtalsinfo?.kontaktpersonTelefonnummer}
+                      <li className="w-5/12 py-2 font-bold">Telefonnummer</li>
+                      <li className="w-7/12 py-2">
+                        <a
+                          className="underline"
+                          href={`tel:${product?.avtalsinfo?.kontaktpersonTelefonnummer}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {product?.avtalsinfo?.kontaktpersonTelefonnummer}
+                        </a>
                       </li>
                     </>
                   )}

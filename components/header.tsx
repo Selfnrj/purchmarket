@@ -24,6 +24,7 @@ export default function Header() {
     { title: "Leverantörer", path: "/leverantorer" },
     { title: "Rapporter", path: "/rapporter" },
     { title: "Nyheter", path: "/nyheter" },
+    { title: "Om oss", path: "/om-oss" },
   ];
 
   return (
@@ -49,7 +50,7 @@ export default function Header() {
             data-collapse-toggle="navbar-sticky"
             type="button"
             aria-controls="navbar-sticky"
-            className="ml-4 inline-flex items-center rounded-lg py-2 px-4 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden"
+            className="ml-4 inline-flex items-center rounded-lg py-2 px-4 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-200 hover:bg-gray-100 md:hidden"
           >
             <span className="sr-only">Open main menu</span>
             <svg

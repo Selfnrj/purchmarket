@@ -1,4 +1,3 @@
-import Avatar from "./avatar";
 import Date from "./date";
 import CoverImage from "./cover-image";
 import Link from "next/link";
@@ -8,15 +7,14 @@ export default function HeroPost({
   coverImage,
   date,
   excerpt,
-  author,
   category,
   slug,
 }) {
   return (
-    <section className="p-8">
+    <section className="p-6">
       <div className="mb-6">
         {coverImage && (
-          <div className="relative h-80 w-full sm:h-96">
+          <div className="relative h-96 w-full sm:h-[480px]">
             <CoverImage title={title} coverImage={coverImage} slug={slug} />
           </div>
         )}

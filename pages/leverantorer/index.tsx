@@ -7,23 +7,17 @@ import LeverantorCard from "../../components/leverantor-card";
 import Loader from "../../components/Loader";
 import LoadmoreButton from "../../components/loadmore-button";
 import PageCoverInput from "../../components/page-coverInput";
-import { getAllLeverantorer, getCategories } from "../../lib/api";
+import {
+  getAllLeverantorer,
+  getCategories,
+  getHeroLeverantor,
+} from "../../lib/api";
 
-const LEVERANTORER_QUERY = gql`
-  query Leverantorer {
-    redigera(id: "cG9zdDo0MTQ=") {
-      id
-      redigera {
-        heroRubrik
-        heroBild {
-          sourceUrl
-        }
-      }
-    }
-  }
-`;
-
-export default function Leverantorer({ allLeverantorer, allCategories }) {
+export default function Leverantorer({
+  allLeverantorer,
+  allCategories,
+  heroLeverantor,
+}) {
   const [filteredAvtal, setFilteredAvtal] = useState(allLeverantorer.edges);
   const [searchString, setSearchString] = useState("");
   const [isAllCategory, setIsAllCategory] = useState(true);
@@ -76,12 +70,7 @@ export default function Leverantorer({ allLeverantorer, allCategories }) {
     };
   }, []);
 
-  const { data, loading, error } = useQuery(LEVERANTORER_QUERY);
-
-  if (loading) return <Loader />;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const { heroRubrik, heroBild } = data.redigera.redigera;
+  const { heroRubrik, heroBild } = heroLeverantor.redigera;
 
   return (
     <>
@@ -105,42 +94,46 @@ export default function Leverantorer({ allLeverantorer, allCategories }) {
             </div>
             <div className="col-span-3">
               {filteredAvtal.length ? (
-                filteredAvtal.slice(0, postNum).map((item) => {
-                  if (
-                    !isAllCategory &&
-                    item.node.productCategories?.edges
-                      .map((item) => item.node.name)
-                      .some((category) => filtercategories.includes(category))
-                  ) {
-                    return (
-                      <LeverantorCard
-                        key={item.node.id}
-                        title={item.node.title}
-                        slug={item.node.slug}
-                        featuredImage={item.node.featuredImage?.node.sourceUrl}
-                        excerpt={item.node.excerpt}
-                      />
-                    );
-                  } else if (isAllCategory) {
-                    return (
-                      <LeverantorCard
-                        key={item.node.id}
-                        title={item.node.title}
-                        slug={item.node.slug}
-                        featuredImage={item.node.featuredImage?.node.sourceUrl}
-                        excerpt={item.node.excerpt}
-                      />
-                    );
-                  }
-                })
+                filteredAvtal
+                  .slice(...(isAllCategory ? [0, postNum] : [0, 1000]))
+                  .map((item) => {
+                    if (
+                      !isAllCategory &&
+                      item.node.productCategories?.edges
+                        .map((item) => item.node.name)
+                        .some((category) => filtercategories.includes(category))
+                    ) {
+                      return (
+                        <LeverantorCard
+                          key={item.node.id}
+                          title={item.node.title}
+                          slug={item.node.slug}
+                          featuredImage={
+                            item.node.featuredImage?.node.sourceUrl
+                          }
+                          excerpt={item.node.excerpt}
+                        />
+                      );
+                    } else if (isAllCategory) {
+                      return (
+                        <LeverantorCard
+                          key={item.node.id}
+                          title={item.node.title}
+                          slug={item.node.slug}
+                          featuredImage={
+                            item.node.featuredImage?.node.sourceUrl
+                          }
+                          excerpt={item.node.excerpt}
+                        />
+                      );
+                    }
+                  })
               ) : (
-                <p className="text-center">Inga avtal hittades...</p>
+                <p className="text-center">Inga leverantörer hittades...</p>
               )}
-              <LoadmoreButton
-                number={postNum}
-                setNumber={setPostNum}
-                allPosts={allLeverantorer}
-              />
+              {postNum < filteredAvtal.length && isAllCategory ? (
+                <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
+              ) : null}
             </div>
           </div>
         </Container>
@@ -152,5 +145,10 @@ export default function Leverantorer({ allLeverantorer, allCategories }) {
 export async function getStaticProps() {
   const allLeverantorer = await getAllLeverantorer();
   const allCategories = await getCategories();
-  return { props: { allLeverantorer, allCategories }, revalidate: 10 };
+  const heroLeverantor = await getHeroLeverantor();
+
+  return {
+    props: { allLeverantorer, allCategories, heroLeverantor },
+    revalidate: 10,
+  };
 }

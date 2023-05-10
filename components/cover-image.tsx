@@ -27,8 +27,6 @@ export default function CoverImage({ title, coverImage, slug }: Props) {
   );
   return (
     <Link
-      rel="preload"
-      as="image"
       className="relative block h-full w-full"
       href={`/nyheter/${slug}`}
       aria-label={title}

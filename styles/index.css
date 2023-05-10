@@ -122,7 +122,7 @@
 }
 
 .wp-block-cover {
-  @apply flex h-[40vh] flex-wrap items-center justify-center overflow-hidden bg-cover bg-center;
+  @apply flex h-[60vh] flex-wrap items-center justify-center overflow-hidden bg-cover bg-center p-0;
 }
 
 .wp-block-verse {
@@ -137,16 +137,8 @@
   @apply relative h-0 w-full pb-[56.25%];
 }
 
-.gutenberg-text ul {
-  @apply list-inside list-disc;
-}
-
-.gutenberg-text p {
-  @apply mb-4;
-}
-
 .content {
-  @apply text-lg leading-relaxed;
+  @apply leading-relaxed;
 }
 
 .content p,
@@ -166,7 +158,7 @@
 }
 
 .content ul {
-  @apply list-disc;
+  @apply list-inside list-disc;
 }
 
 .content ol {
@@ -183,15 +175,15 @@
 }
 
 .content h2 {
-  @apply mt-12 mb-4 text-3xl leading-snug;
+  @apply mt-12 mb-4 text-3xl font-bold leading-snug;
 }
 
 .content h3 {
-  @apply mt-8 mb-4 text-2xl leading-snug;
+  @apply mt-8 mb-4 text-2xl font-bold leading-snug;
 }
 
 .content h4 {
-  @apply mt-6 mb-4 text-xl leading-snug;
+  @apply mt-6 mb-4 text-xl font-bold leading-snug;
 }
 
 .content pre {
@@ -220,4 +212,46 @@
 
 .content audio {
   @apply w-full;
+}
+
+.Lank {
+  display: flex;
+  font-weight: bold;
+  color: #17375e;
+}
+
+.Lank::after {
+  content: "";
+  display: block;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="%2317375E"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>');
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+}
+
+.Lank-vit {
+  display: flex;
+  font-weight: bold;
+  color: white;
+}
+
+.Lank-vit::after {
+  content: "";
+  display: block;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="%23ffffff"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" /></svg>');
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+}
+
+.kontakt-box {
+  @apply m-6 rounded-lg;
+}
+
+.margin {
+  @apply m-6;
+}
+
+.no-margin {
+  @apply m-0;
 }

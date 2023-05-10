@@ -8,7 +8,7 @@ interface Props {
   slug: string;
   excerpt: string;
   categories: any;
-  sourceUrl: string;
+  sourceUrl?: string;
   className?: string;
   productId?: number;
   favorite?: number[];
@@ -41,30 +41,35 @@ export default function AvtalCard({
     />
   );
 
+  const maxExcerptLength = 140; // Set your desired excerpt length here
+
+  // Function to truncate the excerpt to the desired length
+  const truncateExcerpt = (text) => {
+    if (text.length > maxExcerptLength) {
+      return `${text.substr(0, maxExcerptLength)}...`;
+    }
+    return text;
+  };
+
   return (
     <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
-      <div className="relative mb-4 h-80 w-full shrink-0 sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
-        {status === "authenticated" ? (
-          <Link
-            href={`/avtal/${slug}`}
-            className="relative block h-full w-full"
-            rel="preload"
-            as="image"
-          >
-            {cardImage}
-          </Link>
-        ) : (
-          <Link
-            href="/login"
-            className="relative block h-full w-full"
-            rel="preload"
-            as="image"
-          >
-            {cardImage}
-          </Link>
-        )}
-      </div>
-      <div className="relative">
+      {sourceUrl !== undefined ? (
+        <div className="relative mb-4 h-80 w-full shrink-0 sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
+          {status === "authenticated" ? (
+            <Link
+              href={`/avtal/${slug}`}
+              className="relative block h-full w-full"
+            >
+              {cardImage}
+            </Link>
+          ) : (
+            <Link href="/login" className="relative block h-full w-full">
+              {cardImage}
+            </Link>
+          )}
+        </div>
+      ) : null}
+      <div className="relative w-full">
         {status === "authenticated" ? (
           <StarButton
             icon={true}
@@ -77,14 +82,17 @@ export default function AvtalCard({
         )}
         {status === "authenticated" ? (
           <Link href={`/avtal/${slug}`}>
-            <h2 className="mb-4 text-2xl font-black">{title}</h2>
+            <h2 className="mb-4 pr-6 text-2xl font-black">{title}</h2>
           </Link>
         ) : (
-          <Link href="/login" rel="preload" as="image">
+          <Link href="/login">
             <h2 className="mb-4 text-2xl font-black">{title}</h2>
           </Link>
         )}
-        <div className="mb-4" dangerouslySetInnerHTML={{ __html: excerpt }} />
+        <div
+          className="mb-4"
+          dangerouslySetInnerHTML={{ __html: truncateExcerpt(excerpt) }}
+        />
         <div className="flex flex-wrap">
           {categories.edges?.map(({ node }) => (
             <div

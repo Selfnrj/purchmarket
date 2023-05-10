@@ -1,11 +1,11 @@
-﻿import { GetStaticProps } from "next";
-import { useEffect, useState } from "react";
+﻿﻿import { useEffect, useState } from "react";
 import AvtalUtvalda from "../components/avtal-utvalda";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
 import { getUser, getWishList } from "../lib/api";
+import { GetStaticProps } from "next";
 
-export default function MinaAvtal({ viewer, wishList }) {
+export default function MinaAvtal({ wishList, viewer }) {
   const [favorite, setFavorite] = useState(wishList.productIds);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function MinaAvtal({ viewer, wishList }) {
     <>
       <Breadcrumbs />
       <Container>
-        <div>
+        <div className="mx-auto max-w-6xl">
           <h1 className="my-8 text-6xl font-black leading-tight">Mina Avtal</h1>
           <AvtalUtvalda
             viewer={viewer}

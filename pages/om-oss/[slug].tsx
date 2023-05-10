@@ -1,8 +1,8 @@
-﻿import { getAllPagesWithSlugs, getPageBySlug } from "../lib/api";
+﻿import { getAllPagesWithSlugs, getPageBySlug } from "../../lib/api";
 import Head from "next/head";
-import Breadcrumbs from "../components/Breadcrumbs";
+import Breadcrumbs from "../../components/Breadcrumbs";
 
-export default function Page({ page }) {
+export default function OmossPage({ page }) {
   /*   
   const router = useRouter();
 
@@ -29,7 +29,7 @@ export default function Page({ page }) {
 export async function getStaticPaths() {
   const pagesWithSlugs = await getAllPagesWithSlugs();
   return {
-    paths: pagesWithSlugs.edges.map(({ node }) => `/${node.slug}`) || [],
+    paths: pagesWithSlugs.edges.map(({ node }) => `/om-oss/${node.slug}`) || [],
     fallback: false,
   };
 }

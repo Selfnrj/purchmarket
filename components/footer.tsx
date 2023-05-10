@@ -103,7 +103,10 @@ export default function Footer() {
             . All Rights Reserved.
           </span>
           <div className="flex space-x-6 sm:mt-0 sm:justify-center">
-            <a href="https://linkedin.com/in/" target="_blank">
+            <a
+              href="https://www.linkedin.com/company/purch-ab/"
+              target="_blank"
+            >
               <Image width={24} height={24} alt="linkedin" src={linkedin} />
             </a>
           </div>
