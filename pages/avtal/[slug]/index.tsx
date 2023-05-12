@@ -336,7 +336,7 @@ export async function getStaticProps({ params }) {
   const products = await getAllAvtal();
   const wishList = await getWishList();
 
-  return { props: { product, products, wishList } };
+  return { props: { product, products, wishList }, revalidate: 10 };
 }
 
 export async function getStaticPaths() {
