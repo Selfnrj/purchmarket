@@ -70,7 +70,7 @@ export async function getWishList() {
   return data?.getWishList;
 }
 
-export async function getAllPostsForHome(preview) {
+export async function getAllPostsForHome() {
   const data = await fetchAPI(
     `
     query AllPosts {
@@ -107,13 +107,7 @@ export async function getAllPostsForHome(preview) {
         }
       }
     }
-  `,
-    {
-      variables: {
-        onlyEnabled: !preview,
-        preview,
-      },
-    }
+  `
   );
 
   return data?.posts;

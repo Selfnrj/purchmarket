@@ -60,10 +60,10 @@ export default function Nyheter({ allPosts }) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const allPosts = await getAllPostsForHome(preview);
+  const allPosts = await getAllPostsForHome();
 
   return {
     props: { allPosts, preview },
-    revalidate: 10,
+    revalidate: 5,
   };
 };

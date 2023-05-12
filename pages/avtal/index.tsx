@@ -214,6 +214,6 @@ export async function getStaticProps() {
 
   return {
     props: { products, allCategories, wishList, heroAvtal },
-    revalidate: 10,
+    revalidate: 5,
   };
 }
