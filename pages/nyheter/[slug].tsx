@@ -95,6 +95,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: allPosts.edges.map(({ node }) => `/nyheter/${node.slug}`) || [],
-    fallback: true,
+    fallback: false,
   };
 };

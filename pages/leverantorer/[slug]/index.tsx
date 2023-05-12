@@ -80,6 +80,6 @@ export async function getStaticPaths() {
       leverantorWithSlugs.edges.map(
         ({ node }) => `/leverantorer/${node.slug}`
       ) || [],
-    fallback: true,
+    fallback: false,
   };
 }

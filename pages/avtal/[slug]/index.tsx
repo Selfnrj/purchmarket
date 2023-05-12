@@ -343,6 +343,6 @@ export async function getStaticPaths() {
   const avtalWithSlugs = await getAllAvtal();
   return {
     paths: avtalWithSlugs?.edges.map(({ node }) => `/avtal/${node.slug}`) || [],
-    fallback: true,
+    fallback: false,
   };
 }
