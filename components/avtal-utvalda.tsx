@@ -13,9 +13,11 @@ export default function AvtalUtvalda({ favorite, setFavorite, products }) {
     item.node.avtalstyp.valjkund?.some((item) => item.id.includes(id))
   );
 
+  console.log(filteredProductsWithIds);
+
   return (
     <div>
-      {filteredProductsWithIds.lenght ? (
+      {filteredProductsWithIds.length ? (
         filteredProductsWithIds.map((item) => (
           <AvtalCard
             key={item.node.id}

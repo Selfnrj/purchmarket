@@ -6,13 +6,17 @@ import {
   getHeroAvtal,
   getWishList,
 } from "../../lib/api";
-import AvtalCard from "../../components/avtal-card";
 import { ChangeEvent, useEffect, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { Toaster } from "react-hot-toast";
+import AvtalFilterlist from "../../components/avtal-filterlist";
+import AuthContent from "../../components/AuthContent";
+import useAuth from "../../hooks/useAuth";
+import UnAuthContent from "../../components/UnAuthContent";
+import AvtalFilterlistLogout from "../../components/avtal-filterlist-logout";
 
 export default function Avtal({
   products,
@@ -24,6 +28,9 @@ export default function Avtal({
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
   const tagscontact = taggs.flat(1);*/
+
+  const { loggedIn } = useAuth();
+
   const [favorite, setFavorite] = useState(wishList.productIds);
 
   useEffect(() => {
@@ -153,48 +160,28 @@ export default function Avtal({
               ))}
           </div>
           <div className="col-span-3">
-            {filteredAvtal.length ? (
-              filteredAvtal
-                .filter((item) => item.node.avtalstyp.valjkund === null)
-                .slice(...(isAllCategory ? [0, postNum] : [0, 1000]))
-                .map((item) => {
-                  if (
-                    !isAllCategory &&
-                    item.node.productCategories.edges
-                      .map((item) => item.node.name)
-                      .some((category) => filtercategories.includes(category))
-                  ) {
-                    return (
-                      <AvtalCard
-                        key={item.node.id}
-                        productId={item.node.productId}
-                        title={item.node.title}
-                        excerpt={item.node.excerpt}
-                        slug={item.node.slug}
-                        categories={item.node.productCategories}
-                        sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                        setFavorite={setFavorite}
-                        favorite={favorite}
-                      />
-                    );
-                  } else if (isAllCategory) {
-                    return (
-                      <AvtalCard
-                        key={item.node.id}
-                        productId={item.node.productId}
-                        title={item.node.title}
-                        excerpt={item.node.excerpt}
-                        slug={item.node.slug}
-                        categories={item.node.productCategories}
-                        sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                        setFavorite={setFavorite}
-                        favorite={favorite}
-                      />
-                    );
-                  }
-                })
+            {loggedIn ? (
+              <AuthContent>
+                <AvtalFilterlist
+                  filteredAvtal={filteredAvtal}
+                  isAllCategory={isAllCategory}
+                  postNum={postNum}
+                  favorite={favorite}
+                  setFavorite={setFavorite}
+                  filtercategories={filtercategories}
+                />
+              </AuthContent>
             ) : (
-              <p className="text-center">Inga avtal hittades...</p>
+              <UnAuthContent>
+                <AvtalFilterlistLogout
+                  filteredAvtal={filteredAvtal}
+                  isAllCategory={isAllCategory}
+                  postNum={postNum}
+                  favorite={favorite}
+                  setFavorite={setFavorite}
+                  filtercategories={filtercategories}
+                />
+              </UnAuthContent>
             )}
             {postNum < filteredAvtal.length && isAllCategory ? (
               <LoadmoreButton postNum={postNum} setNumber={setPostNum} />

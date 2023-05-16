@@ -17,8 +17,6 @@ export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [shuffledItems, setShuffledItems] = useState(filteredProducts);
 
-  console.log(filteredProducts);
-
   const movePrev = () => {
     if (currentIndex > 0) {
       setCurrentIndex((prevState) => prevState - 1);
