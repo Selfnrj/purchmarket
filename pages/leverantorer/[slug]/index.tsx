@@ -70,7 +70,7 @@ export async function getStaticProps({ params }) {
   const allAvtal = await getAllAvtal();
   const wishList = await getWishList();
 
-  return { props: { leverantor, allAvtal, wishList } };
+  return { props: { leverantor, allAvtal, wishList }, revalidate: 10 };
 }
 
 export async function getStaticPaths() {
@@ -80,6 +80,6 @@ export async function getStaticPaths() {
       leverantorWithSlugs.edges.map(
         ({ node }) => `/leverantorer/${node.slug}`
       ) || [],
-    fallback: true,
+    fallback: false,
   };
 }

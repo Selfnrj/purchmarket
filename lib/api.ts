@@ -96,7 +96,7 @@ export async function getUser() {
   return data?.viewer;
 }
 
-export async function getAllPostsForHome(preview) {
+export async function getAllPostsForHome() {
   const data = await fetchAPI(
     `
     query AllPosts {
@@ -133,13 +133,7 @@ export async function getAllPostsForHome(preview) {
         }
       }
     }
-  `,
-    {
-      variables: {
-        onlyEnabled: !preview,
-        preview,
-      },
-    }
+  `
   );
 
   return data?.posts;

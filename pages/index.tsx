@@ -118,14 +118,14 @@ export default function Index({ allPosts, products, wishList, IndexData }) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const allPosts = await getAllPostsForHome(preview);
+export const getStaticProps: GetStaticProps = async () => {
+  const allPosts = await getAllPostsForHome();
   const products = await getAllAvtal();
   const wishList = await getWishList();
   const IndexData = await getIndex();
 
   return {
-    props: { allPosts, products, preview, wishList, IndexData },
-    revalidate: 10,
+    props: { allPosts, products, wishList, IndexData },
+    revalidate: 5,
   };
 };

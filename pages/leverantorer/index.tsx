@@ -149,6 +149,6 @@ export async function getStaticProps() {
 
   return {
     props: { allLeverantorer, allCategories, heroLeverantor },
-    revalidate: 10,
+    revalidate: 5,
   };
 }

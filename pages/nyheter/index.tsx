@@ -8,8 +8,13 @@ import Breadcrumbs from "../../components/Breadcrumbs";
 import NewsPanel from "../../components/news-panel";
 
 export default function Nyheter({ allPosts }) {
-  const totalCount = allPosts.edges.length;
-  const [postNum, setPostNum] = useState(3); // Default number of posts dislplayed
+  const totalCountNyhet = allPosts.edges.filter(
+    (item) => item.node.categories?.edges[0].node.name === "Nyhet"
+  ).length;
+  const totalCountPress = allPosts.edges.filter(
+    (item) => item.node.categories?.edges[0].node.name === "Press"
+  ).length;
+  const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
 
   return (
     <>
@@ -24,7 +29,10 @@ export default function Nyheter({ allPosts }) {
         <Tab.Group>
           <div className="mb-4  flex items-center justify-between border border-transparent border-b-gray-300">
             <TabLink tablinks={["Alla", "Nyheter", "Press"]} />
-            <p className="hidden sm:block">Totalt: {totalCount} nyheter </p>
+            <p className="hidden sm:block">
+              Totalt: {totalCountNyhet} nyheter och{" "}
+              {totalCountPress === 1 ? "ett" : totalCountPress} pressmeddelanden{" "}
+            </p>
           </div>
           <Tab.Panels>
             <NewsPanel
@@ -52,10 +60,10 @@ export default function Nyheter({ allPosts }) {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const allPosts = await getAllPostsForHome(preview);
+  const allPosts = await getAllPostsForHome();
 
   return {
     props: { allPosts, preview },
-    revalidate: 10,
+    revalidate: 5,
   };
 };
