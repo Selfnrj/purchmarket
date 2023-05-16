@@ -89,6 +89,7 @@ export async function getUser() {
           juzo
           medema
           mediqSverige
+          onemedSverige
         }
       }
     }

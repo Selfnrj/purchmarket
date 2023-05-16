@@ -1,10 +1,10 @@
-﻿import { gql, useQuery } from "@apollo/client";
-import { GetStaticProps } from "next";
+﻿import { GetStaticProps } from "next";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { getUser } from "../lib/api";
 
 export default function KundNummer({ viewer }) {
-  const { catell, juzo, medema, mediqSverige } = viewer.kundnummer;
+  const { catell, juzo, medema, mediqSverige, onemedSverige } =
+    viewer.kundnummer;
 
   return (
     <>
@@ -15,19 +15,27 @@ export default function KundNummer({ viewer }) {
         </h1>
         <div className="flex justify-between border border-transparent border-b-blue-200 p-4">
           <b>Catell</b>
-          <span>{catell}</span>
+          <span>{catell !== null ? catell : "Inget kundnummer"}</span>
         </div>
         <div className="flex justify-between border border-transparent border-b-blue-200 p-4">
           <b>Juzo</b>
-          <span>{juzo}</span>
+          <span>{juzo !== null ? juzo : "Inget kundnummer"}</span>
         </div>
         <div className="flex justify-between border border-transparent border-b-blue-200 p-4">
           <b>Medema</b>
-          <span>{medema}</span>
+          <span>{medema !== null ? medema : "Inget kundnummer"}</span>
         </div>
         <div className="flex justify-between border border-transparent border-b-blue-200 p-4">
           <b>MediqSverige</b>
-          <span>{mediqSverige}</span>
+          <span>
+            {mediqSverige !== null ? mediqSverige : "Inget kundnummer"}
+          </span>
+        </div>
+        <div className="flex justify-between border border-transparent border-b-blue-200 p-4">
+          <b>OneMed Sverige</b>
+          <span>
+            {onemedSverige !== null ? onemedSverige : "Inget kundnummer"}
+          </span>
         </div>
       </div>
     </>
