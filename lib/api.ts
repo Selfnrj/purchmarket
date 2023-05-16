@@ -8,6 +8,7 @@ async function fetchAPI(query = "", { variables }: Record<string, any> = {}) {
       "Authorization"
     ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
   }
+
   // WPGraphQL Plugin must be enabled
   const res = await fetch(API_URL, {
     headers,
@@ -67,33 +68,6 @@ export async function getWishList() {
     }
   `);
   return data?.getWishList;
-}
-
-export async function getUser() {
-  const data = await fetchAPI(`
-    query Viewer {
-      viewer {
-        avatar(size: 400) {
-          url
-        }
-        id
-        databaseId
-        firstName
-        lastName
-        email
-        description
-        capabilities
-        name
-        kundnummer {
-          catell
-          juzo
-          medema
-          mediqSverige
-        }
-      }
-    }
-  `);
-  return data?.viewer;
 }
 
 export async function getAllPostsForHome() {
@@ -607,7 +581,6 @@ export async function getAllRedigera() {
 
 export async function getKundNummer() {
   const data = await fetchAPI(`
-  query Kundnummer {
     viewer {
       kundnummer {
         catell
@@ -616,9 +589,8 @@ export async function getKundNummer() {
         mediqSverige
       }
     }
-  }
   `);
-  return data?.viewer;
+  return data?.user;
 }
 
 export async function getCategories() {

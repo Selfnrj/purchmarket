@@ -1,12 +1,9 @@
-﻿import AvtalCard from "./avtal-card";
+﻿import useAuth, { User } from "../hooks/useAuth";
+import AvtalCard from "./avtal-card";
 
-export default function AvtalUtvalda({
-  viewer,
-  products,
-  favorite,
-  setFavorite,
-}) {
-  const { id } = viewer;
+export default function AvtalUtvalda({ favorite, setFavorite, products }) {
+  const { user } = useAuth();
+  const { id } = user as User;
 
   const filteredProducts = products.edges.filter(
     (item) => item.node.avtalstyp.valjkund !== null
@@ -18,22 +15,22 @@ export default function AvtalUtvalda({
 
   return (
     <div>
-      {filteredProductsWithIds.length ? (
+      {filteredProductsWithIds.lenght ? (
         filteredProductsWithIds.map((item) => (
           <AvtalCard
-            key={item?.node?.id}
-            productId={item?.node?.id}
-            title={item?.node?.title}
-            excerpt={item?.node?.excerpt}
-            slug={item?.node?.slug}
-            categories={item?.node?.productCategories}
-            sourceUrl={item?.node?.featuredImage?.node?.sourceUrl}
+            key={item.node.id}
+            productId={item.node.id}
+            title={item.node.title}
+            excerpt={item.node.excerpt}
+            slug={item.node.slug}
+            categories={item.node.productCategories}
+            sourceUrl={item.node.featuredImage.node.sourceUrl}
             favorite={favorite}
             setFavorite={setFavorite}
           />
         ))
       ) : (
-        <p>Inga avtal att visa</p>
+        <p>Inga utvalda avtal</p>
       )}
     </div>
   );

@@ -1,13 +1,15 @@
 ﻿import Container from "../components/container";
-import { getAllRapporter, getHeroRapporter, getUser } from "../lib/api";
+import { getAllRapporter, getHeroRapporter } from "../lib/api";
+import useAuth from "../hooks/useAuth";
 import RapportLogin from "../components/rapport-login";
+import UnAuthContent from "../components/UnAuthContent";
 import Rapporter from "../components/rapporter";
+import AuthContent from "../components/AuthContent";
 import PageCover from "../components/page-cover";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useSession } from "next-auth/react";
 
-export default function RapporterPage({ viewer, heroRapporter }) {
-  const { status } = useSession();
+export default function RapporterPage({ allRapporter, heroRapporter }) {
+  const { loggedIn } = useAuth();
 
   const { heroText, heroRubrik, heroBild } = heroRapporter.redigera;
 
@@ -20,12 +22,16 @@ export default function RapporterPage({ viewer, heroRapporter }) {
         bild={heroBild.sourceUrl}
         type={heroBild.mediaType}
       />
-      {status === "authenticated" ? (
+      {loggedIn ? (
         <Container>
-          <Rapporter viewer={viewer} />
+          <AuthContent>
+            <Rapporter />
+          </AuthContent>
         </Container>
       ) : (
-        <RapportLogin />
+        <UnAuthContent>
+          <RapportLogin />
+        </UnAuthContent>
       )}
     </>
   );
@@ -34,7 +40,6 @@ export default function RapporterPage({ viewer, heroRapporter }) {
 export async function getStaticProps() {
   const allRapporter = await getAllRapporter();
   const heroRapporter = await getHeroRapporter();
-  const viewer = await getUser();
 
-  return { props: { allRapporter, heroRapporter, viewer }, revalidate: 10 };
+  return { props: { allRapporter, heroRapporter } };
 }

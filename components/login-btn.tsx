@@ -1,14 +1,13 @@
 ﻿import { ArrowRightIcon, UserIcon } from "@heroicons/react/24/outline";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import useAuth from "../hooks/useAuth";
 
 export default function LoginBtn() {
-  const { status } = useSession();
+  const { loggedIn } = useAuth();
 
   return (
     <div>
-      {status === "authenticated" ? (
+      {loggedIn ? (
         <>
           <div className="flex items-center">
             <Link

@@ -1,6 +1,8 @@
 ﻿import { useMutation, gql } from "@apollo/client";
 import { CheckIcon } from "@heroicons/react/24/outline";
 
+import useAuth, { User } from "../hooks/useAuth";
+
 const UPDATE_PROFILE = gql`
   mutation updateProfile(
     $id: ID!
@@ -25,8 +27,9 @@ const UPDATE_PROFILE = gql`
   }
 `;
 
-export default function ProfileForm({ viewer }) {
-  const { id, firstName, lastName, email, description } = viewer;
+export default function ProfileForm() {
+  const { user } = useAuth();
+  const { id, firstName, lastName, email, description } = user as User;
   const [updateProfile, { data, loading, error }] = useMutation(UPDATE_PROFILE);
   const wasProfileUpdated = Boolean(data?.updateUser?.user?.databaseId);
 

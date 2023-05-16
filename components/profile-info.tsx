@@ -1,22 +1,21 @@
-﻿import { useSession } from "next-auth/react";
-import Image from "next/image";
-import React from "react";
+﻿import Image from "next/image";
+import React from 'react'
+import useAuth, { User } from "../hooks/useAuth";
 
-export default function profileInfo({ viewer }) {
-  const { data: session } = useSession();
-  //const { user } = useAuth();
-  //const { firstName, lastName, avatar } = user as User;
+export default function profileInfo() {
+  const { user } = useAuth();
+  const { firstName, lastName, avatar } = user as User;
 
   return (
-    <div className="mt-24 mb-6 flex flex-col items-center">
+    <div className="flex flex-col items-center mt-24 mb-6">
       <Image
         width={200}
         height={200}
         className="mb-4 rounded-full"
         alt="arrow right"
-        src={viewer.avatar.url}
+        src={avatar.url} 
       />
-      <h2 className="text-4xl font-bold">{viewer.name}</h2>
+      <h2 className="text-4xl font-bold">{firstName} {lastName}</h2>
     </div>
-  );
+  )
 }

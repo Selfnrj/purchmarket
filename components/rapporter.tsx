@@ -27,9 +27,10 @@ const RAPPORT_QUERY = gql`
   }
 `;
 
-export default function Rapporter({ viewer }) {
+export default function Rapporter() {
   const { data, loading, error } = useQuery(RAPPORT_QUERY);
-  const { id } = viewer;
+  const { user } = useAuth();
+  const { id } = user as User;
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

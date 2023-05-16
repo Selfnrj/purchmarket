@@ -8,10 +8,16 @@ import { useEffect, useRef, useState } from "react";
 import AvtalCard from "./avtal-card";
 
 export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
+  const filteredProducts = products?.edges.filter(
+    (item) => item.node.avtalstyp.valjkund === null
+  );
+
   const carousel = useRef(null);
   const maxScrollWidth = useRef(0);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [shuffledItems, setShuffledItems] = useState(products?.edges);
+  const [shuffledItems, setShuffledItems] = useState(filteredProducts);
+
+  console.log(filteredProducts);
 
   const movePrev = () => {
     if (currentIndex > 0) {
@@ -85,7 +91,6 @@ export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
       >
         {shuffledItems
           /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
-          .filter((item) => item.node.avtalstyp.valjkund === null)
           .slice(0, 6)
           .map((item, index) => (
             <AvtalCard
