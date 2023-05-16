@@ -4,6 +4,7 @@ import {
   getAllAvtal,
   getCategories,
   getHeroAvtal,
+  getUser,
   getWishList,
 } from "../../lib/api";
 import AvtalCard from "../../components/avtal-card";
@@ -13,18 +14,21 @@ import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { Toaster } from "react-hot-toast";
+import { useSession } from "next-auth/react";
 
 export default function Avtal({
   products,
   allCategories,
   wishList,
   heroAvtal,
+  viewer,
 }) {
   /*   const taggs = products.edges.map((item) =>
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
   const tagscontact = taggs.flat(1);*/
   const [favorite, setFavorite] = useState(wishList.productIds);
+  const { status } = useSession();
 
   useEffect(() => {
     const data = window.localStorage.getItem("SAVE_FAVORITE");
@@ -155,7 +159,18 @@ export default function Avtal({
           <div className="col-span-3">
             {filteredAvtal.length ? (
               filteredAvtal
-                .filter((item) => item.node.avtalstyp.synligtKund === null)
+                .filter((item) => {
+                  if (status === "authenticated") {
+                    return (
+                      item.node.avtalstyp.valjkund === null ||
+                      item.node.avtalstyp.valjkund?.some((item) =>
+                        item.id.includes(viewer.id)
+                      )
+                    );
+                  } else {
+                    return item.node.avtalstyp.valjkund === null;
+                  }
+                })
                 .slice(...(isAllCategory ? [0, postNum] : [0, 1000]))
                 .map((item) => {
                   if (
@@ -211,9 +226,10 @@ export async function getStaticProps() {
   const allCategories = await getCategories();
   const wishList = await getWishList();
   const heroAvtal = await getHeroAvtal();
+  const viewer = await getUser();
 
   return {
-    props: { products, allCategories, wishList, heroAvtal },
+    props: { products, allCategories, wishList, heroAvtal, viewer },
     revalidate: 10,
   };
 }

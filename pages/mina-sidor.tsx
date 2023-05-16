@@ -27,14 +27,9 @@ export default function Profile({ viewer }) {
     },
   });
 
-  const { data: session } = useSession();
-  console.log("session", session);
-
   if (status === "loading") {
     return <Loader />;
   }
-
-  console.log(viewer);
 
   return (
     <div>

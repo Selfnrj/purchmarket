@@ -189,7 +189,6 @@ export async function getAllAvtal() {
                   title
                 }
               }
-              synligtKund
             }
             sok {
               sokord

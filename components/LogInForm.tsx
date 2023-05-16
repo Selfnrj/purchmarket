@@ -21,7 +21,6 @@ export default function LogInForm() {
       if (ok) {
         router.push("/mina-sidor");
       } else {
-        console.log(error);
         toast.error(
           "Ogiltig e-postadress eller lösenord. Var god försök igen."
         );

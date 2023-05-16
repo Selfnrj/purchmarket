@@ -304,7 +304,7 @@ export default function AvtalDetail({ product, products, wishList }) {
               .filter(
                 (item) =>
                   item.node.productId !== product.productId &&
-                  item.node.avtalstyp.synligtKund === null
+                  item.node.avtalstyp.valjkund === null
               )
               .slice(0, 2)
               .map((item) => (

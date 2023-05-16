@@ -56,7 +56,7 @@ export default function Index({ allPosts, products, wishList, IndexData }) {
         <Container>
           <LatestStories allPosts={allPosts} />
         </Container>
-        <Link href="/omoss">
+        <Link href="/om-oss">
           <div className="wp-block-cover relative flex w-full items-center">
             <div className="absolute z-40 h-full w-full bg-black bg-opacity-50" />
             <div className="container relative z-40 mx-auto px-5 text-white">

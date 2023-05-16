@@ -85,7 +85,7 @@ export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
       >
         {shuffledItems
           /* .filter((item) => item.node.avtalstyp.valjkund === "Alla") */
-          .filter((item) => item.node.avtalstyp.synligtKund === null)
+          .filter((item) => item.node.avtalstyp.valjkund === null)
           .slice(0, 6)
           .map((item, index) => (
             <AvtalCard

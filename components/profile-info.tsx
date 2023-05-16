@@ -7,8 +7,6 @@ export default function profileInfo({ viewer }) {
   //const { user } = useAuth();
   //const { firstName, lastName, avatar } = user as User;
 
-  console.log(session);
-
   return (
     <div className="mt-24 mb-6 flex flex-col items-center">
       <Image

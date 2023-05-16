@@ -1,83 +1,40 @@
-﻿import { gql, useQuery } from "@apollo/client";
-import AvtalCard from "./avtal-card";
+﻿import AvtalCard from "./avtal-card";
 
-const PRODUCT_QUERY = gql`
-  query Avtal {
-    products {
-      edges {
-        node {
-          date
-          excerpt
-          id
-          productId
-          title
-          slug
-          featuredImage {
-            node {
-              altText
-              sourceUrl
-            }
-          }
-          productCategories {
-            edges {
-              node {
-                id
-                name
-              }
-            }
-          }
-          productTags {
-            edges {
-              node {
-                id
-                name
-              }
-            }
-          }
-          avtalstyp {
-            valjkund {
-              id
-            }
-            leverantor {
-              ... on Leverantorer {
-                title
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export default function AvtalUtvalda({ viewer, favorite, setFavorite }) {
-  const { data, loading, error } = useQuery(PRODUCT_QUERY);
+export default function AvtalUtvalda({
+  viewer,
+  products,
+  favorite,
+  setFavorite,
+}) {
   const { id } = viewer;
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const filteredProducts = products.edges.filter(
+    (item) => item.node.avtalstyp.valjkund !== null
+  );
 
-  const allProducts = data.products.edges;
+  const filteredProductsWithIds = filteredProducts.filter((item) =>
+    item.node.avtalstyp.valjkund?.some((item) => item.id.includes(id))
+  );
 
   return (
     <div>
-      {allProducts
-        .filter((item) =>
-          item.node.avtalstyp.valjkund?.filter((item) => item.id.includes(id))
-        )
-        .map((item) => (
+      {filteredProductsWithIds.length ? (
+        filteredProductsWithIds.map((item) => (
           <AvtalCard
-            key={item.node.id}
-            productId={item.node.id}
-            title={item.node.title}
-            excerpt={item.node.excerpt}
-            slug={item.node.slug}
-            categories={item.node.productCategories}
-            sourceUrl={item.node.featuredImage.node.sourceUrl}
+            key={item?.node?.id}
+            productId={item?.node?.id}
+            title={item?.node?.title}
+            excerpt={item?.node?.excerpt}
+            slug={item?.node?.slug}
+            categories={item?.node?.productCategories}
+            sourceUrl={item?.node?.featuredImage?.node?.sourceUrl}
             favorite={favorite}
             setFavorite={setFavorite}
           />
-        ))}
+        ))
+      ) : (
+        <p>Inga avtal att visa</p>
+      )}
     </div>
   );
 }
