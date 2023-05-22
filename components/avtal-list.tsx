@@ -68,7 +68,7 @@ export default function AvtalList({ products, rubrik, favorite, setFavorite }) {
       return array;
     };
 
-    setShuffledItems(shuffleArray(products?.edges));
+    setShuffledItems(shuffleArray(filteredProducts));
   }, []);
 
   return (
