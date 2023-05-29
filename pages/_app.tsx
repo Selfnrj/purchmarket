@@ -5,6 +5,8 @@ import { client } from "../lib/apolloClient";
 import { AuthProvider } from "../hooks/useAuth";
 import Layout from "../components/layout";
 import "../styles/index.css";
+import { useEffect } from "react";
+import { initGA, logPageView } from "../lib/ga";
 
 const lato = Lato({
   weight: ["400", "700", "900"],
@@ -14,6 +16,14 @@ const lato = Lato({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    if (!(window as any).GA_INITIALIZED) {
+      initGA();
+      (window as any).GA_INITIALIZED = true;
+    }
+    logPageView();
+  }, []);
+
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
