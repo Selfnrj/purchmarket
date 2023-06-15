@@ -6,7 +6,7 @@ import {
   getHeroAvtal,
   getWishList,
 } from "../../lib/api";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Checkbox from "../../components/checkbox";
 import LoadmoreButton from "../../components/loadmore-button";
@@ -81,6 +81,23 @@ export default function Avtal({
 
   const { heroRubrik, heroBild } = heroAvtal.redigera;
 
+  const inputRef = useRef(null);
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      // Remove the input focus
+      inputRef.current.blur();
+    }
+  };
+
+  const handleInputClick = () => {
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
+  };
+
   return (
     <>
       <Toaster />
@@ -99,9 +116,12 @@ export default function Avtal({
                 className="w-full rounded-full p-4 pl-12 text-black"
                 placeholder="Sök avtal"
                 value={searchString}
+                onKeyPress={handleKeyPress}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setSearchString(e.target.value)
                 }
+                ref={inputRef}
+                onClick={handleInputClick}
               />
             </div>
           </form>
