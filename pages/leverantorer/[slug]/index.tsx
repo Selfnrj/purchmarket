@@ -1,5 +1,4 @@
 ﻿import Image from "next/image";
-import { useState } from "react";
 import AvtalCard from "../../../components/avtal-card";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import Container from "../../../components/container";
@@ -9,10 +8,22 @@ import {
   getLeverantor,
   getWishList,
 } from "../../../lib/api";
+import { gql, useQuery } from "@apollo/client";
+import Loader from "../../../components/Loader";
 
-export default function LeverantorDetalj({ leverantor, allAvtal, wishList }) {
-  const [favorite, setFavorite] = useState(wishList?.productIds);
+const WISHLIST = gql`
+  query WishList {
+    getWishList {
+      productIds
+    }
+  }
+`;
 
+export default function LeverantorDetalj({ leverantor, allAvtal }) {
+  const { data, loading, error } = useQuery(WISHLIST);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
   const visibleAvtal = allAvtal?.edges.filter(
     (name) =>
       name.node?.avtalstyp?.leverantor !== null &&
@@ -55,8 +66,7 @@ export default function LeverantorDetalj({ leverantor, allAvtal, wishList }) {
               slug={item.node.slug}
               categories={item.node.productCategories}
               sourceUrl={item.node.featuredImage?.node.sourceUrl}
-              setFavorite={setFavorite}
-              favorite={favorite}
+              wishList={data?.getWishList.productIds}
             />
           ))}
         </div>

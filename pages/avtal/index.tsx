@@ -15,6 +15,16 @@ import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
+import { gql, useQuery } from "@apollo/client";
+import Loader from "../../components/Loader";
+
+const WISHLIST = gql`
+  query WishList {
+    getWishList {
+      productIds
+    }
+  }
+`;
 
 export default function Avtal({
   products,
@@ -27,17 +37,7 @@ export default function Avtal({
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
   const tagscontact = taggs.flat(1);*/
-  const [favorite, setFavorite] = useState(wishList.productIds);
   const { status } = useSession();
-
-  useEffect(() => {
-    const data = window.localStorage.getItem("SAVE_FAVORITE");
-    if (data !== null) setFavorite(JSON.parse(data));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
-  }, [favorite]);
 
   const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
   const [filteredAvtal, setFilteredAvtal] = useState(products.edges);
@@ -77,6 +77,11 @@ export default function Avtal({
   }, [filtercategories]);
 
   const { heroRubrik, heroBild } = heroAvtal.redigera;
+
+  const { data, loading, error } = useQuery(WISHLIST);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>
@@ -188,8 +193,7 @@ export default function Avtal({
                         slug={item.node.slug}
                         categories={item.node.productCategories}
                         sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                        setFavorite={setFavorite}
-                        favorite={favorite}
+                        wishList={data?.getWishList.productIds}
                       />
                     );
                   } else if (isAllCategory) {
@@ -202,8 +206,7 @@ export default function Avtal({
                         slug={item.node.slug}
                         categories={item.node.productCategories}
                         sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                        setFavorite={setFavorite}
-                        favorite={favorite}
+                        wishList={data?.getWishList.productIds}
                       />
                     );
                   }

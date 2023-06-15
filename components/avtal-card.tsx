@@ -11,8 +11,7 @@ interface Props {
   sourceUrl?: string;
   className?: string;
   productId?: number;
-  favorite?: number[];
-  setFavorite?: any;
+  wishList?: any;
 }
 
 export default function AvtalCard({
@@ -23,8 +22,7 @@ export default function AvtalCard({
   sourceUrl,
   className,
   productId,
-  favorite,
-  setFavorite,
+  wishList,
 }: Props) {
   const { status } = useSession();
 
@@ -71,12 +69,7 @@ export default function AvtalCard({
       ) : null}
       <div className="relative w-full">
         {status === "authenticated" ? (
-          <StarButton
-            icon={true}
-            productId={productId}
-            favorite={favorite}
-            setFavorite={setFavorite}
-          />
+          <StarButton icon={true} productId={productId} wishList={wishList} />
         ) : (
           ""
         )}

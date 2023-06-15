@@ -1,26 +1,11 @@
-﻿import { useEffect, useState } from "react";
-import { Toaster } from "react-hot-toast";
+﻿import { Toaster } from "react-hot-toast";
 import AvtalSparade from "../components/avtal-sparade";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
 import { getAllAvtal, getWishList } from "../lib/api";
-import Link from "next/link";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import AvtalCard from "../components/avtal-card";
 import AvtalList from "../components/avtal-list";
 
-export default function SparadeAvtal({ products, wishList }) {
-  const [favorite, setFavorite] = useState(wishList.productIds);
-
-  useEffect(() => {
-    const data = window.localStorage.getItem("SAVE_FAVORITE");
-    if (data !== null) setFavorite(JSON.parse(data));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
-  }, [favorite]);
-
+export default function SparadeAvtal({ products }) {
   return (
     <>
       <Breadcrumbs />
@@ -32,19 +17,10 @@ export default function SparadeAvtal({ products, wishList }) {
             Här hittar du alla dina sparade avtal.
           </p>
         </div>
-        <AvtalSparade
-          products={products}
-          favorite={favorite}
-          setFavorite={setFavorite}
-        />
+        <AvtalSparade products={products} />
       </div>
       <Container>
-        <AvtalList
-          rubrik="Relaterade avtal"
-          products={products}
-          favorite={favorite}
-          setFavorite={setFavorite}
-        />
+        <AvtalList rubrik="Relaterade avtal" products={products} />
       </Container>
     </>
   );

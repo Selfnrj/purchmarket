@@ -1,6 +1,6 @@
 ﻿import { gql, useQuery } from "@apollo/client";
 import Breadcrumbs from "../components/Breadcrumbs";
-import Loader from "@/components/Loader";
+import Loader from "../components/Loader";
 
 const VIEWER = gql`
   query viewer {

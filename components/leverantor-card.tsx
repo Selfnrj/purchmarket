@@ -1,6 +1,6 @@
-﻿import Image from "next/image";
+﻿import { useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
-import useAuth from "../hooks/useAuth";
 
 type Props = {
   id?: string;
@@ -17,7 +17,7 @@ export default function LeverantorCard({
   slug,
   excerpt,
 }: Props) {
-  const { loggedIn } = useAuth();
+  const { status } = useSession();
 
   return (
     <div
@@ -35,7 +35,7 @@ export default function LeverantorCard({
         </div>
       )}
       <div className="flex-1">
-        {loggedIn ? (
+        {status === "authenticated" ? (
           <Link href={`/leverantorer/${slug}`}>
             <h2 className="mb-4 text-2xl font-black">{title}</h2>
           </Link>

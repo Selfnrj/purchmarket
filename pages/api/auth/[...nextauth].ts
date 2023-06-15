@@ -31,7 +31,7 @@ const options: NextAuthOptions = {
           });
 
           const user = {
-            name: data.login.authToken,
+            name: data.login.refreshToken,
             email: credentials.email,
           };
 

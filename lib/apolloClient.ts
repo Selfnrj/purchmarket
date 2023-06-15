@@ -1,6 +1,6 @@
 ﻿import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 const httpLink = createHttpLink({
   uri: process.env.NEXT_PUBLIC_WORDPRESS_API_URL,
@@ -11,7 +11,6 @@ const authLink = setContext(async (_, { headers }) => {
   // return the headers to the context so httpLink can read them
 
   const session = await getSession();
-
   const token = session?.user?.name;
 
   return {

@@ -8,25 +8,28 @@ import StarButton from "../../../components/star-button";
 import { Toaster } from "react-hot-toast";
 import Breadcrumbs from "../../../components/Breadcrumbs";
 import AvtalCard from "../../../components/avtal-card";
-import { useEffect, useState } from "react";
 import Script from "next/script";
 import Head from "next/head";
 import { useSession } from "next-auth/react";
+import { gql, useQuery } from "@apollo/client";
+import Loader from "../../../components/Loader";
+
+const WISHLIST = gql`
+  query WishList {
+    getWishList {
+      productIds
+    }
+  }
+`;
 
 export default function AvtalDetail({ product, products, wishList }) {
+  const { data, loading, error } = useQuery(WISHLIST);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+
   //const size = filesize(avtal.avtalPdf?.pdf?.fileSize);
   const { status } = useSession();
-
-  const [favorite, setFavorite] = useState(wishList?.productIds);
-
-  useEffect(() => {
-    const data = window.localStorage.getItem("SAVE_FAVORITE");
-    if (data !== null) setFavorite(JSON.parse(data));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
-  }, [favorite]);
 
   return (
     <>
@@ -78,8 +81,7 @@ export default function AvtalDetail({ product, products, wishList }) {
                 <StarButton
                   icon={false}
                   productId={product.productId}
-                  favorite={favorite}
-                  setFavorite={setFavorite}
+                  wishList={data?.getWishList.productIds}
                 />
               ) : (
                 ""
@@ -317,8 +319,7 @@ export default function AvtalDetail({ product, products, wishList }) {
                   slug={item.node.slug}
                   categories={item.node.productCategories}
                   sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                  favorite={favorite}
-                  setFavorite={setFavorite}
+                  wishList={data?.getWishList.productIds}
                 />
               ))}
           </div>

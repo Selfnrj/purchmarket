@@ -1,11 +1,28 @@
-﻿import AvtalCard from "./avtal-card";
+﻿import { gql, useQuery } from "@apollo/client";
+import AvtalCard from "./avtal-card";
+import Loader from "./Loader";
 
-export default function AvtalSparade({ products, favorite, setFavorite }) {
+const WISHLIST = gql`
+  query WishList {
+    getWishList {
+      productIds
+    }
+  }
+`;
+
+export default function AvtalSparade({ products }) {
+  const { data, loading, error } = useQuery(WISHLIST);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
     <div>
-      {products?.edges.length ? (
+      {data?.getWishList.productIds.length > 0 ? (
         products?.edges
-          .filter((item) => favorite.includes(item.node.productId))
+          .filter((item) =>
+            data?.getWishList.productIds.includes(item.node.productId)
+          )
           .map((item) => (
             <AvtalCard
               key={item.node.id}
@@ -15,8 +32,7 @@ export default function AvtalSparade({ products, favorite, setFavorite }) {
               slug={item.node.slug}
               categories={item.node.productCategories}
               sourceUrl={item.node.featuredImage?.node.sourceUrl}
-              favorite={favorite}
-              setFavorite={setFavorite}
+              wishList={data?.getWishList.productIds}
             />
           ))
       ) : (

@@ -1,12 +1,18 @@
+import { getSession } from "next-auth/react";
+
 const API_URL = process.env.WORDPRESS_API_URL;
 
 async function fetchAPI(query = "", { variables }: Record<string, any> = {}) {
   const headers = { "Content-Type": "application/json" };
 
-  if (process.env.WORDPRESS_AUTH_REFRESH_TOKEN) {
-    headers[
-      "Authorization"
-    ] = `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`;
+  const session = await getSession();
+
+  const token = session?.user?.name;
+
+  console.log("token", token);
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
   }
   // WPGraphQL Plugin must be enabled
   const res = await fetch(API_URL, {

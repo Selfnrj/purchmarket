@@ -6,11 +6,13 @@ export default function AvtalUtvalda({
   favorite,
   setFavorite,
 }) {
-  const { id } = viewer;
+  //const { id } = viewer;
 
   const filteredProducts = products.edges.filter(
     (item) => item.node.avtalstyp.valjkund !== null
   );
+
+  console.log(filteredProducts);
 
   const filteredProductsWithIds = filteredProducts.filter((item) =>
     item.node.avtalstyp.valjkund?.some((item) => item.id.includes(id))
