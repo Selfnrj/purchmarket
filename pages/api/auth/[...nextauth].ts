@@ -29,18 +29,16 @@ const options: NextAuthOptions = {
               password: credentials.password,
             },
           });
-          if (data?.login?.authToken) {
-            return {
-              accessToken: data.login.authToken,
-              refreshToken: data.login.refreshToken,
-            };
-          } else {
-            throw new Error("Invalid credentials");
-          }
+
+          const user = {
+            name: data.login.authToken,
+            email: credentials.email,
+          };
+
+          return user as any;
         } catch (error) {
-          throw new Error("Invalid credentials");
+          throw new Error("Authentication failed");
         }
-        return null as any;
       },
     }),
   ],

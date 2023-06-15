@@ -1,10 +1,25 @@
 ﻿import { gql, useQuery } from "@apollo/client";
-import { GetStaticProps } from "next";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { getUser } from "../lib/api";
+import Loader from "@/components/Loader";
 
-export default function KundNummer({ viewer }) {
-  const { catell, juzo, medema, mediqSverige } = viewer.kundnummer;
+const VIEWER = gql`
+  query viewer {
+    viewer {
+      kundnummer {
+        catell
+        juzo
+        medema
+        mediqSverige
+      }
+    }
+  }
+`;
+
+export default function KundNummer() {
+  const { data, loading, error } = useQuery(VIEWER);
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+  const { catell, juzo, medema, mediqSverige } = data.viewer.kundnummer;
 
   return (
     <>
@@ -33,12 +48,3 @@ export default function KundNummer({ viewer }) {
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const viewer = await getUser();
-
-  return {
-    props: { viewer },
-    revalidate: 10,
-  };
-};

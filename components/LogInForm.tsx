@@ -1,13 +1,14 @@
 ﻿import Link from "next/link";
 import toast, { Toaster } from "react-hot-toast";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useEffect, useState } from "react";
 
 export default function LogInForm() {
   const router = useRouter();
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
   const [isSigningIn, setIsSigningIn] = useState(false);
+  const { data: session } = useSession();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();

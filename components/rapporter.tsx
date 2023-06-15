@@ -1,44 +1,26 @@
-﻿import useAuth, { User } from "../hooks/useAuth";
-import { gql, useQuery } from "@apollo/client";
+﻿import { gql, useQuery } from "@apollo/client";
 import FileDownloader from "./FileDownloader";
 
-const RAPPORT_QUERY = gql`
-  query Rapporter {
-    allRapporter {
-      edges {
-        node {
-          file {
-            pdf {
-              fileSize
-              mediaItemUrl
-              title
-            }
-          }
-          title
-          id
-          rapportUser {
-            kopplaRapport {
-              id
-            }
-          }
-        }
-      }
+const VIEWER = gql`
+  query Viewer {
+    viewer {
+      id
     }
   }
 `;
 
-export default function Rapporter({ viewer }) {
-  const { data, loading, error } = useQuery(RAPPORT_QUERY);
-  const { id } = viewer;
+export default function Rapporter({ allRapporter }) {
+  const { data, loading, error } = useQuery(VIEWER);
+
+  const id = data?.viewer.id;
+  console.log(data?.viewer.id);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  const allRapporter = data.allRapporter.edges;
-
   return (
     <div>
-      {allRapporter
+      {allRapporter.edges
         .filter((item) => item.node.rapportUser.kopplaRapport[0].id === id)
         .map(({ node }) => (
           <FileDownloader

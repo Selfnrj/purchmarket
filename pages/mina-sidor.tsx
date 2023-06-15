@@ -35,7 +35,7 @@ export default function Profile({ viewer }) {
     <div>
       <Breadcrumbs />
       <Container>
-        <ProfileInfo viewer={viewer} />
+        <ProfileInfo />
         <div className="mb-16 flex justify-center">
           <Link
             href="/installningar"

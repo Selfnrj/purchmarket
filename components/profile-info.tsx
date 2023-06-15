@@ -1,11 +1,29 @@
-﻿import { useSession } from "next-auth/react";
-import Image from "next/image";
-import React from "react";
+﻿import Image from "next/image";
+import { gql, useQuery } from "@apollo/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
-export default function profileInfo({ viewer }) {
-  const { data: session } = useSession();
-  //const { user } = useAuth();
-  //const { firstName, lastName, avatar } = user as User;
+const VIEWER = gql`
+  query viewer {
+    viewer {
+      avatar(size: 400) {
+        url
+      }
+      name
+    }
+  }
+`;
+
+export default function profileInfo() {
+  const { data, loading, error } = useQuery(VIEWER);
+
+  if (loading)
+    return (
+      <div className="mt-24 mb-6 flex flex-col items-center">
+        <Skeleton className="mb-4 h-[200px] w-[200px] rounded-full bg-slate-200" />
+        <Skeleton className="h-8 w-[250px] bg-slate-200" />
+      </div>
+    );
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="mt-24 mb-6 flex flex-col items-center">
@@ -14,9 +32,9 @@ export default function profileInfo({ viewer }) {
         height={200}
         className="mb-4 rounded-full"
         alt="arrow right"
-        src={viewer.avatar.url}
+        src={data.viewer.avatar.url}
       />
-      <h2 className="text-4xl font-bold">{viewer.name}</h2>
+      <h2 className="text-4xl font-bold">{data.viewer.name}</h2>
     </div>
   );
 }

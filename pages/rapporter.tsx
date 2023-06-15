@@ -6,7 +6,7 @@ import PageCover from "../components/page-cover";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useSession } from "next-auth/react";
 
-export default function RapporterPage({ viewer, heroRapporter }) {
+export default function RapporterPage({ heroRapporter, allRapporter }) {
   const { status } = useSession();
 
   const { heroText, heroRubrik, heroBild } = heroRapporter.redigera;
@@ -22,7 +22,7 @@ export default function RapporterPage({ viewer, heroRapporter }) {
       />
       {status === "authenticated" ? (
         <Container>
-          <Rapporter viewer={viewer} />
+          <Rapporter allRapporter={allRapporter} />
         </Container>
       ) : (
         <RapportLogin />
@@ -34,7 +34,6 @@ export default function RapporterPage({ viewer, heroRapporter }) {
 export async function getStaticProps() {
   const allRapporter = await getAllRapporter();
   const heroRapporter = await getHeroRapporter();
-  const viewer = await getUser();
 
-  return { props: { allRapporter, heroRapporter, viewer }, revalidate: 10 };
+  return { props: { allRapporter, heroRapporter }, revalidate: 10 };
 }
