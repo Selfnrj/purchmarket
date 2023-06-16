@@ -1,87 +1,90 @@
 ﻿import Image from "next/image";
-import Container from "../../components/container";
 import {
   getAllAvtal,
   getCategories,
   getHeroAvtal,
-  getUser,
   getWishList,
 } from "../../lib/api";
-import AvtalCard from "../../components/avtal-card";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import Checkbox from "../../components/checkbox";
-import LoadmoreButton from "../../components/loadmore-button";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { Toaster } from "react-hot-toast";
-import { useSession } from "next-auth/react";
 import { gql, useQuery } from "@apollo/client";
 import Loader from "../../components/Loader";
+import SearchFilter from "../../components/SearchFilter";
 
-const WISHLIST = gql`
-  query WishList {
-    getWishList {
-      productIds
+const PRODUCTS = gql`
+  query Avtal {
+    products(
+      where: { orderby: { field: MENU_ORDER, order: ASC } }
+      first: 10000
+    ) {
+      edges {
+        node {
+          date
+          excerpt
+          content
+          id
+          productId
+          title
+          slug
+          featuredImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          productCategories {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+          productTags {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+          avtalstyp {
+            valjkund {
+              id
+            }
+            leverantor {
+              ... on Leverantorer {
+                title
+              }
+            }
+          }
+          sok {
+            sokord
+          }
+        }
+      }
     }
   }
 `;
 
-export default function Avtal({
-  products,
-  allCategories,
-  wishList,
-  heroAvtal,
-  viewer,
-}) {
+export default function Avtal({ allCategories, heroAvtal }) {
   /*   const taggs = products.edges.map((item) =>
     item.node.productTags.edges.map((item) => item.node.name.toLowerCase())
   );
   const tagscontact = taggs.flat(1);*/
-  const { status } = useSession();
-
-  const [postNum, setPostNum] = useState(8); // Default number of posts dislplayed
-  const [filteredAvtal, setFilteredAvtal] = useState(products.edges);
-  const [avtalTitles, setAvtalTitles] = useState(
-    products.edges.map((item) => item.node.title.toLowerCase())
-  );
-  const [avtalContent, setAvtalContent] = useState(
-    products.edges.map((item) => item.node.sok.sokord.toLowerCase())
-  );
-  const [searchString, setSearchString] = useState("");
-  const [isAllCategory, setIsAllCategory] = useState(true);
-  const [filtercategories, setFiltercategories] = useState([]);
-
-  useEffect(() => {
-    const filteredPostsTitles: string[] = [...avtalTitles].filter(
-      (title) => title.indexOf(searchString.trim().toLowerCase()) !== -1
-    );
-    const filteredPostsContent: string[] = [...avtalContent].filter(
-      (title) => title?.indexOf(searchString.trim().toLowerCase()) !== -1
-    );
-
-    const refilteredPosts = [...products.edges].filter(
-      (item) =>
-        filteredPostsTitles.includes(item.node.title.toLowerCase()) ||
-        filteredPostsContent.includes(item.node.sok.sokord.toLowerCase())
-    );
-
-    setFilteredAvtal(refilteredPosts);
-  }, [searchString, avtalTitles, products.edges]);
-
-  useEffect(() => {
-    if (filtercategories.length > 0) {
-      setIsAllCategory(false);
-    } else {
-      setIsAllCategory(true);
-    }
-  }, [filtercategories]);
-
   const { heroRubrik, heroBild } = heroAvtal.redigera;
+  const [searchString, setSearchString] = useState("");
 
-  const { data, loading, error } = useQuery(WISHLIST);
+  const {
+    data: productsData,
+    loading: productLoading,
+    error: productError,
+  } = useQuery(PRODUCTS);
 
-  if (loading) return <Loader />;
-  if (error) return <p>Error: {error.message}</p>;
+  if (productLoading) return <Loader />;
+  if (productError) return <p>Error: {productError.message}</p>;
 
   return (
     <>
@@ -115,111 +118,11 @@ export default function Avtal({
           src={heroBild.sourceUrl}
         />
       </div>
-      <Container>
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-4 sm:gap-8">
-          <div className="mb-8 sm:mb-0">
-            <div className="flex justify-between border border-transparent border-b-gray-300 pb-4 ">
-              Filter
-              <button
-                className="text-sm text-blue-600 hover:underline"
-                onClick={() => {
-                  setFiltercategories([]);
-                  setIsAllCategory(true);
-                }}
-              >
-                Återställ filter
-              </button>
-            </div>
-            <h6 className="mt-8 mb-4 text-xs font-bold uppercase text-gray-500">
-              Kategori
-            </h6>
-            {allCategories.edges
-              /* .filter((exclude) => exclude.node?.name !== "Nyhet") */
-              .map((category) => (
-                <Checkbox
-                  key={category.node.id}
-                  handleClick={() => {
-                    if (!filtercategories.includes(category.node.name)) {
-                      setFiltercategories([
-                        ...filtercategories,
-                        category.node.name,
-                      ]);
-                    } else {
-                      const selectedCategory = [...filtercategories].filter(
-                        (selectedCategory) =>
-                          selectedCategory !== category.node.name
-                      );
-                      setFiltercategories(selectedCategory);
-                    }
-                  }}
-                  name={category.node.name}
-                  checked={
-                    filtercategories.includes(category.node.name)
-                      ? "checked"
-                      : ""
-                  }
-                />
-              ))}
-          </div>
-          <div className="col-span-3">
-            {filteredAvtal.length ? (
-              filteredAvtal
-                .filter((item) => {
-                  if (status === "authenticated") {
-                    return (
-                      item.node.avtalstyp.valjkund === null ||
-                      item.node.avtalstyp.valjkund?.some((item) =>
-                        item.id.includes(viewer.id)
-                      )
-                    );
-                  } else {
-                    return item.node.avtalstyp.valjkund === null;
-                  }
-                })
-                .slice(...(isAllCategory ? [0, postNum] : [0, 1000]))
-                .map((item) => {
-                  if (
-                    !isAllCategory &&
-                    item.node.productCategories.edges
-                      .map((item) => item.node.name)
-                      .some((category) => filtercategories.includes(category))
-                  ) {
-                    return (
-                      <AvtalCard
-                        key={item.node.id}
-                        productId={item.node.productId}
-                        title={item.node.title}
-                        excerpt={item.node.excerpt}
-                        slug={item.node.slug}
-                        categories={item.node.productCategories}
-                        sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                        wishList={data?.getWishList.productIds}
-                      />
-                    );
-                  } else if (isAllCategory) {
-                    return (
-                      <AvtalCard
-                        key={item.node.id}
-                        productId={item.node.productId}
-                        title={item.node.title}
-                        excerpt={item.node.excerpt}
-                        slug={item.node.slug}
-                        categories={item.node.productCategories}
-                        sourceUrl={item.node.featuredImage?.node.sourceUrl}
-                        wishList={data?.getWishList.productIds}
-                      />
-                    );
-                  }
-                })
-            ) : (
-              <p className="text-center">Inga avtal hittades...</p>
-            )}
-            {postNum < filteredAvtal.length && isAllCategory ? (
-              <LoadmoreButton postNum={postNum} setNumber={setPostNum} />
-            ) : null}
-          </div>
-        </div>
-      </Container>
+      <SearchFilter
+        productsData={productsData}
+        allCategories={allCategories}
+        searchString={searchString}
+      />
     </>
   );
 }
@@ -229,10 +132,9 @@ export async function getStaticProps() {
   const allCategories = await getCategories();
   const wishList = await getWishList();
   const heroAvtal = await getHeroAvtal();
-  const viewer = await getUser();
 
   return {
-    props: { products, allCategories, wishList, heroAvtal, viewer },
+    props: { products, allCategories, wishList, heroAvtal },
     revalidate: 10,
   };
 }

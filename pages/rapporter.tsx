@@ -1,5 +1,5 @@
 ﻿import Container from "../components/container";
-import { getAllRapporter, getHeroRapporter, getUser } from "../lib/api";
+import { getAllRapporter, getHeroRapporter } from "../lib/api";
 import RapportLogin from "../components/rapport-login";
 import Rapporter from "../components/rapporter";
 import PageCover from "../components/page-cover";

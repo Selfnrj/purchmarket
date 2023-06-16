@@ -1,9 +1,31 @@
-﻿import { GetStaticProps } from "next";
-import Breadcrumbs from "../components/Breadcrumbs";
+﻿import Breadcrumbs from "../components/Breadcrumbs";
 import ProfileForm from "../components/profile-setting";
-import { getUser } from "../lib/api";
+import { gql, useQuery } from "@apollo/client";
+import Loader from "../components/Loader";
 
-export default function Installningar({ viewer }) {
+const VIEWER = gql`
+  query viewer {
+    viewer {
+      id
+      databaseId
+      firstName
+      lastName
+      email
+      description
+      capabilities
+      avatar(size: 400) {
+        url
+      }
+    }
+  }
+`;
+
+export default function Installningar() {
+  const { data, loading, error } = useQuery(VIEWER);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+
   return (
     <>
       <Breadcrumbs />
@@ -11,17 +33,8 @@ export default function Installningar({ viewer }) {
         <h1 className="mb-8 text-4xl font-black leading-tight">
           Inställningar
         </h1>
-        <ProfileForm viewer={viewer} />
+        <ProfileForm viewer={data.viewer} />
       </div>
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const viewer = await getUser();
-
-  return {
-    props: { viewer },
-    revalidate: 10,
-  };
-};

@@ -13,11 +13,9 @@ import Link from "next/link";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
-import { GetStaticProps } from "next";
-import { getUser } from "../lib/api";
 import Loader from "../components/Loader";
 
-export default function Profile({ viewer }) {
+export default function Profile() {
   const router = useRouter();
   const { status } = useSession({
     required: true,
@@ -83,12 +81,3 @@ export default function Profile({ viewer }) {
     </div>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const viewer = await getUser();
-
-  return {
-    props: { viewer },
-    revalidate: 10,
-  };
-};

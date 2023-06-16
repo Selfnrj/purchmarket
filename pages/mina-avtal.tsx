@@ -1,21 +1,86 @@
-﻿﻿import { useEffect, useState } from "react";
-import AvtalUtvalda from "../components/avtal-utvalda";
+﻿﻿import AvtalUtvalda from "../components/avtal-utvalda";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
-import { getAllAvtal, getUser, getWishList } from "../lib/api";
-import { GetStaticProps } from "next";
+import { useQuery, gql } from "@apollo/client";
+import Loader from "../components/Loader";
 
-export default function MinaAvtal({ wishList, viewer, products }) {
-  const [favorite, setFavorite] = useState(wishList.productIds);
+const PRODUCTS = gql`
+  query Avtal {
+    products(
+      where: { orderby: { field: MENU_ORDER, order: ASC } }
+      first: 10000
+    ) {
+      edges {
+        node {
+          date
+          excerpt
+          content
+          id
+          productId
+          title
+          slug
+          featuredImage {
+            node {
+              altText
+              sourceUrl
+            }
+          }
+          productCategories {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+          productTags {
+            edges {
+              node {
+                id
+                name
+              }
+            }
+          }
+          avtalstyp {
+            valjkund {
+              id
+            }
+            leverantor {
+              ... on Leverantorer {
+                title
+              }
+            }
+          }
+          sok {
+            sokord
+          }
+        }
+      }
+    }
+  }
+`;
 
-  useEffect(() => {
-    const data = window.localStorage.getItem("SAVE_FAVORITE");
-    if (data !== null) setFavorite(JSON.parse(data));
-  }, []);
+const VIEWER = gql`
+  query viewer {
+    viewer {
+      id
+    }
+  }
+`;
 
-  useEffect(() => {
-    window.localStorage.setItem("SAVE_FAVORITE", JSON.stringify(favorite));
-  }, [favorite]);
+export default function MinaAvtal() {
+  const { data, loading, error } = useQuery(PRODUCTS);
+  const {
+    data: viewerData,
+    loading: viewerLoading,
+    error: viewerError,
+  } = useQuery(VIEWER);
+
+  if (loading) return <Loader />;
+  if (error) return <p>Error: {error.message}</p>;
+
+  if (viewerLoading) return <Loader />;
+  if (viewerError) return <p>Error: {viewerError.message}</p>;
 
   return (
     <>
@@ -24,24 +89,11 @@ export default function MinaAvtal({ wishList, viewer, products }) {
         <div className="mx-auto max-w-6xl">
           <h1 className="my-8 text-6xl font-black leading-tight">Mina Avtal</h1>
           <AvtalUtvalda
-            products={products}
-            viewer={viewer}
-            favorite={favorite}
-            setFavorite={setFavorite}
+            products={data.products}
+            viewer={viewerData.viewer.id}
           />
         </div>
       </Container>
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const viewer = await getUser();
-  const wishList = await getWishList();
-  const products = await getAllAvtal();
-
-  return {
-    props: { viewer, wishList, products },
-    revalidate: 10,
-  };
-};
