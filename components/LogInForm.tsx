@@ -2,7 +2,7 @@
 import toast, { Toaster } from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, useState } from "react";
 
 export default function LogInForm() {
   const router = useRouter();
@@ -63,7 +63,9 @@ export default function LogInForm() {
             }
             required
           />
-          <Link href="/glomt-losenord">Glömt ditt lösenord?</Link>
+          <Link className="hover:underline" href="/glomt-losenord">
+            Glömt ditt lösenord?
+          </Link>
         </div>
 
         <button

@@ -1,5 +1,5 @@
 ﻿import { gql, useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Container from "../../components/container";
 import Filter from "../../components/Filter";

@@ -50,9 +50,9 @@ export default function AvtalCard({
   };
 
   return (
-    <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 sm:flex ${className}`}>
+    <div className={`mb-6 rounded-3xl bg-[#DFEDFF] p-8 md:flex ${className}`}>
       {sourceUrl !== undefined ? (
-        <div className="relative mb-4 h-80 w-full shrink-0 sm:mb-0 sm:mr-8 sm:h-48 sm:w-48">
+        <div className="relative mb-4 h-80 w-full shrink-0 md:mb-0 md:mr-8 md:h-48 md:w-48">
           {status === "authenticated" ? (
             <Link
               href={`/avtal/${slug}`}

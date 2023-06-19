@@ -1,6 +1,6 @@
 ﻿import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Image, { StaticImageData } from "next/image";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useRef } from "react";
 
 type Props = {
   rubrik: string;
@@ -17,6 +17,23 @@ export default function PageCoverInput({
   value,
   setSearchString,
 }: Props) {
+  const inputRef = useRef(null);
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      // Remove the input focus
+      inputRef.current.blur();
+    }
+  };
+
+  const handleInputClick = () => {
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
+  };
+
   return (
     <div className="wp-block-cover relative flex w-full items-center justify-center">
       <div className="absolute z-20 h-full w-full bg-black bg-opacity-50" />
@@ -35,6 +52,9 @@ export default function PageCoverInput({
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setSearchString(e.target.value)
               }
+              onKeyPress={handleKeyPress}
+              ref={inputRef}
+              onClick={handleInputClick}
             />
           </div>
         </form>

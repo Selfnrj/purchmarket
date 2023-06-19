@@ -1,73 +1,13 @@
 ﻿import Image from "next/image";
-import {
-  getAllAvtal,
-  getCategories,
-  getHeroAvtal,
-  getWishList,
-} from "../../lib/api";
-import { ChangeEvent, useState } from "react";
+import { getCategories, getHeroAvtal } from "../../lib/api";
+import { ChangeEvent, useRef, useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import { Toaster } from "react-hot-toast";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Loader from "../../components/Loader";
 import SearchFilter from "../../components/SearchFilter";
-
-const PRODUCTS = gql`
-  query Avtal {
-    products(
-      where: { orderby: { field: MENU_ORDER, order: ASC } }
-      first: 10000
-    ) {
-      edges {
-        node {
-          date
-          excerpt
-          content
-          id
-          productId
-          title
-          slug
-          featuredImage {
-            node {
-              altText
-              sourceUrl
-            }
-          }
-          productCategories {
-            edges {
-              node {
-                id
-                name
-              }
-            }
-          }
-          productTags {
-            edges {
-              node {
-                id
-                name
-              }
-            }
-          }
-          avtalstyp {
-            valjkund {
-              id
-            }
-            leverantor {
-              ... on Leverantorer {
-                title
-              }
-            }
-          }
-          sok {
-            sokord
-          }
-        }
-      }
-    }
-  }
-`;
+import { PRODUCTS } from "../../lib/getProducts";
 
 export default function Avtal({ allCategories, heroAvtal }) {
   /*   const taggs = products.edges.map((item) =>
@@ -76,6 +16,23 @@ export default function Avtal({ allCategories, heroAvtal }) {
   const tagscontact = taggs.flat(1);*/
   const { heroRubrik, heroBild } = heroAvtal.redigera;
   const [searchString, setSearchString] = useState("");
+
+  const inputRef = useRef(null);
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      // Remove the input focus
+      inputRef.current.blur();
+    }
+  };
+
+  const handleInputClick = () => {
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
+  };
 
   const {
     data: productsData,
@@ -107,6 +64,9 @@ export default function Avtal({ allCategories, heroAvtal }) {
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setSearchString(e.target.value)
                 }
+                onKeyPress={handleKeyPress}
+                ref={inputRef}
+                onClick={handleInputClick}
               />
             </div>
           </form>
@@ -128,13 +88,11 @@ export default function Avtal({ allCategories, heroAvtal }) {
 }
 
 export async function getStaticProps() {
-  const products = await getAllAvtal();
   const allCategories = await getCategories();
-  const wishList = await getWishList();
   const heroAvtal = await getHeroAvtal();
 
   return {
-    props: { products, allCategories, wishList, heroAvtal },
+    props: { allCategories, heroAvtal },
     revalidate: 10,
   };
 }

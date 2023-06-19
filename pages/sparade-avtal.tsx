@@ -2,10 +2,21 @@
 import AvtalSparade from "../components/avtal-sparade";
 import Breadcrumbs from "../components/Breadcrumbs";
 import Container from "../components/container";
-import { getAllAvtal, getWishList } from "../lib/api";
 import AvtalList from "../components/avtal-list";
+import Loader from "../components/Loader";
+import { PRODUCTS } from "../lib/getProducts";
+import { useQuery } from "@apollo/client";
 
-export default function SparadeAvtal({ products }) {
+export default function SparadeAvtal() {
+  const {
+    data: productsData,
+    loading: productLoading,
+    error: productError,
+  } = useQuery(PRODUCTS);
+
+  if (productLoading) return <Loader />;
+  if (productError) return <p>Error: {productError.message}</p>;
+
   return (
     <>
       <Breadcrumbs />
@@ -17,17 +28,11 @@ export default function SparadeAvtal({ products }) {
             Här hittar du alla dina sparade avtal.
           </p>
         </div>
-        <AvtalSparade products={products} />
+        <AvtalSparade products={productsData.products} />
       </div>
       <Container>
-        <AvtalList rubrik="Relaterade avtal" products={products} />
+        <AvtalList rubrik="Relaterade avtal" />
       </Container>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const products = await getAllAvtal();
-  const wishList = await getWishList();
-  return { props: { products, wishList } };
 }

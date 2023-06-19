@@ -65,7 +65,7 @@ export default function Index({ allPosts, products, wishList, IndexData }) {
           </div>
         </Link>
         <Container>
-          <AvtalList rubrik="Inköpsavtal" products={products} />
+          <AvtalList rubrik="Inköpsavtal" />
         </Container>
         <Link href="/rapporter">
           <div className="flex w-full items-center bg-[#DFEDFF] py-16">

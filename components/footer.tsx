@@ -63,7 +63,7 @@ export default function Footer() {
                 Adress
               </h2>
               <ul className="text-gray-400">
-                <li className="mb-4">Kungsportsavenyn 37</li>
+                <li className="mb-4">Kungsportsavenyen 37</li>
                 <li className="mb-4">411 36 Göteborg</li>
                 <li>Sverige</li>
               </ul>
@@ -78,9 +78,20 @@ export default function Footer() {
                     Logga in
                   </Link>
                 </li>
-                <li>
-                  <Link href="/kontakta-oss" className="hover:underline">
+                <li className="mb-4">
+                  <Link
+                    href="/om-oss/vara-medarbetare"
+                    className="hover:underline"
+                  >
                     Kontakta oss
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/personuppgiftspolicy"
+                    className="hover:underline"
+                  >
+                    Personuppgiftspolicy
                   </Link>
                 </li>
               </ul>

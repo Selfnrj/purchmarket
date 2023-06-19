@@ -74,13 +74,14 @@ export default function Header() {
           } w-full items-center justify-between md:order-1 md:flex md:w-auto`}
           id="navbar-sticky"
         >
-          <ul className="md:text-md mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-200 p-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:font-medium">
+          <ul className="md:text-md mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-200 py-4 md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:font-medium">
             {navlinks.map(({ title, path }) => (
               <NavLink
                 key={title}
                 path={path}
                 link={title}
                 isActive={isActive(path)}
+                setIsNavCollapsed={setIsNavCollapsed as any}
               />
             ))}
             {menuItems?.edges?.map(({ node }) => (
@@ -89,6 +90,7 @@ export default function Header() {
                 path={node.path}
                 link={node.label}
                 isActive={isActive(node.path)}
+                setIsNavCollapsed={setIsNavCollapsed as any}
               />
             ))}
           </ul>

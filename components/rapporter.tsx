@@ -1,27 +1,19 @@
-﻿import { gql, useQuery } from "@apollo/client";
+﻿import { useQuery } from "@apollo/client";
+import { RAPPORTER } from "../lib/getRapporter";
 import FileDownloader from "./FileDownloader";
+import Loader from "./Loader";
 
-const VIEWER = gql`
-  query Viewer {
-    viewer {
-      id
-    }
-  }
-`;
+export default function Rapporter({ viewer }) {
+  const id = viewer;
 
-export default function Rapporter({ allRapporter }) {
-  const { data, loading, error } = useQuery(VIEWER);
-
-  const id = data?.viewer.id;
-  console.log(data?.viewer.id);
-
-  if (loading) return <p>Loading...</p>;
+  const { data, loading, error } = useQuery(RAPPORTER);
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
-      {allRapporter.edges
-        .filter((item) => item.node.rapportUser.kopplaRapport[0].id === id)
+      {data.allRapporter.edges
+        .filter((item) => item.node.rapportUser?.kopplaRapport[0].id === id)
         .map(({ node }) => (
           <FileDownloader
             key={node.id}

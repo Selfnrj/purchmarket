@@ -16,7 +16,7 @@ export default function NewsPanel({
   newsCategory,
 }: Props) {
   return (
-    <Tab.Panel>
+    <div>
       {allPosts.edges
         .filter(
           (item) =>
@@ -41,6 +41,6 @@ export default function NewsPanel({
             item.node.categories?.edges[0].node.name === newsCategory ||
             newsCategory === undefined
         ).length && <LoadmoreButton postNum={postNum} setNumber={setPostNum} />}
-    </Tab.Panel>
+    </div>
   );
 }
