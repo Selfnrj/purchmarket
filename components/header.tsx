@@ -81,7 +81,8 @@ export default function Header() {
                 path={path}
                 link={title}
                 isActive={isActive(path)}
-                setIsNavCollapsed={setIsNavCollapsed as any}
+                isNavCollapsed={isNavCollapsed}
+                setIsNavCollapsed={setIsNavCollapsed}
               />
             ))}
             {menuItems?.edges?.map(({ node }) => (
@@ -90,7 +91,8 @@ export default function Header() {
                 path={node.path}
                 link={node.label}
                 isActive={isActive(node.path)}
-                setIsNavCollapsed={setIsNavCollapsed as any}
+                isNavCollapsed={isNavCollapsed}
+                setIsNavCollapsed={setIsNavCollapsed}
               />
             ))}
           </ul>

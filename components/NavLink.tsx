@@ -4,17 +4,24 @@ type Props = {
   link: string;
   path: string;
   isActive: boolean;
-  setIsNavCollapsed: (arg: boolean) => () => void;
+  isNavCollapsed: boolean;
+  setIsNavCollapsed: (isNavCollapsed: boolean) => void;
 };
 
-function NavLink({ path, link, isActive, setIsNavCollapsed }: Props) {
+function NavLink({
+  path,
+  link,
+  isActive,
+  isNavCollapsed,
+  setIsNavCollapsed,
+}: Props) {
   return (
     <li>
       <Link
         href={path}
         className={`navLink ${isActive === true ? " active" : ""}`}
         aria-current="page"
-        onClick={!setIsNavCollapsed as any}
+        onClick={() => setIsNavCollapsed(!isNavCollapsed)}
       >
         {link}
       </Link>
