@@ -85,7 +85,7 @@ export default function SetPasswordForm({ resetKey: key, login }: Props) {
   return (
     <form method="post" onSubmit={handleSubmit}>
       <fieldset disabled={loading} aria-busy={loading}>
-        <label htmlFor="new-password">Password</label>
+        <label htmlFor="new-password">Lösenord</label>
         <input
           id="new-password"
           type="password"
@@ -95,7 +95,7 @@ export default function SetPasswordForm({ resetKey: key, login }: Props) {
           onChange={(event) => setPassword(event.target.value)}
           required
         />
-        <label htmlFor="password-confirm">Confirm Password</label>
+        <label htmlFor="password-confirm">Bekräfta lösenord</label>
         <input
           id="password-confirm"
           type="password"
@@ -116,7 +116,7 @@ export default function SetPasswordForm({ resetKey: key, login }: Props) {
           type="submit"
           disabled={loading}
         >
-          {loading ? "Saving..." : "Save password"}
+          {loading ? "Sparar..." : "Spara lösenord"}
         </button>
       </fieldset>
     </form>

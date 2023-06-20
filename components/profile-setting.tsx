@@ -1,5 +1,6 @@
 ﻿import { useMutation, gql } from "@apollo/client";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 const UPDATE_PROFILE = gql`
@@ -89,12 +90,6 @@ export default function ProfileForm({ viewer }) {
             defaultValue={description || ""}
             autoComplete="telefonnummer"
           />
-          <Link
-            className="my-8 block max-w-[240px] rounded-full border border-[#17375E] px-16 py-4 text-center font-bold text-[#17375E]"
-            href="/glomt-losenord"
-          >
-            Byt lösenord
-          </Link>
           {error ? <p className="error-message">{error.message}</p> : null}
           <button
             className="mt-4 rounded-full bg-[#17375E] px-16 py-4 font-bold text-white"
@@ -105,6 +100,12 @@ export default function ProfileForm({ viewer }) {
           </button>
         </fieldset>
       </form>
+      <button
+        className="my-8 block max-w-[240px] rounded-full border border-[#17375E] px-16 py-4 text-center font-bold text-[#17375E]"
+        onClick={() => signOut({ callbackUrl: "/glomt-losenord" })}
+      >
+        Byt lösenord
+      </button>
     </>
   );
 }
