@@ -74,7 +74,7 @@ export default function Footer() {
               </h2>
               <ul className="text-gray-400">
                 <li className="mb-4">
-                  <Link href="login" className="hover:underline">
+                  <Link href="/login" className="hover:underline">
                     Logga in
                   </Link>
                 </li>
