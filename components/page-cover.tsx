@@ -33,6 +33,7 @@ function PageCover({ rubrik, text, bild, video, type }: Props) {
       )}
       {type === "file" && (
         <video
+          playsInline
           autoPlay
           muted
           loop
