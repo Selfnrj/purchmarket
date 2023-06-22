@@ -38,7 +38,7 @@ export default function Footer() {
                 </li>
                 <li className="mb-4">
                   <Link href="/leverantorer" className="hover:underline">
-                    Leverantörer
+                    Våra leverantörer
                   </Link>
                 </li>
                 <li className="mb-4">

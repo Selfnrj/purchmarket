@@ -21,7 +21,7 @@ export default function Header() {
 
   const navlinks = [
     { title: "Hitta inköpsavtal", path: "/avtal" },
-    { title: "Leverantörer", path: "/leverantorer" },
+    { title: "Våra leverantörer", path: "/leverantorer" },
     { title: "Rapporter", path: "/rapporter" },
     { title: "Nyheter", path: "/nyheter" },
     { title: "Om oss", path: "/om-oss" },
