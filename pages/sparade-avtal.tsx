@@ -20,17 +20,17 @@ export default function SparadeAvtal() {
   return (
     <>
       <Breadcrumbs />
-      <div className="mx-auto max-w-6xl">
-        <Toaster />
-        <div className="mt-12 mb-8">
-          <h1 className="text-7xl font-bold">Sparade avtal</h1>
-          <p className="font-semibold leading-8">
-            Här hittar du alla dina sparade avtal.
-          </p>
-        </div>
-        <AvtalSparade products={productsData.products} />
-      </div>
       <Container>
+        <div className="mx-auto max-w-6xl">
+          <Toaster />
+          <div className="mt-12 mb-8">
+            <h1 className="text-5xl font-black sm:text-7xl">Sparade avtal</h1>
+            <p className="font-semibold leading-8">
+              Här hittar du alla dina sparade avtal.
+            </p>
+          </div>
+          <AvtalSparade products={productsData.products} />
+        </div>
         <AvtalList rubrik="Relaterade avtal" />
       </Container>
     </>

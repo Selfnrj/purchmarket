@@ -29,7 +29,7 @@ export default function Installningar() {
   return (
     <>
       <Breadcrumbs />
-      <div className="my-16 mx-auto max-w-2xl rounded-3xl bg-[#DFEDFF] p-16">
+      <div className="my-16 mx-auto max-w-2xl bg-[#DFEDFF] p-4 sm:rounded-3xl sm:p-16">
         <h1 className="mb-8 text-4xl font-black leading-tight">
           Inställningar
         </h1>

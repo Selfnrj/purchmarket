@@ -87,7 +87,7 @@ export default function MinaAvtal() {
       <Breadcrumbs />
       <Container>
         <div className="mx-auto max-w-6xl">
-          <h1 className="my-8 text-6xl font-black leading-tight">Mina Avtal</h1>
+          <h1 className="my-8 text-5xl font-black sm:text-7xl">Mina Avtal</h1>
           <AvtalUtvalda
             products={data.products}
             viewer={viewerData.viewer.id}
