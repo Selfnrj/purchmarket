@@ -17,11 +17,6 @@ export default function Rapporter({ viewer }) {
   item.node.rapportUser.kopplaRapport.some((item) => item.id === viewer)
   );
 
-  console.log(filteredRapporterId);
-
-  console.log(viewer);
-
-
   return (
     <div>
       {filteredRapporterId.length > 0 ? (
