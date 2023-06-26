@@ -132,7 +132,6 @@ export default function AvtalDetail({ product, products, wishList }) {
                 <FileDownloader
                   title={product?.file?.pdf?.title}
                   url={product?.file?.pdf?.mediaItemUrl}
-                  size={product?.file?.pdf?.fileSize}
                 />
               </div>
             )}
