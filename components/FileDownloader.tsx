@@ -1,6 +1,6 @@
 ﻿import { ArrowDownTrayIcon, DocumentIcon } from "@heroicons/react/24/outline";
 
-export default function FileDownloader({ url, title, size }) {
+export default function FileDownloader({ url, title }) {
   return (
     <div className="flex items-center justify-between border border-transparent border-b-gray-300 p-4">
       <div className="flex items-center">

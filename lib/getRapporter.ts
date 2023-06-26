@@ -2,14 +2,12 @@
 
 export const RAPPORTER = gql`
   query Rapporter {
-    allRapporter(first: 10000) {
+    allRapporter(last: 92) {
       edges {
         node {
           file {
             pdf {
-              fileSize
               mediaItemUrl
-              title
             }
           }
           title
@@ -17,8 +15,6 @@ export const RAPPORTER = gql`
           rapportUser {
             kopplaRapport {
               id
-              name
-              email
             }
           }
         }
