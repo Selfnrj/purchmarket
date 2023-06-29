@@ -2,7 +2,7 @@
 
 export const RAPPORTER = gql`
   query Rapporter {
-    allRapporter(last: 92) {
+    allRapporter(first: 1000) {
       edges {
         node {
           file {
