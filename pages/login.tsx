@@ -23,7 +23,7 @@ export default function LogIn() {
               Saknar du konto?
             </h1>
             <p className="leading mb-8 text-center text-xl">
-              Fyll i uppgifter nedan för att logga in på ditt konto.
+              Kontakta oss så hjälper vi dig att bli medlem hos oss.
             </p>
             <Link
               className="rounded-full bg-[#17375E] p-4 px-8 font-bold text-white"

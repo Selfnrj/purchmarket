@@ -63,7 +63,7 @@ export default function ProfileForm({ viewer }) {
             defaultValue={firstName || ""}
             autoComplete="given-name"
           />
-          <label htmlFor="profile-last-name">Eftername</label>
+          <label htmlFor="profile-last-name">Efternamn</label>
           <input
             id="profile-last-name"
             type="text"
