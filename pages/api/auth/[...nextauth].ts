@@ -30,10 +30,13 @@ const options: NextAuthOptions = {
             },
           });
 
+          console.log('variables', credentials.email, credentials.password);
+
           const user = {
             name: data.login.refreshToken,
             email: credentials.email,
           };
+          console.log('user', user);
 
           return user as any;
         } catch (error) {
